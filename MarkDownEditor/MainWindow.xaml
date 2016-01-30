@@ -1,0 +1,54 @@
+﻿<Controls:MetroWindow 
+    x:Class="MarkDownEditor.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:MarkDownEditor"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+    mc:Ignorable="d"
+    xmlns:vm="clr-namespace:MarkDownEditor.ViewModel"     
+    DataContext="{Binding Main,Source={StaticResource Locator}}"
+    Title="{Binding Title}"
+    Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="New"></MenuItem>
+                <MenuItem Header="Open"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Save As"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="MarkDown">
+                <avalonEdit:TextEditor Margin="10" SyntaxHighlighting="MarkDown" Document="{Binding SourceCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </GroupBox>
+            <Grid Grid.Column="1">
+                <GroupBox Header="Preview">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <ComboBox ItemsSource="{Binding MarkDownType.Keys}" SelectedItem="{Binding CurrentMarkdownTypeText}"></ComboBox>
+                        </StackPanel>
+                        <cefSharp:ChromiumWebBrowser Grid.Row="1" x:Name="webBrowser"  Address="{Binding PreviewSource}"></cefSharp:ChromiumWebBrowser>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
