@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using System.Diagnostics;
 using CefSharp;
+using ICSharpCode.AvalonEdit;
 
 namespace MarkDownEditor
 {
@@ -26,7 +27,20 @@ namespace MarkDownEditor
         public MainWindow()
         {
             InitializeComponent();
-            webBrowser.RequestHandler = new RequestHandler();
+            webBrowser.RequestHandler = new RequestHandler();          
+        }       
+
+        private void editor_ScrollChanged(object sender, RoutedEventArgs e)
+        {
+            ScrollChangedEventArgs args = (ScrollChangedEventArgs)e;
+            if (args.VerticalOffset == 0)
+                return;
+
+            ScrollViewer viewer = (ScrollViewer)e.OriginalSource;
+            double ratio = args.VerticalOffset / viewer.ScrollableHeight;
+
+            string src = $"scrollTo(0, {ratio} * document.body.scrollHeight)";
+            webBrowser.ExecuteScriptAsync(src);
         }
     }
 }

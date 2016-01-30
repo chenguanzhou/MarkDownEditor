@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:MarkDownEditor"
+    xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
@@ -13,6 +15,13 @@
     DataContext="{Binding Main,Source={StaticResource Locator}}"
     Title="{Binding Title}"
     Height="600" Width="800">
+    <Controls:MetroWindow.Resources>
+        <CollectionViewSource x:Key="sysFonts" Source="{x:Static Member=Fonts.SystemFontFamilies}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Source" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -33,7 +42,38 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <GroupBox Grid.Column="0" Header="MarkDown">
-                <avalonEdit:TextEditor Margin="10" SyntaxHighlighting="MarkDown" Document="{Binding SourceCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox MinWidth="100" ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont}">                            
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel></VirtualizingStackPanel>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Style.Setters>
+                                        <Setter Property="FontFamily" Value="{Binding}"></Setter>
+                                    </Style.Setters>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                        <Controls:NumericUpDown MinWidth="80" Minimum="1" Maximum="72" Value="{Binding EditorFontSize}"></Controls:NumericUpDown>
+                    </StackPanel>
+                    <avalonEdit:TextEditor  
+                        x:Name="editor"
+                        Grid.Row="1" Margin="10"
+                        SyntaxHighlighting="MarkDown" 
+                        Document="{Binding SourceCode}" 
+                        FontFamily="{Binding EditorFont}" 
+                        FontSize="{Binding EditorFontSize}"
+                        ScrollViewer.ScrollChanged="editor_ScrollChanged">
+                    </avalonEdit:TextEditor>
+                </Grid>
             </GroupBox>
             <Grid Grid.Column="1">
                 <GroupBox Header="Preview">

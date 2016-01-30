@@ -1,9 +1,11 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Input;
 
 namespace MarkDownEditor.ViewModel
 {
@@ -27,6 +29,7 @@ namespace MarkDownEditor.ViewModel
         public MainViewModel()
         {
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
+            UpdatePreview();
         }
 
         public string Title => "MarkDown Editor Alpha";
@@ -39,8 +42,11 @@ namespace MarkDownEditor.ViewModel
             get
             {
                 //if (!File.Exists(previewSourceTempPath))
-                //    return Properties.Resources.EmptyHTML;
-
+                //{
+                //    StreamWriter sw = new StreamWriter(previewSourceTempPath);
+                //    sw.Write(Properties.Resources.EmptyHTML);
+                //    sw.Close();
+                //}
                 //StreamReader sr = new StreamReader(previewSourceTempPath);
                 //string all = sr.ReadToEnd();
                 //sr.Close();
@@ -49,7 +55,7 @@ namespace MarkDownEditor.ViewModel
             }
         }
         
-        private TextDocument sourceCode = new TextDocument("");
+        private TextDocument sourceCode = new TextDocument();
         public TextDocument SourceCode
         {
             get { return sourceCode; }
@@ -61,6 +67,34 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("SourceCode");
             }
         }
+
+        private string editorFont = "Consolas";
+        public string EditorFont
+        {
+            get { return editorFont; }
+            set
+            {
+                if (editorFont == value)
+                    return;
+                editorFont = value;
+                RaisePropertyChanged("EditorFont");
+            }
+        }
+
+        private int editorFontSize = 12;
+        public int EditorFontSize
+        {
+            get { return editorFontSize; }
+            set
+            {
+                if (editorFontSize == value)
+                    return;
+                editorFontSize = value;
+                RaisePropertyChanged("EditorFontSize");
+            }
+        }
+
+        public double ScrollbarPos { get; set; }
 
         public Dictionary<string,string> MarkDownType => new Dictionary<string, string>()
         {
