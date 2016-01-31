@@ -27,19 +27,35 @@ namespace MarkDownEditor
         public MainWindow()
         {
             InitializeComponent();
-            webBrowser.RequestHandler = new RequestHandler();          
-        }       
+            webBrowser.RequestHandler = new RequestHandler();
+            editor.TextChanged += Editor_TextChanged;
+        }
+
+        private void Editor_TextChanged(object sender, EventArgs e)
+        {
+            ScrollAsync();
+        }
+
+        private double EditorScrollYRatio { get; set; }
 
         private void editor_ScrollChanged(object sender, RoutedEventArgs e)
         {
             ScrollChangedEventArgs args = (ScrollChangedEventArgs)e;
             if (args.VerticalOffset == 0)
+            {
+                EditorScrollYRatio = 0;
                 return;
+            }
 
             ScrollViewer viewer = (ScrollViewer)e.OriginalSource;
-            double ratio = args.VerticalOffset / viewer.ScrollableHeight;
+            EditorScrollYRatio = args.VerticalOffset / viewer.ScrollableHeight;
 
-            string src = $"scrollTo(0, {ratio} * document.body.scrollHeight)";
+            ScrollAsync();
+        }
+
+        private void ScrollAsync()
+        {
+            string src = $"scrollTo(0, {EditorScrollYRatio} * document.body.scrollHeight)";
             webBrowser.ExecuteScriptAsync(src);
         }
     }

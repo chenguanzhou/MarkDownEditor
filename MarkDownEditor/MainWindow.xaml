@@ -8,10 +8,12 @@
     xmlns:local="clr-namespace:MarkDownEditor"
     xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:MetroDialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
     xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
     mc:Ignorable="d"
-    xmlns:vm="clr-namespace:MarkDownEditor.ViewModel"     
+    xmlns:vm="clr-namespace:MarkDownEditor.ViewModel"
+    MetroDialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding Main,Source={StaticResource Locator}}"
     Title="{Binding Title}"
     MinHeight="600"
@@ -27,20 +29,29 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Controls:MetroWindow.Resources>
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <!--<Menu Grid.Row="0">
-            <MenuItem Header="File">
-                <MenuItem Header="New"></MenuItem>
-                <MenuItem Header="Open"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Save As"></MenuItem>
+        <Menu Grid.Row="0" Padding="5">
+            <MenuItem Header="Document">
+                <MenuItem Header="New" Command="{Binding NewDocumentCommand}"></MenuItem>
+                <MenuItem Header="Open" Command="{Binding OpenDocumentCommand}"></MenuItem>
+                <MenuItem Header="Save" Command="{Binding SaveDocumentCommand}"></MenuItem>
+                <MenuItem Header="Save As" Command="{Binding SaveAsDocumentCommand}"></MenuItem>
             </MenuItem>
-        </Menu>-->
+            <MenuItem Header="Export">
+                <MenuItem Header="To HTML"></MenuItem>
+            </MenuItem>
+        </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -70,7 +81,7 @@
                             </ComboBox>
                             <Controls:NumericUpDown Height="16" MinWidth="80" FontSize="12" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
                             </Controls:NumericUpDown>-->
-                            <Button Width="50" Height="50" ToolTip="Bold" 
+                            <Button Width="50" Height="50" ToolTip="Bold" Command="{Binding BoldCommand}" CommandParameter="{Binding ElementName=editor}"
                                     Style="{DynamicResource MetroCircleButtonStyle}" 
                                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                                 <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -80,7 +91,7 @@
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Button>
-                            <Button Width="50" Height="50" ToolTip="Italic" 
+                            <Button Width="50" Height="50" ToolTip="Italic" Command="{Binding ItalicCommand}" CommandParameter="{Binding ElementName=editor}"
                                     Style="{DynamicResource MetroCircleButtonStyle}" 
                                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                                 <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -90,7 +101,8 @@
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Button>
-                            <Button Width="50" Height="50" ToolTip="Quote" 
+                            <!--<Separator Width="50" Background="Transparent"></Separator>-->
+                            <Button Width="50" Height="50" ToolTip="Quote" Command="{Binding QuoteCommand}" CommandParameter="{Binding ElementName=editor}"
                                     Style="{DynamicResource MetroCircleButtonStyle}" 
                                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                                 <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -100,7 +112,7 @@
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Button>
-                            <Button Width="50" Height="50" ToolTip="Link" 
+                            <Button Width="50" Height="50" ToolTip="Hyperlink" Command="{Binding HyperlinkCommand}" CommandParameter="{Binding ElementName=editor}"
                                     Style="{DynamicResource MetroCircleButtonStyle}" 
                                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                                 <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -111,12 +123,22 @@
                                 </Rectangle>
                             </Button>
                             <Button Width="50" Height="50" ToolTip="Code" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding GeneralCodeCommand}" CommandParameter="{Binding ElementName=editor}"
                                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                                 <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill"
                                          Visual="{DynamicResource appbar_code_xml}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                            <Button Width="50" Height="50" ToolTip="Code" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding SeparateLineCommand}" CommandParameter="{Binding ElementName=editor}"
+                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform"
+                                         Visual="{DynamicResource appbar_minus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Button>
@@ -126,7 +148,7 @@
                         x:Name="editor"
                         Grid.Row="1" Margin="10"
                         SyntaxHighlighting="MarkDown" 
-                        Document="{Binding SourceCode}" 
+                        Document="{Binding SourceCode}"
                         FontFamily="{Binding EditorFont}" 
                         FontSize="{Binding EditorFontSize}"
                         ScrollViewer.ScrollChanged="editor_ScrollChanged">
@@ -140,8 +162,8 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <ComboBox ItemsSource="{Binding MarkDownType.Keys}" SelectedItem="{Binding CurrentMarkdownTypeText}"></ComboBox>
+                        <StackPanel Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <ComboBox HorizontalAlignment="Right" ItemsSource="{Binding MarkDownType.Keys}" SelectedItem="{Binding CurrentMarkdownTypeText}"></ComboBox>
                         </StackPanel>
                         <cefSharp:ChromiumWebBrowser Grid.Row="1" x:Name="webBrowser" Margin="10" Address="{Binding PreviewSource}"></cefSharp:ChromiumWebBrowser>
                     </Grid>

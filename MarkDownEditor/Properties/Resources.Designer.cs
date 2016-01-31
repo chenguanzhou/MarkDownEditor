@@ -61,11 +61,56 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bold Text Area.
+        /// </summary>
+        internal static string EmptyBoldAreaText {
+            get {
+                return ResourceManager.GetString("EmptyBoldAreaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        internal static string EmptyCode {
+            get {
+                return ResourceManager.GetString("EmptyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;html&gt;&lt;head&gt;&lt;meta http-equiv=&quot;&quot;Content-Type&quot;&quot; content=&quot;&quot;text/html; charset=UTF-8&quot;&quot;&gt;&lt;style&gt;body {overflow-y: hidden;}v\:* {behavior:url(#default#VML);}o\:* {behavior:url(#default#VML);}w\:* {behavior:url(#default#VML);}.shape {behavior:url(#default#VML);}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;.
         /// </summary>
         internal static string EmptyHTML {
             get {
                 return ResourceManager.GetString("EmptyHTML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description of the link.
+        /// </summary>
+        internal static string EmptyHyperlinkDescription {
+            get {
+                return ResourceManager.GetString("EmptyHyperlinkDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Italic Text Area.
+        /// </summary>
+        internal static string EmptyItalicAreaText {
+            get {
+                return ResourceManager.GetString("EmptyItalicAreaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untitled.
+        /// </summary>
+        internal static string UntitledTitle {
+            get {
+                return ResourceManager.GetString("UntitledTitle", resourceCulture);
             }
         }
     }
