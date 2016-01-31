@@ -81,7 +81,7 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        private int editorFontSize = 12;
+        private int editorFontSize = 16;
         public int EditorFontSize
         {
             get { return editorFontSize; }

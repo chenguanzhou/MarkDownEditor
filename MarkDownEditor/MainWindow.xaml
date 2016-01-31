@@ -14,7 +14,12 @@
     xmlns:vm="clr-namespace:MarkDownEditor.ViewModel"     
     DataContext="{Binding Main,Source={StaticResource Locator}}"
     Title="{Binding Title}"
-    Height="600" Width="800">
+    MinHeight="600"
+    MinWidth="800"
+    ShowTitleBar="True"
+    WindowState="Maximized"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    NonActiveGlowBrush="#CDFF0000">
     <Controls:MetroWindow.Resources>
         <CollectionViewSource x:Key="sysFonts" Source="{x:Static Member=Fonts.SystemFontFamilies}">
             <CollectionViewSource.SortDescriptions>
@@ -28,14 +33,14 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
+        <!--<Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="New"></MenuItem>
                 <MenuItem Header="Open"></MenuItem>
                 <MenuItem Header="Save"></MenuItem>
                 <MenuItem Header="Save As"></MenuItem>
             </MenuItem>
-        </Menu>
+        </Menu>-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -47,8 +52,9 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox MinWidth="100" ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont}">                            
+                    <Controls:MetroContentControl BorderBrush="Red" BorderThickness="2">
+                        <StackPanel Orientation="Horizontal">
+                            <!--<ComboBox MinWidth="100" FontSize="12" ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont}">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel></VirtualizingStackPanel>
@@ -61,9 +67,61 @@
                                     </Style.Setters>
                                 </Style>
                             </ComboBox.ItemContainerStyle>
-                        </ComboBox>
-                        <Controls:NumericUpDown MinWidth="80" Minimum="1" Maximum="72" Value="{Binding EditorFontSize}"></Controls:NumericUpDown>
-                    </StackPanel>
+                            </ComboBox>
+                            <Controls:NumericUpDown Height="16" MinWidth="80" FontSize="12" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
+                            </Controls:NumericUpDown>-->
+                            <Button Width="50" Height="50" ToolTip="Bold" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_text_bold}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                            <Button Width="50" Height="50" ToolTip="Italic" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_text_italic}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                            <Button Width="50" Height="50" ToolTip="Quote" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_quote_left}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                            <Button Width="50" Height="50" ToolTip="Link" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_link}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                            <Button Width="50" Height="50" ToolTip="Code" 
+                                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Rectangle Width="20" Height="20" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill"
+                                         Visual="{DynamicResource appbar_code_xml}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                        </StackPanel>
+                    </Controls:MetroContentControl>
                     <avalonEdit:TextEditor  
                         x:Name="editor"
                         Grid.Row="1" Margin="10"
@@ -82,10 +140,10 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
                             <ComboBox ItemsSource="{Binding MarkDownType.Keys}" SelectedItem="{Binding CurrentMarkdownTypeText}"></ComboBox>
                         </StackPanel>
-                        <cefSharp:ChromiumWebBrowser Grid.Row="1" x:Name="webBrowser"  Address="{Binding PreviewSource}"></cefSharp:ChromiumWebBrowser>
+                        <cefSharp:ChromiumWebBrowser Grid.Row="1" x:Name="webBrowser" Margin="10" Address="{Binding PreviewSource}"></cefSharp:ChromiumWebBrowser>
                     </Grid>
                 </GroupBox>
             </Grid>
