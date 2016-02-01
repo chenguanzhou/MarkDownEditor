@@ -23,7 +23,14 @@ namespace MarkDownEditor
                 return false;
             else
             {
-                Process.Start(request.Url);
+                try
+                {
+                    Process.Start(request.Url);
+                }
+                catch(Exception)
+                {
+
+                }
                 return true;
             }
         }

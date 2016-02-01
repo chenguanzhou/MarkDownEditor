@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CancelException" xml:space="preserve">
+    <value>CancelException</value>
+  </data>
   <data name="EmptyBoldAreaText" xml:space="preserve">
     <value>Bold Text Area</value>
   </data>
@@ -129,8 +132,14 @@
   <data name="EmptyHyperlinkDescription" xml:space="preserve">
     <value>Description of the link</value>
   </data>
+  <data name="EmptyImageDescription" xml:space="preserve">
+    <value>Description of the image</value>
+  </data>
   <data name="EmptyItalicAreaText" xml:space="preserve">
     <value>Italic Text Area</value>
+  </data>
+  <data name="ListItem" xml:space="preserve">
+    <value>List Item</value>
   </data>
   <data name="UntitledTitle" xml:space="preserve">
     <value>Untitled</value>

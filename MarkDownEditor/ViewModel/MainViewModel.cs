@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MarkDownEditor.ViewModel
@@ -38,11 +40,11 @@ namespace MarkDownEditor.ViewModel
         private string markdownSourceTempPath = Path.GetTempFileName();
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
-        public string Title => DocumentTitle + (IsModified?"(*)":"") +" ---- MarkDown Editor Alpha";
+        public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDown Editor Alpha";
 
         public string PreviewSource => previewSourceTempPath;
 
-        public string documentTitle = "Untitled";
+        public string documentTitle = Properties.Resources.UntitledTitle;
         public string DocumentTitle
         {
             get { return documentTitle; }
@@ -96,6 +98,73 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
+        private Task statusBarCancelTask = null;
+        private string statusBarText = "";
+        public string StatusBarText
+        {
+            get { return statusBarText; }
+            set
+            {
+                if (statusBarText == value)
+                    return;               
+
+                statusBarText = value;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    statusBarCancelTask = Task.Run(
+                    () =>
+                    {
+                        string currentText = value;
+                        System.Threading.Thread.Sleep(5000);
+                        if (StatusBarText == value)
+                            StatusBarText = "";
+                    });
+                }                
+                RaisePropertyChanged("StatusBarText");
+            }
+        }
+
+        private int caretOffset = 0;
+        public int CaretOffset
+        {
+            get { return caretOffset; }
+            set
+            {
+                if (caretOffset == value)
+                    return;
+                caretOffset = value;
+                var line = SourceCode.GetLineByOffset(CaretOffset);
+                CurrentCaretStatisticsInfo = $"Ln: {line.LineNumber}    Col: {CaretOffset- line.Offset}";
+                RaisePropertyChanged("CaretOffset");
+            }
+        }
+
+        private string currentCaretStatisticsInfo = "";
+        public string CurrentCaretStatisticsInfo
+        {
+            get { return currentCaretStatisticsInfo; }
+            set
+            {
+                if (currentCaretStatisticsInfo == value)
+                    return;
+                currentCaretStatisticsInfo = value;
+                RaisePropertyChanged("CurrentCaretStatisticsInfo");
+            }
+        }
+                
+        private string documrntStatisticsInfo = "";
+        public string DocumrntStatisticsInfo
+        {
+            get { return documrntStatisticsInfo; }
+            set
+            {
+                if (documrntStatisticsInfo == value)
+                    return;
+                documrntStatisticsInfo = value;
+                RaisePropertyChanged("DocumrntStatisticsInfo");
+            }
+        }
+
         private string editorFont = "Consolas";
         public string EditorFont
         {
@@ -124,7 +193,7 @@ namespace MarkDownEditor.ViewModel
 
         public double ScrollbarPos { get; set; }
 
-        public Dictionary<string,string> MarkDownType => new Dictionary<string, string>()
+        public Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
         {
             { "Markdown", "markdown" },
             { "Markdown_Strict", "markdown_strict"},
@@ -153,8 +222,9 @@ namespace MarkDownEditor.ViewModel
             {
                 SourceCode.Text = "";
                 DocumentPath = null;
-                DocumentTitle = "Untitled";
+                DocumentTitle = Properties.Resources.UntitledTitle;
                 IsModified = false;
+                StatusBarText = "New document created";
             };
 
             if (IsModified)
@@ -163,7 +233,17 @@ namespace MarkDownEditor.ViewModel
                     new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
                 if (ret == MessageDialogResult.Affirmative)
                 {
-
+                    try
+                    {
+                        if (Save() == false)
+                            return;
+                    }
+                    catch (Exception ex)
+                    {
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                        return;
+                    }
+                    CreateNewDoc();
                 }
                 else if (ret == MessageDialogResult.Negative)
                     CreateNewDoc();
@@ -177,8 +257,8 @@ namespace MarkDownEditor.ViewModel
             Action OpenDoc = async () =>
             {
                 var dlg = new OpenFileDialog();
-                dlg.Filter = "";
-                if (dlg.ShowDialog()==true)
+                dlg.Filter = "Markdown Documents|*.md;*.markdown|All Files|*.*";
+                if (dlg.ShowDialog() == true)
                 {
                     StreamReader sr = new StreamReader(dlg.FileName);
                     SourceCode.Text = await sr.ReadToEndAsync();
@@ -189,7 +269,8 @@ namespace MarkDownEditor.ViewModel
                     DocumentPath = dlg.FileName;
                     DocumentTitle = Path.GetFileName(dlg.FileName);
                     IsModified = false;
-                }                
+                    StatusBarText = $"Document \"{dlg.FileName}\" loaded successfully";
+                }
             };
 
             if (IsModified)
@@ -198,7 +279,17 @@ namespace MarkDownEditor.ViewModel
                     new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
                 if (ret == MessageDialogResult.Affirmative)
                 {
-
+                    try
+                    {
+                        if (Save() == false)
+                            return;
+                    }
+                    catch (Exception ex)
+                    {
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                        return;
+                    }
+                    OpenDoc();
                 }
                 else if (ret == MessageDialogResult.Negative)
                     OpenDoc();
@@ -207,15 +298,62 @@ namespace MarkDownEditor.ViewModel
                 OpenDoc();
         });
 
-        public ICommand SaveDocumentCommand => new RelayCommand(() =>
+        public ICommand SaveDocumentCommand => new RelayCommand(async () =>
         {
-
+            try
+            {
+                Save();
+                IsModified = false;
+            }
+            catch (Exception ex)
+            {
+                await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+            }
         });
 
-        public ICommand SaveAsDocumentCommand => new RelayCommand(() =>
+        public ICommand SaveAsDocumentCommand => new RelayCommand(async () =>
         {
-
+            var dlg = new SaveFileDialog();
+            if (dlg.ShowDialog() == true)
+            {
+                try
+                {
+                    SaveDoc2File(dlg.FileName);
+                }
+                catch (Exception ex)
+                {
+                    await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                }
+                DocumentPath = dlg.FileName;
+                DocumentTitle = Path.GetFileName(dlg.FileName);
+                IsModified = false;
+            }
         });
+
+        private bool Save()
+        {
+            if (string.IsNullOrEmpty(DocumentPath))
+            {
+                var dlg = new SaveFileDialog();
+                if (dlg.ShowDialog() == true)
+                    SaveDoc2File(dlg.FileName);
+                else
+                    return false;
+            }
+            else
+            {
+                SaveDoc2File(DocumentPath);
+            }
+            return true;
+        }
+
+        private async void SaveDoc2File(string path)
+        { 
+            StreamWriter sw = new StreamWriter(path);
+            await sw.WriteAsync(SourceCode.Text);
+            sw.Close();
+            StatusBarText = $"Document \"{path}\" saved successfully";
+        }
 
         #endregion
 
@@ -294,28 +432,6 @@ namespace MarkDownEditor.ViewModel
             }
         });
 
-        public ICommand HyperlinkCommand => new RelayCommand<object>(async (obj) =>
-        {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Hyperlink", "Please input an URL",new MetroDialogSettings() { DefaultText = "http://"});
-            if (url != null)
-            {
-                if (editor.SelectionLength == 0)
-                {
-                    var toInsert = $"[{Properties.Resources.EmptyHyperlinkDescription}]({url})";
-                    sourceCode.Insert(editor.SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
-                    editor.SelectionStart += 1;
-                    editor.SelectionLength = Properties.Resources.EmptyHyperlinkDescription.Length;
-                }
-                else
-                {
-                    var toInsert = $"[{editor.SelectedText}]({url})";
-                    sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
-                    editor.SelectionLength = 0;
-                }
-            }
-        });
-
         public ICommand GeneralCodeCommand => new RelayCommand<object>((obj) =>
         {
             var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
@@ -386,12 +502,116 @@ namespace MarkDownEditor.ViewModel
             }
         });
 
+        public ICommand UnorderedListCommand => new RelayCommand<object>((obj) =>
+        {
+            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
+            if (editor.SelectionLength == 0)
+            {
+                SourceCode.Insert(editor.SelectionStart, $"\r\n\r\n- {Properties.Resources.ListItem}\r\n\r\n", AnchorMovementType.BeforeInsertion);
+                editor.SelectionStart += 6;
+                editor.SelectionLength = Properties.Resources.ListItem.Length;
+            }
+            else
+            {
+                if (editor.SelectedText.Contains("\n"))//MultiLine
+                {
+                    
+                }
+                else//SingleLine
+                {
+                    var lineDocument = SourceCode.GetLineByOffset(editor.SelectionStart);
+                    int lineStartOffset = lineDocument.Offset;
+                    if ((editor.SelectionStart - lineStartOffset) >= 2 &&
+                            SourceCode.GetText(editor.SelectionStart - 2, 2) == "- " &&
+                            string.IsNullOrWhiteSpace(SourceCode.GetText(lineStartOffset, editor.SelectionStart - 2 - lineStartOffset)))
+                        SourceCode.Remove(lineStartOffset, editor.SelectionStart- lineStartOffset);
+                    else
+                    {
+                        SourceCode.Replace(editor.SelectionStart, editor.SelectionLength, $"\r\n\r\n- {editor.SelectedText}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
+                    }
+                }
+            }
+        });
+
+        public ICommand OrderedListCommand => new RelayCommand<object>((obj) =>
+        {
+            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
+
+        });
+
+        public ICommand HyperlinkCommand => new RelayCommand<object>(async (obj) =>
+        {
+            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
+            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Hyperlink", "Please input an URL", new MetroDialogSettings() { DefaultText = "http://example.com/ \"Optional Title\"" });
+            if (url != null)
+            {
+                if (editor.SelectionLength == 0)
+                {
+                    var toInsert = $"[{Properties.Resources.EmptyHyperlinkDescription}]({url})";
+                    sourceCode.Insert(editor.SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
+                    editor.SelectionStart += 1;
+                    editor.SelectionLength = Properties.Resources.EmptyHyperlinkDescription.Length;
+                }
+                else
+                {
+                    var toInsert = $"[{editor.SelectedText}]({url})";
+                    sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
+                    editor.SelectionLength = 0;
+                }
+            }
+        });
+
+        public ICommand ImageCommand => new RelayCommand<object>(async (obj) =>
+        {
+            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
+            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Image", "Please input an image URL", new MetroDialogSettings() { DefaultText = "http://example.com/graph.jpg \"Optional Title\"" });
+            if (url != null)
+            {
+                if (editor.SelectionLength == 0)
+                {
+                    var toInsert = $"![{Properties.Resources.EmptyImageDescription}]({url})";
+                    sourceCode.Insert(editor.SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
+                    editor.SelectionStart += 2;
+                    editor.SelectionLength = Properties.Resources.EmptyImageDescription.Length;
+                }
+                else
+                {
+                    var toInsert = $"![{editor.SelectedText}]({url})";
+                    sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
+                    editor.SelectionLength = 0;
+                }
+            }
+        });
+
         public ICommand SeparateLineCommand => new RelayCommand<object>((obj) =>
         {
             var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
             sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, "\r\n\r\n--------\r\n\r\n");
         });
 
+        public ICommand DateStampCommand => new RelayCommand<object>((obj) =>
+        {
+            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
+            sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, DateTime.Now.ToLongDateString());
+        });
+
+        public ICommand TimeStampCommand => new RelayCommand<object>((obj) =>
+        {
+            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
+            sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, DateTime.Now.ToString());
+        });
+
+        #endregion
+
+        #region Preview
+        public ICommand RefreshPreviewCommand => new RelayCommand(() =>
+        {
+            UpdatePreview();
+        });
+        public ICommand ExternalBrowserCommand => new RelayCommand(() =>
+        {
+            Process.Start(previewSourceTempPath);
+        });
         #endregion
 
         private void UpdatePreview()
@@ -408,6 +628,9 @@ namespace MarkDownEditor.ViewModel
             process.WaitForExit();
 
             RaisePropertyChanged("PreviewSource");
+
+            //DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[A-Za-z0-9]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
+            DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[\S]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
         }
     }
 }

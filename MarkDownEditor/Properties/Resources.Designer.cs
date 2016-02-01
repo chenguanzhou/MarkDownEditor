@@ -61,6 +61,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CancelException.
+        /// </summary>
+        internal static string CancelException {
+            get {
+                return ResourceManager.GetString("CancelException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bold Text Area.
         /// </summary>
         internal static string EmptyBoldAreaText {
@@ -97,11 +106,29 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description of the image.
+        /// </summary>
+        internal static string EmptyImageDescription {
+            get {
+                return ResourceManager.GetString("EmptyImageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Italic Text Area.
         /// </summary>
         internal static string EmptyItalicAreaText {
             get {
                 return ResourceManager.GetString("EmptyItalicAreaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List Item.
+        /// </summary>
+        internal static string ListItem {
+            get {
+                return ResourceManager.GetString("ListItem", resourceCulture);
             }
         }
         
