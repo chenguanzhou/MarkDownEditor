@@ -1,15 +1,19 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ICSharpCode.AvalonEdit.Document;
+using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MarkDownEditor.ViewModel
 {
@@ -214,6 +218,19 @@ namespace MarkDownEditor.ViewModel
                 UpdatePreview();
             }
         }
+
+        public class AccentItem
+        {
+            public string Name { get; set; }
+            public Brush ColorBrush { get; set; }
+            public ICommand ChangeAccentCommand => new RelayCommand(() => 
+            {
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
+                var accent = ThemeManager.GetAccent(this.Name);
+                ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+            });
+        }
+        public List<AccentItem> AccentColors { get; set; } = ThemeManager.Accents.Select(s=>new AccentItem() { Name=s.Name,ColorBrush= s.Resources["AccentColorBrush"] as Brush }).ToList();
 
         #region Document Commands
         public ICommand NewDocumentCommand => new RelayCommand(async () =>
