@@ -138,8 +138,14 @@
   <data name="EmptyItalicAreaText" xml:space="preserve">
     <value>Italic Text Area</value>
   </data>
+  <data name="EmptyTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="ListItem" xml:space="preserve">
     <value>List Item</value>
+  </data>
+  <data name="MarkDownFileFilter" xml:space="preserve">
+    <value>"Markdown Documents|*.md;*.markdown|All Files|*.*"</value>
   </data>
   <data name="UntitledTitle" xml:space="preserve">
     <value>Untitled</value>
