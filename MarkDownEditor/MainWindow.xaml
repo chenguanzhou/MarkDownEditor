@@ -358,7 +358,9 @@
                                     </Rectangle>
                                 </Button>
                             </WrapPanel>
-                        <cefSharp:ChromiumWebBrowser Grid.Row="1" x:Name="webBrowser" Focusable="False" Margin="10" Address="{Binding PreviewSource}"></cefSharp:ChromiumWebBrowser>
+                        <local:MvvmChromiumWebBrowser
+                            Grid.Row="1" x:Name="webBrowser" Focusable="False" Margin="10" 
+                            Address="{Binding PreviewSource}" IsBrowserInitialized="{Binding IsBrowserInitialized,Mode=OneWayToSource}"></local:MvvmChromiumWebBrowser>
                     </Grid>
                 </GroupBox>
             </Grid>

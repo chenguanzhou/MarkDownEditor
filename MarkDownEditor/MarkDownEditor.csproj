@@ -112,6 +112,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MvvmChromiumWebBrowser.cs" />
     <Compile Include="MvvmTextEditor.cs" />
     <Compile Include="RequestHandler.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
