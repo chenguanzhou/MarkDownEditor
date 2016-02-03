@@ -19,6 +19,7 @@
     Icon="MarkdownEditorLogo.png"
     MinHeight="300"
     MinWidth="600"
+    Closing="MetroWindow_Closing"
     ShowTitleBar="True"
     WindowState="Maximized"
     GlowBrush="{DynamicResource AccentColorBrush}"

@@ -49,6 +49,13 @@ namespace MarkDownEditor.ViewModel
             CurrentCaretStatisticsInfo = $"Ln: {line.LineNumber}    Col: {CaretOffset - line.Offset}";
         }
 
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            File.Delete(markdownSourceTempPath);
+            File.Delete(previewSourceTempPath);
+        }
+
         private string markdownSourceTempPath = Path.GetTempFileName();
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
@@ -266,6 +273,10 @@ namespace MarkDownEditor.ViewModel
             Action CreateNewDoc = () =>
             {
                 SourceCode = new TextDocument();
+                SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
+                UpdatePreview();
+                SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = true);
+
                 DocumentPath = null;
                 DocumentTitle = Properties.Resources.UntitledTitle;
                 IsModified = false;
@@ -274,7 +285,7 @@ namespace MarkDownEditor.ViewModel
 
             if (IsModified)
             {
-                var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "New Document", "Would you want to save your changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Unsaved Changes", "Would you want to save your changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
                     new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
                 if (ret == MessageDialogResult.Affirmative)
                 {
@@ -339,7 +350,7 @@ namespace MarkDownEditor.ViewModel
 
             if (IsModified)
             {
-                var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "New Document", "Would you want to save your changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Unsaved Changes", "Would you want to save your changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
                     new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
                 if (ret == MessageDialogResult.Affirmative)
                 {
@@ -801,6 +812,28 @@ namespace MarkDownEditor.ViewModel
                 IsModified = false;
                 StatusBarText = $"Document \"{args[1]}\" loaded successfully";
             }
+        }
+
+        public async Task<bool> RequestClosing()
+        {
+            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, $"Unsaved Changes", "Do you want to save changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
+            if (ret == MessageDialogResult.Affirmative)
+            {
+                try
+                {
+                    return !Save();
+                }
+                catch (Exception ex)
+                {
+                    await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                    return true;
+                }
+            }
+            else if (ret == MessageDialogResult.Negative)
+                return false;
+            else
+                return true;
         }
 
         private void UpdatePreview()

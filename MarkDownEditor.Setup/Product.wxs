@@ -65,9 +65,7 @@
         
         <File Id="icudtl.dat" Name="icudtl.dat" Source="$(var.MarkDownEditor_TargetDir)icudtl.dat" />
         
-        <File Id="theme.css" Name="theme.css" Source="$(var.MarkDownEditor_TargetDir)theme.css" />
-        
-                
+        <File Id="theme.css" Name="theme.css" Source="$(var.MarkDownEditor_TargetDir)theme.css" />       
       </Component>
     </ComponentGroup>
   </Fragment>
