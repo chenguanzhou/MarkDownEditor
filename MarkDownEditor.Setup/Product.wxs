@@ -9,13 +9,13 @@
 
     <Feature Id="ProductFeature" Title="MarkDownEditor" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="RegistryFileAssociation" />
     </Feature>
 
     <PropertyRef Id="NETFRAMEWORK45"/>
     <Condition Message="This application requires .NET Framework 4.5"> <![CDATA[Installed OR NETFRAMEWORK45]]> </Condition>
 
-    
-    <UIRef Id="WixUI_Mondo" />
+    <UIRef Id="WixUI_InstallDir" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <UIRef Id="WixUI_ErrorProgressText" />
   </Product>
@@ -25,7 +25,23 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="MarkDownEditor" />
       </Directory>
-    </Directory>    
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="TARGETDIR">
+      <Component Id="RegistryFileAssociation" Guid="{2CA21BE2-DFEF-4D92-B7EF-58D08C696BE9}">
+        <RegistryKey Root="HKCR" Key=".md">
+          <RegistryValue Type="string" Value="markdowneditor" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR" Key=".markdown">
+          <RegistryValue Type="string" Value="markdowneditor" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR" Key="markdowneditor\shell\open\command">
+          <RegistryValue Type="string" Value='"[INSTALLFOLDER]MarkDownEditor.exe" "%1"' />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
   </Fragment>
 
   <Fragment>
