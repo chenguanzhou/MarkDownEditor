@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{9FE27A74-214E-452A-91EA-0E9252E25F36}" Name="MarkDownEditor" Language="1033" Version="1.0.0.0" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+  <Product Id="{41744844-6623-45C6-8239-DF0E8754B588}" Name="MarkDownEditor" Language="1033" Version="0.2.0" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{3729D113-26F9-436F-BAFA-CAF699D0452F}" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade Schedule="afterInstallInitialize"
+      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
+      
+    <!--<Upgrade Id="{3BEF6C34-3A71-4375-9718-52544AF31BC0}">
+      <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
+          Minimum="0.0.0" IncludeMinimum="yes"
+          Maximum="$(var.Version)" IncludeMaximum="no" />
+      <UpgradeVersion OnlyDetect="yes" Property="NEWERFOUND"
+          Minimum="$(var.Version)" IncludeMinimum="no" />
+    </Upgrade>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+      <Custom Action="NewerVersion" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+    </InstallExecuteSequence>
+
+    <CustomAction Id="NewerVersion" Error="A later version of [ProductName] is already installed." />-->
+    
+    
     <MediaTemplate />
 
     <Feature Id="ProductFeature" Title="MarkDownEditor" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="RegistryFileAssociation" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="DesktopFolderShortcut" />
     </Feature>
 
     <PropertyRef Id="NETFRAMEWORK45"/>
@@ -25,7 +46,11 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="MarkDownEditor" />
       </Directory>
-    </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="MarkDownEditor"/>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>    
   </Fragment>
 
   <Fragment>
@@ -45,7 +70,34 @@
   </Fragment>
 
   <Fragment>
-    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">     
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="{7F0D7FDE-25C4-4AA0-9191-EDD3B882D664}">
+
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                    Name="MarkDownEditor"
+                    Description="MarkDownEditor"
+                    Target="[INSTALLFOLDER]MarkDownEditor.exe"
+                    WorkingDirectory="INSTALLFOLDER"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\MarkDownEditor" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+        <Shortcut Id="UninstallProduct"
+                          Name="Uninstall"
+                          Description="Uninstalls MarkDownEditor"
+                          Target="[SystemFolder]msiexec.exe"
+                          Arguments="/x [ProductCode]"/>
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopFolderShortcut" Guid="{65EE8F22-656A-4D71-90F9-CDCAEF560F77}">
+        <Shortcut Id="DesktopShortcut" Directory="DesktopFolder"   Name="MarkDownEditor" Target="[INSTALLFOLDER]MarkDownEditor.exe"  WorkingDirectory="INSTALLFOLDER">
+        </Shortcut>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\MarkDownEditor" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="ProductComponent" Guid="8a576ef8-df40-48f0-93b5-31f757029e1d">
         <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" Source="$(var.MarkDownEditor_TargetDir)ICSharpCode.AvalonEdit.dll" />
         <File Id="CefSharp.BrowserSubprocess.Core.dll" Name="CefSharp.BrowserSubprocess.Core.dll" Source="$(var.MarkDownEditor_TargetDir)CefSharp.BrowserSubprocess.Core.dll" />
@@ -79,8 +131,13 @@
         <File Id="natives_blob.bin" Name="natives_blob.bin" Source="$(var.MarkDownEditor_TargetDir)natives_blob.bin" />
         <File Id="snapshot_blob.bin" Name="snapshot_blob.bin" Source="$(var.MarkDownEditor_TargetDir)snapshot_blob.bin" />
         <File Id="icudtl.dat" Name="icudtl.dat" Source="$(var.MarkDownEditor_TargetDir)icudtl.dat" />
-        <File Id="theme.css" Name="theme.css" Source="$(var.MarkDownEditor_TargetDir)theme.css" />       
-        <File Id="xelatex.template" Name="xelatex.template" Source="$(var.MarkDownEditor_TargetDir)xelatex.template" />       
+        <File Id="theme.css" Name="theme.css" Source="$(var.MarkDownEditor_TargetDir)theme.css" />
+        <File Id="xelatex.template" Name="xelatex.template" Source="$(var.MarkDownEditor_TargetDir)xelatex.template" />
+        <Shortcut Id="UninstallProductInner"
+                          Name="Uninstall"
+                          Description="Uninstalls MarkDownEditor"
+                          Target="[SystemFolder]msiexec.exe"
+                          Arguments="/x [ProductCode]"/>
       </Component>
     </ComponentGroup>
   </Fragment>

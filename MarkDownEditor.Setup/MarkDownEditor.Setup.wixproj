@@ -22,10 +22,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
-    <Compile Include="SourceFileDir\hehe.wxs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MarkDownEditor.Setup.wax" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarkDownEditor\MarkDownEditor.csproj">
@@ -38,6 +34,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixDependencyExtension">
       <HintPath>$(WixExtDir)\WixDependencyExtension.dll</HintPath>
       <Name>WixDependencyExtension</Name>
@@ -58,9 +58,6 @@
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SourceFileDir" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

@@ -45,7 +45,7 @@ namespace MarkDownEditor.ViewModel
 
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
             UpdatePreview();
-            sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = true);
+            sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
 
             var line = SourceCode.GetLineByOffset(CaretOffset);
             CurrentCaretStatisticsInfo = $"Ln: {line.LineNumber}    Col: {CaretOffset - line.Offset}";
@@ -340,7 +340,7 @@ namespace MarkDownEditor.ViewModel
                 SourceCode = new TextDocument();
                 SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
                 UpdatePreview();
-                SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = true);
+                SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
 
                 DocumentPath = null;
                 DocumentTitle = Properties.Resources.UntitledTitle;
@@ -406,7 +406,7 @@ namespace MarkDownEditor.ViewModel
                     SourceCode = new TextDocument(content);
                     SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
                     UpdatePreview();
-                    SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = true);
+                    SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
                     DocumentPath = dlg.FileName;
                     DocumentTitle = Path.GetFileName(dlg.FileName);
                     IsModified = false;
@@ -878,7 +878,7 @@ namespace MarkDownEditor.ViewModel
                 SourceCode = new TextDocument(content);
                 SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
                 UpdatePreview();
-                SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = true);
+                SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
                 DocumentPath = args[1];
                 DocumentTitle = Path.GetFileName(args[1]);
                 IsModified = false;
