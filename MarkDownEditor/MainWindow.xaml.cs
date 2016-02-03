@@ -16,6 +16,7 @@ using MahApps.Metro.Controls;
 using System.Diagnostics;
 using CefSharp;
 using ICSharpCode.AvalonEdit;
+using System.Windows.Threading;
 
 namespace MarkDownEditor
 {

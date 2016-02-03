@@ -124,11 +124,29 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string EmptyTitle {
+            get {
+                return ResourceManager.GetString("EmptyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List Item.
         /// </summary>
         internal static string ListItem {
             get {
                 return ResourceManager.GetString("ListItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Markdown Documents|*.md;*.markdown|All Files|*.*&quot;.
+        /// </summary>
+        internal static string MarkDownFileFilter {
+            get {
+                return ResourceManager.GetString("MarkDownFileFilter", resourceCulture);
             }
         }
         

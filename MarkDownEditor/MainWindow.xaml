@@ -16,24 +16,52 @@
     MetroDialog:DialogParticipation.Register="{Binding}"
     DataContext="{Binding Main,Source={StaticResource Locator}}"
     Title="{Binding Title}"
+    Icon="MarkdownEditorLogo.png"
     MinHeight="300"
     MinWidth="600"
     ShowTitleBar="True"
     WindowState="Maximized"
     GlowBrush="{DynamicResource AccentColorBrush}"
     NonActiveGlowBrush="#CDFF0000">
-    <Controls:MetroWindow.Resources>
+    <Window.Resources>
         <CollectionViewSource x:Key="sysFonts" Source="{x:Static Member=Fonts.SystemFontFamilies}">
             <CollectionViewSource.SortDescriptions>
                 <ComponentModel:SortDescription PropertyName="Source" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-    </Controls:MetroWindow.Resources>
+        <Style x:Key="EditorButton" TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
+            <Setter Property="Width" Value="40"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"></Setter>
+            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"></Setter>
+        </Style>
+    </Window.Resources>
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+
+    <Controls:MetroWindow.InputBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewDocumentCommand}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenDocumentCommand}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveDocumentCommand}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveAsDocumentCommand}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+B" Command="{Binding BoldCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+I" Command="{Binding ItalicCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuoteCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+K" Command="{Binding GeneralCodeCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+U" Command="{Binding UnorderedListCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+Shift+O" Command="{Binding OrderedListCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+H" Command="{Binding TitleCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+L" Command="{Binding HyperlinkCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+G" Command="{Binding ImageCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+R" Command="{Binding SeparateLineCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding DateStampCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+T" Command="{Binding TimeStampCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="F5" Command="{Binding RefreshPreviewCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+        <KeyBinding Gesture="F6" Command="{Binding ExternalBrowserCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
+    </Controls:MetroWindow.InputBindings>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -55,180 +83,239 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Controls:MetroContentControl BorderBrush="Red" BorderThickness="2">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                        <WrapPanel Orientation="Horizontal">
+                            <WrapPanel.Resources>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                                </Style>                                
+                            </WrapPanel.Resources>
+                            <!--<ComboBox MinWidth="100" FontSize="12" ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel></VirtualizingStackPanel>
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem">
+                                <Style.Setters>
+                                    <Setter Property="FontFamily" Value="{Binding}"></Setter>
+                                </Style.Setters>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+                        <Controls:NumericUpDown Height="16" MinWidth="80" FontSize="12" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
+                        </Controls:NumericUpDown>-->
                             <StackPanel Orientation="Horizontal">
-                                <!--<ComboBox MinWidth="100" FontSize="12" ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont}">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel></VirtualizingStackPanel>
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                            <ComboBox.ItemContainerStyle>
-                                <Style TargetType="ComboBoxItem">
-                                    <Style.Setters>
-                                        <Setter Property="FontFamily" Value="{Binding}"></Setter>
-                                    </Style.Setters>
-                                </Style>
-                            </ComboBox.ItemContainerStyle>
-                            </ComboBox>
-                            <Controls:NumericUpDown Height="16" MinWidth="80" FontSize="12" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
-                            </Controls:NumericUpDown>-->
-                                <Button Width="40" Height="40" ToolTip="New" Command="{Binding NewDocumentCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Button ToolTip="New (Ctrl+N)" 
+                                        Command="{Binding NewDocumentCommand}"
+                                        Style="{StaticResource EditorButton}">
                                     <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_page_add}" />
+                                        Visual="{DynamicResource appbar_page_add}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>
-                                <Button Width="40" Height="40" ToolTip="Open" Command="{Binding OpenDocumentCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Button ToolTip="Open (Ctrl+O)" 
+                                        Command="{Binding OpenDocumentCommand}"
+                                        Style="{StaticResource EditorButton}">
                                     <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_folder_open}" />
+                                        Visual="{DynamicResource appbar_folder_open}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>
-                                <Button Width="40" Height="40" ToolTip="Save" Command="{Binding SaveDocumentCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Button ToolTip="Save (Ctrl+S)" 
+                                        Command="{Binding SaveDocumentCommand}"
+                                        Style="{DynamicResource EditorButton}" >
                                     <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_save}" />
+                                        Visual="{DynamicResource appbar_save}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>
-                                <Button Width="40" Height="40" ToolTip="Save As" Command="{Binding SaveAsDocumentCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                <Button ToolTip="Save As (Ctrl+Shift+S)" 
+                                        Command="{Binding SaveAsDocumentCommand}"
+                                        Style="{DynamicResource EditorButton}" >
                                     <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_disk_download}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Separator Width="20" Background="Transparent"></Separator>
-                                <Button Width="40" Height="40" ToolTip="Bold" Command="{Binding BoldCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_text_bold}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Button Width="40" Height="40" ToolTip="Italic" Command="{Binding ItalicCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_text_italic}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Button Width="40" Height="40" ToolTip="Quote" Command="{Binding QuoteCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_quote_left}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>                                
-                                <Button Width="40" Height="40" ToolTip="Code" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding GeneralCodeCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_code_xml}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Separator Width="20" Background="Transparent"></Separator>
-                                <Button Width="40" Height="40" ToolTip="Unordered List" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding UnorderedListCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_list}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Button Width="40" Height="40" ToolTip="Ordered List" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding OrderedListCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_sort_numeric}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Separator Width="20" Background="Transparent"></Separator>
-                                <Button Width="40" Height="40" ToolTip="Hyperlink" Command="{Binding HyperlinkCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_link}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Button Width="40" Height="40" ToolTip="Image" Command="{Binding ImageCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_image}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Separator Width="20" Background="Transparent"></Separator>
-                                <Button Width="40" Height="40" ToolTip="Horizontal Rule" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding SeparateLineCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_minus}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Button Width="40" Height="40" ToolTip="Date Stamp" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding DateStampCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_calendar_14}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </Button>
-                                <Button Width="40" Height="40" ToolTip="Time Stamp" 
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Command="{Binding TimeStampCommand}" CommandParameter="{Binding ElementName=editor}"
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
-                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform"
-                                         Visual="{DynamicResource appbar_clock}" />
+                                        Visual="{DynamicResource appbar_disk_download}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>
                             </StackPanel>
-                        </ScrollViewer>
+                            <StackPanel Orientation="Horizontal">
+                                <Button ToolTip="Undo (Ctrl+Z)" 
+                                        Command="{Binding UndoCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        IsEnabled="{Binding CanUndo}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_undo}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Redo (Ctrl+Y)" 
+                                        Command="{Binding RedoCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        IsEnabled="{Binding CanRedo}"
+                                        Style="{DynamicResource EditorButton}">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_redo}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button ToolTip="Bold (Ctrl+B)" 
+                                        Command="{Binding BoldCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_text_bold}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Italic (Ctrl+I)" 
+                                        Command="{Binding ItalicCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_text_italic}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Quote (Ctrl+Q)" 
+                                        Command="{Binding QuoteCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_quote_left}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Code (Ctrl+K)" 
+                                        Command="{Binding GeneralCodeCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_code_xml}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button ToolTip="Unordered List (Ctrl+U)" 
+                                        Command="{Binding UnorderedListCommand}"
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_list}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Ordered List (Ctrl+Shift+O)" 
+                                        Command="{Binding OrderedListCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                Style="{DynamicResource EditorButton}">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_sort_numeric}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Title (Ctrl+H)" 
+                                        Command="{Binding TitleCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_billboard}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button ToolTip="Hyperlink (Ctrl+L)" 
+                                        Command="{Binding HyperlinkCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                Style="{DynamicResource EditorButton}" 
+                                BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_link}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Image (Ctrl+G)" 
+                                        Command="{Binding ImageCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                Style="{DynamicResource EditorButton}" 
+                                BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_image}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button ToolTip="Horizontal Rule (Ctrl+R)" 
+                                        Command="{Binding SeparateLineCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}">
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_minus}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Date Stamp (Ctrl++Shift+D)" 
+                                        Command="{Binding DateStampCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_calendar_14}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                                <Button ToolTip="Time Stamp (Ctrl+T)" 
+                                        Command="{Binding TimeStampCommand}" 
+                                        CommandParameter="{Binding ElementName=editor}"
+                                        Style="{DynamicResource EditorButton}" >
+                                    <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                        Visual="{DynamicResource appbar_clock}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Button>
+                            </StackPanel>
+                        </WrapPanel>
                     </Controls:MetroContentControl>
                     <local:MvvmTextEditor
                         x:Name="editor"
@@ -236,6 +323,8 @@
                         SyntaxHighlighting="MarkDown" 
                         Document="{Binding SourceCode}"
                         CaretOffset="{Binding CaretOffset,Mode=TwoWay}"
+                        CanUndo="{Binding CanUndo,Mode=OneWayToSource}"
+                        CanRedo="{Binding CanRedo,Mode=OneWayToSource}"
                         FontFamily="{Binding EditorFont}" 
                         FontSize="{Binding EditorFontSize}"
                         ScrollViewer.ScrollChanged="editor_ScrollChanged">
@@ -249,11 +338,9 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                            <StackPanel Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
-                                <Button Width="40" Height="40" ToolTip="Refresh" Command="{Binding RefreshPreviewCommand}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                            <WrapPanel Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button ToolTip="Refresh (F5)" Command="{Binding RefreshPreviewCommand}"
+                                    Style="{DynamicResource EditorButton}" >
                                     <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
@@ -261,9 +348,8 @@
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>
-                                <Button Width="40" Height="40" ToolTip="Open In External Browser" Command="{Binding ExternalBrowserCommand}"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                            <Button ToolTip="Open In External Browser (F6)" Command="{Binding ExternalBrowserCommand}"
+                                    Style="{DynamicResource EditorButton}" >
                                     <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
@@ -271,9 +357,10 @@
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>
-                            </StackPanel>
-                        </ScrollViewer>
-                        <cefSharp:ChromiumWebBrowser Grid.Row="1" x:Name="webBrowser" Focusable="False" Margin="10" Address="{Binding PreviewSource}"></cefSharp:ChromiumWebBrowser>
+                            </WrapPanel>
+                        <local:MvvmChromiumWebBrowser
+                            Grid.Row="1" x:Name="webBrowser" Focusable="False" Margin="10" 
+                            Address="{Binding PreviewSource}" IsBrowserInitialized="{Binding IsBrowserInitialized,Mode=OneWayToSource}"></local:MvvmChromiumWebBrowser>
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -302,10 +389,10 @@
 
             <StatusBarItem Grid.Column="2" Content="{Binding CurrentCaretStatisticsInfo}">
             </StatusBarItem>
-            <Separator Grid.Column="3"/>
+            <Separator Grid.Column="3" Margin="10,0,10,0"/>
             <StatusBarItem Grid.Column="4" Content="{Binding DocumrntStatisticsInfo}">
             </StatusBarItem>
-            <Separator Grid.Column="5"/>
+            <Separator Grid.Column="5" Margin="10,0,10,0"/>
             <StatusBarItem Grid.Column="6">
                 <ComboBox ItemsSource="{Binding MarkDownType.Keys}" FontSize="14" BorderThickness="0"
                           SelectedItem="{Binding CurrentMarkdownTypeText}"
