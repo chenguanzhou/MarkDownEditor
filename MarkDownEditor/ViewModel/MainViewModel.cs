@@ -449,10 +449,14 @@ namespace MarkDownEditor.ViewModel
             get { return canUndo; }
             set
             {
+                if (canUndo == value)
+                    return;
                 canUndo = value;
+                IsModified = canUndo;
                 RaisePropertyChanged("CanUndo");
             }
         }
+
         public ICommand UndoCommand => new RelayCommand<object>((obj) =>
         {
             var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
@@ -465,6 +469,8 @@ namespace MarkDownEditor.ViewModel
             get { return canRedo; }
             set
             {
+                if (canRedo == value)
+                    return;
                 canRedo = value;
                 RaisePropertyChanged("CanRedo");
             }
