@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight.Command;
 using ICSharpCode.AvalonEdit.Document;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
+using MarkDownEditor.Model;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -230,12 +232,75 @@ namespace MarkDownEditor.ViewModel
 
         public double ScrollbarPos { get; set; }
 
+        public class ExportFileType
+        {
+            public ExportFileType(string sourceCodePath)
+            {
+                SourceCodePath = sourceCodePath;
+            }
+            public string Name { get; set; }            
+            public string Filter { get; set; }
+            public string ToolTip { get; set; }
+            public string SourceCodePath { get; set; }
+
+            public ICommand ExportCommand => new RelayCommand(async () =>
+            {
+                var context = ServiceLocator.Current.GetInstance<MainViewModel>();
+                if (DocumentExporter.CanExport(Name) == false)
+                {
+                    await DialogCoordinator.Instance.ShowMessageAsync(context, 
+                        "Error", $"File of {Name} can't be exported in this version!");
+                    return;
+                }
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.Title = "Export To " + "Name";
+                dlg.FileName = context.DocumentPath==null?context.DocumentTitle
+                        :Path.GetFileNameWithoutExtension(context.DocumentPath);
+                dlg.Filter = Filter;
+                if (dlg.ShowDialog() == true)
+                {
+                    var progress = await DialogCoordinator.Instance.ShowProgressAsync(context, "Export", "Exporting");
+                    progress.SetIndeterminate();
+                    try
+                    {
+                        DocumentExporter.Export(Name, context.CurrentMarkdownTypeText, SourceCodePath, dlg.FileName);
+                        await progress.CloseAsync();
+                        var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
+                            "Completed", $"Export file :\"{dlg.FileName}\" successfully!\nOpen it right now?",
+                            MessageDialogStyle.AffirmativeAndNegative,new MetroDialogSettings() { AffirmativeButtonText="Open",
+                            NegativeButtonText="Cancel"});
+                        if (ret == MessageDialogResult.Affirmative)
+                        {
+                            Process.Start(dlg.FileName);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        await progress.CloseAsync();
+                        await DialogCoordinator.Instance.ShowMessageAsync(context,
+                            "Error", $"Failed to export!\nDetail: {ex.Message}");
+                    }
+                }
+            });
+        }
+
+        public List<ExportFileType> ExportFileTypes => new List<ExportFileType>()
+        {
+            new ExportFileType(markdownSourceTempPath) {Name="Plain Html", ToolTip=Properties.Resources.TypePlainHtmlToolTip, Filter=Properties.Resources.TypePlainHtmlFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="Html" , ToolTip=Properties.Resources.TypeHtmlToolTip, Filter=Properties.Resources.TypeHtmlFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="RTF" , ToolTip=Properties.Resources.TypeRTFFilter, Filter=Properties.Resources.TypeRTFFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="Docx" , ToolTip=Properties.Resources.TypeDocxToolTip, Filter=Properties.Resources.TypeDocxFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="Epub" , ToolTip=Properties.Resources.TypeEpubToolTip, Filter=Properties.Resources.TypeEpubFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter }
+        };
+
         public Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
         {
             { "Markdown", "markdown" },
-            { "Markdown_Strict", "markdown_strict"},
-            { "Markdown_Github", "markdown_github" },
-            { "Markdown_mmd", "markdown_mmd" }
+            { "Strict Markdown", "markdown_strict"},
+            { "GitHub Flavored Markdown", "markdown_github" },
+            { "PHP Markdown Extra", "markdown_mmd" },
+            { "MultiMarkdown", "markdown_mmd" }
         };
 
         private string currentMarkdownTypeText = "Markdown";
@@ -312,10 +377,11 @@ namespace MarkDownEditor.ViewModel
         {
             try
             {
-                StreamReader sr = new StreamReader(path);
+                var enc = SimpleHelpers.FileEncoding.DetectFileEncoding(path, System.Text.Encoding.UTF8);
+                StreamReader sr = new StreamReader(path, enc);
                 var content = await sr.ReadToEndAsync();
                 sr.Close();
-                return content;             
+                return content;
             }
             catch(Exception ex)
             {

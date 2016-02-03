@@ -43,7 +43,8 @@
         <File Id="GalaSoft.MvvmLight.Extras.dll" Name="GalaSoft.MvvmLight.Extras.dll" Source="$(var.MarkDownEditor_TargetDir)GalaSoft.MvvmLight.Extras.dll" />
         <File Id="GalaSoft.MvvmLight.Platform.dll" Name="GalaSoft.MvvmLight.Platform.dll" Source="$(var.MarkDownEditor_TargetDir)GalaSoft.MvvmLight.Platform.dll" />
         <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.MarkDownEditor_TargetDir)System.Windows.Interactivity.dll" />
-        
+        <File Id="Ude.dll" Name="Ude.dll" Source="$(var.MarkDownEditor_TargetDir)Ude.dll" />
+
         <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.MarkDownEditor_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
         <File Id="libcef.dll" Name="libcef.dll" Source="$(var.MarkDownEditor_TargetDir)libcef.dll" />
         <File Id="libEGL.dll" Name="libEGL.dll" Source="$(var.MarkDownEditor_TargetDir)libEGL.dll" />
@@ -59,13 +60,11 @@
         <File Id="cef_100_percent.pak" Name="cef_100_percent.pak" Source="$(var.MarkDownEditor_TargetDir)cef_100_percent.pak" />
         <File Id="cef_200_percent.pak" Name="cef_200_percent.pak" Source="$(var.MarkDownEditor_TargetDir)cef_200_percent.pak" />
         <File Id="cef_extensions.pak" Name="cef_extensions.pak" Source="$(var.MarkDownEditor_TargetDir)cef_extensions.pak" />
-
         <File Id="natives_blob.bin" Name="natives_blob.bin" Source="$(var.MarkDownEditor_TargetDir)natives_blob.bin" />
         <File Id="snapshot_blob.bin" Name="snapshot_blob.bin" Source="$(var.MarkDownEditor_TargetDir)snapshot_blob.bin" />
-        
         <File Id="icudtl.dat" Name="icudtl.dat" Source="$(var.MarkDownEditor_TargetDir)icudtl.dat" />
-        
         <File Id="theme.css" Name="theme.css" Source="$(var.MarkDownEditor_TargetDir)theme.css" />       
+        <File Id="xelatex.template" Name="xelatex.template" Source="$(var.MarkDownEditor_TargetDir)xelatex.template" />       
       </Component>
     </ComponentGroup>
   </Fragment>

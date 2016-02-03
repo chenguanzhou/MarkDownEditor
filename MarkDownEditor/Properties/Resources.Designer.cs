@@ -88,15 +88,6 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;html&gt;&lt;head&gt;&lt;meta http-equiv=&quot;&quot;Content-Type&quot;&quot; content=&quot;&quot;text/html; charset=UTF-8&quot;&quot;&gt;&lt;style&gt;body {overflow-y: hidden;}v\:* {behavior:url(#default#VML);}o\:* {behavior:url(#default#VML);}w\:* {behavior:url(#default#VML);}.shape {behavior:url(#default#VML);}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;.
-        /// </summary>
-        internal static string EmptyHTML {
-            get {
-                return ResourceManager.GetString("EmptyHTML", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Description of the link.
         /// </summary>
         internal static string EmptyHyperlinkDescription {
@@ -142,11 +133,119 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Markdown Documents|*.md;*.markdown|All Files|*.*&quot;.
+        ///   Looks up a localized string similar to Markdown Documents|*.md;*.markdown|All Files|*.*.
         /// </summary>
         internal static string MarkDownFileFilter {
             get {
                 return ResourceManager.GetString("MarkDownFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Word|*.docx.
+        /// </summary>
+        internal static string TypeDocxFilter {
+            get {
+                return ResourceManager.GetString("TypeDocxFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Word 2007-2016 Document Format.
+        /// </summary>
+        internal static string TypeDocxToolTip {
+            get {
+                return ResourceManager.GetString("TypeDocxToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Electronic Publication|*.epub.
+        /// </summary>
+        internal static string TypeEpubFilter {
+            get {
+                return ResourceManager.GetString("TypeEpubFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Electronic Publication Format.
+        /// </summary>
+        internal static string TypeEpubToolTip {
+            get {
+                return ResourceManager.GetString("TypeEpubToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML Web Page|*.html.
+        /// </summary>
+        internal static string TypeHtmlFilter {
+            get {
+                return ResourceManager.GetString("TypeHtmlFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HyperText Markup Language.
+        /// </summary>
+        internal static string TypeHtmlToolTip {
+            get {
+                return ResourceManager.GetString("TypeHtmlToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LATEX Document|*.tex.
+        /// </summary>
+        internal static string TypeLatexFilter {
+            get {
+                return ResourceManager.GetString("TypeLatexFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We suggest to compile exported tex files using XeLatex command if CJK characters exist in document.
+        /// </summary>
+        internal static string TypeLatexToolTip {
+            get {
+                return ResourceManager.GetString("TypeLatexToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plain HTML Web Page|*.html.
+        /// </summary>
+        internal static string TypePlainHtmlFilter {
+            get {
+                return ResourceManager.GetString("TypePlainHtmlFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HyperText Markup Language without any css.
+        /// </summary>
+        internal static string TypePlainHtmlToolTip {
+            get {
+                return ResourceManager.GetString("TypePlainHtmlToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rich Text Format|*.rtf.
+        /// </summary>
+        internal static string TypeRTFFilter {
+            get {
+                return ResourceManager.GetString("TypeRTFFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rich Text Format.
+        /// </summary>
+        internal static string TypeRTFTip {
+            get {
+                return ResourceManager.GetString("TypeRTFTip", resourceCulture);
             }
         }
         

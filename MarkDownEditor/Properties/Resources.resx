@@ -126,9 +126,6 @@
   <data name="EmptyCode" xml:space="preserve">
     <value>Code</value>
   </data>
-  <data name="EmptyHTML" xml:space="preserve">
-    <value>&lt;html&gt;&lt;head&gt;&lt;meta http-equiv=""Content-Type"" content=""text/html; charset=UTF-8""&gt;&lt;style&gt;body {overflow-y: hidden;}v\:* {behavior:url(#default#VML);}o\:* {behavior:url(#default#VML);}w\:* {behavior:url(#default#VML);}.shape {behavior:url(#default#VML);}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;</value>
-  </data>
   <data name="EmptyHyperlinkDescription" xml:space="preserve">
     <value>Description of the link</value>
   </data>
@@ -145,7 +142,43 @@
     <value>List Item</value>
   </data>
   <data name="MarkDownFileFilter" xml:space="preserve">
-    <value>"Markdown Documents|*.md;*.markdown|All Files|*.*"</value>
+    <value>Markdown Documents|*.md;*.markdown|All Files|*.*</value>
+  </data>
+  <data name="TypeDocxFilter" xml:space="preserve">
+    <value>Microsoft Word|*.docx</value>
+  </data>
+  <data name="TypeDocxToolTip" xml:space="preserve">
+    <value>Microsoft Word 2007-2016 Document Format</value>
+  </data>
+  <data name="TypeEpubFilter" xml:space="preserve">
+    <value>Electronic Publication|*.epub</value>
+  </data>
+  <data name="TypeEpubToolTip" xml:space="preserve">
+    <value>Electronic Publication Format</value>
+  </data>
+  <data name="TypeHtmlFilter" xml:space="preserve">
+    <value>HTML Web Page|*.html</value>
+  </data>
+  <data name="TypeHtmlToolTip" xml:space="preserve">
+    <value>HyperText Markup Language</value>
+  </data>
+  <data name="TypeLatexFilter" xml:space="preserve">
+    <value>LATEX Document|*.tex</value>
+  </data>
+  <data name="TypeLatexToolTip" xml:space="preserve">
+    <value>We suggest to compile exported tex files using XeLatex command if CJK characters exist in document</value>
+  </data>
+  <data name="TypePlainHtmlFilter" xml:space="preserve">
+    <value>Plain HTML Web Page|*.html</value>
+  </data>
+  <data name="TypePlainHtmlToolTip" xml:space="preserve">
+    <value>HyperText Markup Language without any css</value>
+  </data>
+  <data name="TypeRTFFilter" xml:space="preserve">
+    <value>Rich Text Format|*.rtf</value>
+  </data>
+  <data name="TypeRTFTip" xml:space="preserve">
+    <value>Rich Text Format</value>
   </data>
   <data name="UntitledTitle" xml:space="preserve">
     <value>Untitled</value>
