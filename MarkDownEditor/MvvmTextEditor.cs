@@ -21,7 +21,7 @@ namespace MarkDownEditor
         public MvvmTextEditor()
         {
             TextArea.SelectionChanged += TextArea_SelectionChanged;
-            TextArea.Caret.PositionChanged += Caret_PositionChanged;
+            TextArea.Caret.PositionChanged += Caret_PositionChanged;            
         }
 
         private void Caret_PositionChanged(object sender, EventArgs e)
@@ -37,45 +37,6 @@ namespace MarkDownEditor
             this.SelectionStart = SelectionStart;
             this.SelectionLength = SelectionLength;
         }
-
-        #region Text.
-        /// <summary>
-        /// Dependancy property for the editor text property binding.
-        /// </summary>
-        public static readonly DependencyProperty TextProperty =
-             DependencyProperty.Register("Text", typeof(string), typeof(MvvmTextEditor),
-             new PropertyMetadata((obj, args) =>
-             {
-                 MvvmTextEditor target = (MvvmTextEditor)obj;
-                 target.Text = (string)args.NewValue;
-             }));
-
-        /// <summary>
-        /// Provide access to the Text.
-        /// </summary>
-        public new string Text
-        {
-            get { return base.Text; }
-            set { base.Text = value; }
-        }
-
-        /// <summary>
-        /// Return the current text length.
-        /// </summary>
-        public int Length
-        {
-            get { return base.Text.Length; }
-        }
-
-        /// <summary>
-        /// Override of OnTextChanged event.
-        /// </summary>
-        protected override void OnTextChanged(EventArgs e)
-        {
-            RaisePropertyChanged("Length");
-            base.OnTextChanged(e);
-        }
-        #endregion // Text.
 
         #region Caret Offset.
         /// <summary>
@@ -141,6 +102,50 @@ namespace MarkDownEditor
             set { SetValue(SelectionStartProperty, value); }
         }
         #endregion // Selection.
+
+
+        #region Undo/Redo.
+        /// <summary>
+        /// Override of OnTextChanged event.
+        /// </summary>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            SetValue(CanUndoProperty, CanUndo);
+            SetValue(CanRedoProperty, CanRedo);
+            base.OnTextChanged(e);
+        }
+
+        /// <summary>
+        /// DependencyProperty for the TextEditor CanUndo property. 
+        /// </summary>
+        public static readonly DependencyProperty CanUndoProperty =
+             DependencyProperty.Register("CanUndo", typeof(bool), typeof(MvvmTextEditor));
+
+        /// <summary>
+        /// Access to the CanUndo property.
+        /// </summary>
+        public new bool CanUndo
+        {
+            get { return base.CanUndo; }
+            set {  }
+        }
+
+        /// <summary>
+        /// DependencyProperty for the TextEditor CanUndo property. 
+        /// </summary>
+        public static readonly DependencyProperty CanRedoProperty =
+             DependencyProperty.Register("CanRedo", typeof(bool), typeof(MvvmTextEditor));
+
+        /// <summary>
+        /// Access to the CanUndo property.
+        /// </summary>
+        public new bool CanRedo
+        {
+            get { return base.CanRedo; }
+            set { }
+        }
+        #endregion // Undo/Redo.
+
 
         /// <summary>
         /// Implement the INotifyPropertyChanged event handler.
