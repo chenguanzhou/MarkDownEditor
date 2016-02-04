@@ -168,6 +168,12 @@
   <data name="TypeLatexToolTip" xml:space="preserve">
     <value>We suggest to compile exported tex files using XeLatex command if CJK characters exist in document</value>
   </data>
+  <data name="TypePdfFilter" xml:space="preserve">
+    <value>Portable Document Format|*.pdf</value>
+  </data>
+  <data name="TypePdfToolTip" xml:space="preserve">
+    <value>Portable Document Format</value>
+  </data>
   <data name="TypePlainHtmlFilter" xml:space="preserve">
     <value>Plain HTML Web Page|*.html</value>
   </data>

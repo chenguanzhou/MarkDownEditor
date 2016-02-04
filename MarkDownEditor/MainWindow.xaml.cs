@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using Microsoft.Practices.ServiceLocation;
 using MarkDownEditor.ViewModel;
 using MahApps.Metro;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace MarkDownEditor
 {
@@ -106,6 +107,7 @@ namespace MarkDownEditor
                     oldWindowState = metroWindow.WindowState;
                     metroWindow.WindowState = WindowState.Maximized;
                     metroWindow.UseNoneWindowStyle = true;
+                    metroWindow.ShowTitleBar = false;
                     metroWindow.IgnoreTaskbarOnMaximize = true;
                 }
                 else

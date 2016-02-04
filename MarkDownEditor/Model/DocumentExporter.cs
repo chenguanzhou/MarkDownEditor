@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace MarkDownEditor.Model
                 { "RTF", new RFTExporter()},
                 { "Docx", new DocxExporter()},
                 { "Epub", new EpubExporter()},
-                { "Latex", new LatexExporter()}
+                { "Latex", new LatexExporter()},
+                { "PDF", new PdfExporter()}
             };
 
         static public bool CanExport(string typeName) 
@@ -110,6 +112,29 @@ namespace MarkDownEditor.Model
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
+        }
+    }
+
+    public class PdfExporter : IDocumentExporter
+    {
+        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        {
+            var tmpFilePath = Path.GetTempFileName()+".html";
+            Process process = new Process();
+            process.StartInfo.FileName = "pandoc";
+            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -H theme.css -o \"{tmpFilePath}\"";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            process.WaitForExit();
+
+            process = new Process();
+            process.StartInfo.FileName = "wkhtmltopdf";
+            process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            process.WaitForExit();
+
+            File.Delete(tmpFilePath);
         }
     }
 }

@@ -17,8 +17,8 @@
     DataContext="{Binding Main,Source={StaticResource Locator}}"
     Title="{Binding Title}"
     Icon="MarkdownEditorLogo.png"
-    MinHeight="300"
-    MinWidth="600"
+    MinHeight="500"
+    MinWidth="700"
     Closing="MetroWindow_Closing"
     ShowTitleBar="True"
     WindowState="Maximized"
@@ -59,6 +59,15 @@
                             Value="{DynamicResource MetroCircleButtonFocusVisual}" />
             <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"></Setter>
             <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"></Setter>
+        </Style>
+        <Style x:Key="SettingKeyStyle" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="FontWeight" Value="Normal"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="0,0,0,5"></Setter>
+            <Setter Property="Opacity" Value="0.65"></Setter>
+            <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}"></Setter>
+            <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}"></Setter>
         </Style>
     </Window.Resources>
 
@@ -104,11 +113,11 @@
                     <ColumnDefinition Width="{Binding PreviewWidth}"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <GroupBox Grid.Column="0" Header="MarkDown">
-                    <Grid>
+
+                    <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Controls:MetroContentControl BorderBrush="Red" BorderThickness="2">
@@ -119,22 +128,6 @@
                                         <Setter Property="Orientation" Value="Horizontal"></Setter>
                                     </Style>
                                 </WrapPanel.Resources>
-                                <!--<ComboBox MinWidth="100" FontSize="12" ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont}">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel></VirtualizingStackPanel>
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                            <ComboBox.ItemContainerStyle>
-                                <Style TargetType="ComboBoxItem">
-                                    <Style.Setters>
-                                        <Setter Property="FontFamily" Value="{Binding}"></Setter>
-                                    </Style.Setters>
-                                </Style>
-                            </ComboBox.ItemContainerStyle>
-                            </ComboBox>
-                            <Controls:NumericUpDown Height="16" MinWidth="80" FontSize="12" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
-                            </Controls:NumericUpDown>-->
                                 <StackPanel>
                                     <Button ToolTip="New (Ctrl+N)" 
                                             Command="{Binding NewDocumentCommand}"
@@ -357,26 +350,21 @@
                             CanUndo="{Binding CanUndo,Mode=OneWayToSource}"
                             CanRedo="{Binding CanRedo,Mode=OneWayToSource}"
                             WordWrap="{Binding WordWrap}"
+                            LineNumbersForeground="{DynamicResource AccentColorBrush}"
                             FontFamily="{Binding EditorFont}"
                             FontSize="{Binding EditorFontSize}"
                             ScrollViewer.ScrollChanged="editor_ScrollChanged">
                         </local:MvvmTextEditor>
-                        <Border Grid.Row="2" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"></Border>
-                        <Grid Grid.Row="3">
-                            <ToolBarTray Margin="0,5,0,0" IsLocked="True">
-                                <ToolBar>
-                                    <ToolBar.Resources>
-                                        <Style TargetType="StackPanel">
-                                            <Setter Property="Margin" Value="3"></Setter>
-                                            <Setter Property="Orientation" Value="Horizontal"></Setter>
-                                        </Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Margin" Value="3"></Setter>
-                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                            <Setter Property="FontSize" Value="14"></Setter>
-                                        </Style>
-                                    </ToolBar.Resources>
-                                    <Controls:SplitButton Margin="5" MinWidth="100"  FontSize="14" ItemsSource="{Binding Source={StaticResource sysFonts}}" DisplayMemberPath="" SelectedItem="{Binding EditorFont,Mode=TwoWay}">
+                        <Expander Grid.Row="2" Header="Settings" ExpandDirection="Up">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel.Resources>
+                                    <Style TargetType="DockPanel">
+                                        <Setter Property="Margin" Value="5"></Setter>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <DockPanel>
+                                    <TextBlock Text="Font" Style="{StaticResource SettingKeyStyle}"/>
+                                    <Controls:SplitButton DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Width="200" FontSize="16" ItemsSource="{Binding Source={StaticResource sysFonts}}" DisplayMemberPath="" SelectedItem="{Binding EditorFont,Mode=TwoWay}">
                                         <Controls:SplitButton.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <VirtualizingStackPanel></VirtualizingStackPanel>
@@ -390,18 +378,26 @@
                                             </Style>
                                         </Controls:SplitButton.ItemContainerStyle>
                                     </Controls:SplitButton>
-                                    <Controls:NumericUpDown Margin="5" MinWidth="80" FontSize="16" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Font Size" Style="{StaticResource SettingKeyStyle}"/>
+                                    <Controls:NumericUpDown DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Width="200" FontSize="16" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
                                         <Controls:NumericUpDown.Style>
                                             <Style></Style>
                                         </Controls:NumericUpDown.Style>
                                     </Controls:NumericUpDown>
-                                </ToolBar>
-                                <ToolBar>
-                                    <Controls:ToggleSwitch Margin="5" IsChecked="{Binding WordWrap}" OnLabel="Text Wrap" OffLabel="No Wrap"></Controls:ToggleSwitch>
-                                    <Controls:ToggleSwitch Margin="5" IsChecked="{Binding ShowLineNumbers}" OnLabel="Show Line Numbers" OffLabel="Show Line Numbers"></Controls:ToggleSwitch>
-                                </ToolBar>
-                            </ToolBarTray>
-                        </Grid>
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Word Wrap" Style="{StaticResource SettingKeyStyle}"/>
+                                    <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding WordWrap}"></Controls:ToggleSwitch>
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Show Line Numbers" Style="{StaticResource SettingKeyStyle}"/>
+                                    <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding ShowLineNumbers}"></Controls:ToggleSwitch>
+                                </DockPanel>
+                            </StackPanel>
+                        </Expander>
+
                     </Grid>
                 </GroupBox>
                 <Grid Grid.Column="1">
@@ -491,18 +487,18 @@
                     </GroupBox>
                 </Grid>
             </Grid>
-            <Border Margin="30">
+            <Border Margin="35">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="ExitFullScreenButton" Grid.Row="1" Grid.Column="1" FontSize="25" Padding="10" BorderThickness="5" Opacity="0.6" 
+                    <Button x:Name="ExitFullScreenButton" Grid.Row="0" Grid.Column="1" FontSize="25" Padding="10" BorderThickness="5" Opacity="0.6" 
                             Content="Exit Full Screen" Click="ExitFullScreenButton_Click"
                             Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen,Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
                 </Grid>

@@ -2,29 +2,13 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{41744844-6623-45C6-8239-DF0E8754B588}" Name="MarkDownEditor" Language="1033" Version="0.2.0" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+  <Product Id="{41744844-6623-45C6-8239-DF0E8754B588}" Name="MarkDownEditor" Language="1033" Version="0.2.1" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
     <Package Id="{3729D113-26F9-436F-BAFA-CAF699D0452F}" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
-      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
-      
-    <!--<Upgrade Id="{3BEF6C34-3A71-4375-9718-52544AF31BC0}">
-      <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
-          Minimum="0.0.0" IncludeMinimum="yes"
-          Maximum="$(var.Version)" IncludeMaximum="no" />
-      <UpgradeVersion OnlyDetect="yes" Property="NEWERFOUND"
-          Minimum="$(var.Version)" IncludeMinimum="no" />
-    </Upgrade>
-
-    <InstallExecuteSequence>
-      <RemoveExistingProducts After="InstallInitialize" />
-      <Custom Action="NewerVersion" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
-    </InstallExecuteSequence>
-
-    <CustomAction Id="NewerVersion" Error="A later version of [ProductName] is already installed." />-->
+      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>   
     
-    
-    <MediaTemplate />
+    <MediaTemplate EmbedCab="yes"/>
 
     <Feature Id="ProductFeature" Title="MarkDownEditor" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
@@ -123,6 +107,7 @@
         <File Id="MarkDownEditor.exe.config" Name="MarkDownEditor.exe.config" Source="$(var.MarkDownEditor_TargetDir)MarkDownEditor.exe.config" />
         <File Id="CefSharp.BrowserSubprocess.exe" Name="CefSharp.BrowserSubprocess.exe" Source="$(var.MarkDownEditor_TargetDir)CefSharp.BrowserSubprocess.exe" />
         <File Id="pandoc.exe" Name="pandoc.exe" Source="$(var.MarkDownEditor_TargetDir)pandoc.exe" />
+        <File Id="wkhtmltopdf.exe" Name="wkhtmltopdf.exe" Source="$(var.MarkDownEditor_TargetDir)wkhtmltopdf.exe" />
 
         <File Id="cef.pak" Name="cef.pak" Source="$(var.MarkDownEditor_TargetDir)cef.pak" />
         <File Id="cef_100_percent.pak" Name="cef_100_percent.pak" Source="$(var.MarkDownEditor_TargetDir)cef_100_percent.pak" />

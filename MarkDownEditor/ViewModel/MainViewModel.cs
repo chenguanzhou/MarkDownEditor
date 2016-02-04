@@ -345,7 +345,9 @@ namespace MarkDownEditor.ViewModel
                 if (DocumentExporter.CanExport(Name) == false)
                 {
                     await DialogCoordinator.Instance.ShowMessageAsync(context, 
-                        "Error", $"File of {Name} can't be exported in this version!");
+                        "Error", $"File of {Name} can't be exported in this version!", 
+                        MessageDialogStyle.Affirmative, 
+                        new MetroDialogSettings() { ColorScheme=MetroDialogColorScheme.Accented});
                     return;
                 }
                 SaveFileDialog dlg = new SaveFileDialog();
@@ -355,16 +357,19 @@ namespace MarkDownEditor.ViewModel
                 dlg.Filter = Filter;
                 if (dlg.ShowDialog() == true)
                 {
-                    var progress = await DialogCoordinator.Instance.ShowProgressAsync(context, "Export", "Exporting");
+                    var progress = await DialogCoordinator.Instance.ShowProgressAsync(context, "Export", "Exporting",false, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                     progress.SetIndeterminate();
                     try
                     {
-                        DocumentExporter.Export(Name, context.CurrentMarkdownTypeText, SourceCodePath, dlg.FileName);
+                        await Task.Run(()=> 
+                        {
+                            DocumentExporter.Export(Name, context.CurrentMarkdownTypeText, SourceCodePath, dlg.FileName);
+                        });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
                             "Completed", $"Export file :\"{dlg.FileName}\" successfully!\nOpen it right now?",
-                            MessageDialogStyle.AffirmativeAndNegative,new MetroDialogSettings() { AffirmativeButtonText="Open",
-                            NegativeButtonText="Cancel"});
+                            MessageDialogStyle.AffirmativeAndNegative,
+                            new MetroDialogSettings() { AffirmativeButtonText="Open",NegativeButtonText="Cancel",ColorScheme=MetroDialogColorScheme.Accented});
                         if (ret == MessageDialogResult.Affirmative)
                         {
                             Process.Start(dlg.FileName);
@@ -374,7 +379,8 @@ namespace MarkDownEditor.ViewModel
                     {
                         await progress.CloseAsync();
                         await DialogCoordinator.Instance.ShowMessageAsync(context,
-                            "Error", $"Failed to export!\nDetail: {ex.Message}");
+                            "Error", $"Failed to export!\nDetail: {ex.Message}",
+                            MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                     }
                 }
             });
@@ -387,7 +393,8 @@ namespace MarkDownEditor.ViewModel
             new ExportFileType(markdownSourceTempPath) {Name="RTF" , ToolTip=Properties.Resources.TypeRTFFilter, Filter=Properties.Resources.TypeRTFFilter },
             new ExportFileType(markdownSourceTempPath) {Name="Docx" , ToolTip=Properties.Resources.TypeDocxToolTip, Filter=Properties.Resources.TypeDocxFilter },
             new ExportFileType(markdownSourceTempPath) {Name="Epub" , ToolTip=Properties.Resources.TypeEpubToolTip, Filter=Properties.Resources.TypeEpubFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter }
+            new ExportFileType(markdownSourceTempPath) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter }
         };
 
         public Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
@@ -447,7 +454,7 @@ namespace MarkDownEditor.ViewModel
             if (IsModified)
             {
                 var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Unsaved Changes", "Would you want to save your changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-                    new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
+                    new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle", ColorScheme = MetroDialogColorScheme.Accented });
                 if (ret == MessageDialogResult.Affirmative)
                 {
                     try
@@ -457,7 +464,8 @@ namespace MarkDownEditor.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message, 
+                            MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented});
                         return;
                     }
                     CreateNewDoc();
@@ -481,7 +489,8 @@ namespace MarkDownEditor.ViewModel
             }
             catch(Exception ex)
             {
-                await DialogCoordinator.Instance.ShowMessageAsync(this, "Error", $"Open file \"{path}\" failed!\nMessage: {ex.Message}");
+                await DialogCoordinator.Instance.ShowMessageAsync(this, "Error", $"Open file \"{path}\" failed!\nMessage: {ex.Message}", 
+                    MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                 return null;
             }            
         }
@@ -512,8 +521,9 @@ namespace MarkDownEditor.ViewModel
 
             if (IsModified)
             {
-                var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Unsaved Changes", "Would you want to save your changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-                    new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
+                var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Unsaved Changes", "Would you want to save your changes?",
+                    MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                    new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle", ColorScheme = MetroDialogColorScheme.Accented });
                 if (ret == MessageDialogResult.Affirmative)
                 {
                     try
@@ -523,7 +533,7 @@ namespace MarkDownEditor.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message, MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                         return;
                     }
                     OpenDoc();
@@ -543,7 +553,8 @@ namespace MarkDownEditor.ViewModel
             }
             catch (Exception ex)
             {
-                await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message, 
+                    MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
             }
         });
 
@@ -560,7 +571,8 @@ namespace MarkDownEditor.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                    await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message, 
+                        MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                 }
                 DocumentPath = dlg.FileName;
                 DocumentTitle = Path.GetFileName(dlg.FileName);
@@ -893,7 +905,8 @@ namespace MarkDownEditor.ViewModel
         public ICommand HyperlinkCommand => new RelayCommand<object>(async (obj) =>
         {
             var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Hyperlink", "Please input an URL", new MetroDialogSettings() { DefaultText = "http://example.com/ \"Optional Title\"" });
+            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Hyperlink", "Please input an URL",
+                new MetroDialogSettings() { DefaultText = "http://example.com/ \"Optional Title\"", ColorScheme = MetroDialogColorScheme.Accented });
             if (url != null)
             {
                 if (editor.SelectionLength == 0)
@@ -915,7 +928,8 @@ namespace MarkDownEditor.ViewModel
         public ICommand ImageCommand => new RelayCommand<object>(async (obj) =>
         {
             var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Image", "Please input an image URL", new MetroDialogSettings() { DefaultText = "http://example.com/graph.jpg \"Optional Title\"" });
+            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Image", "Please input an image URL", 
+                new MetroDialogSettings() { DefaultText = "http://example.com/graph.jpg \"Optional Title\"", ColorScheme = MetroDialogColorScheme.Accented });
             if (url != null)
             {
                 if (editor.SelectionLength == 0)
@@ -985,8 +999,10 @@ namespace MarkDownEditor.ViewModel
 
         public async Task<bool> RequestClosing()
         {
-            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, $"Unsaved Changes", "Do you want to save changes?", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-                new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save", FirstAuxiliaryButtonText = "Cancle" });
+            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, $"Unsaved Changes", "Do you want to save changes?",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                new MetroDialogSettings() { AffirmativeButtonText = "Save", NegativeButtonText = "Don't save",
+                    FirstAuxiliaryButtonText = "Cancle", ColorScheme = MetroDialogColorScheme.Accented });
             if (ret == MessageDialogResult.Affirmative)
             {
                 try
@@ -995,7 +1011,8 @@ namespace MarkDownEditor.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message);
+                    await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message, MessageDialogStyle.Affirmative, 
+                        new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented});
                     return true;
                 }
             }
