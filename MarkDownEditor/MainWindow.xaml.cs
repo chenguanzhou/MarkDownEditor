@@ -19,6 +19,7 @@ using ICSharpCode.AvalonEdit;
 using System.Windows.Threading;
 using Microsoft.Practices.ServiceLocation;
 using MarkDownEditor.ViewModel;
+using MahApps.Metro;
 
 namespace MarkDownEditor
 {
@@ -32,13 +33,14 @@ namespace MarkDownEditor
             InitializeComponent();
             webBrowser.RequestHandler = new RequestHandler();
             editor.TextChanged += Editor_TextChanged;
+            mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
         }
+
+        public MainViewModel mainViewModel;
 
         private bool ShouldClose = false;
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            MainViewModel mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
-            
+        {            
             if (mainViewModel != null)
             {
                 if (!ShouldClose && mainViewModel.IsModified)
@@ -51,7 +53,7 @@ namespace MarkDownEditor
                     }
                 }
             }
-        }
+        }        
 
         private void Editor_TextChanged(object sender, EventArgs e)
         {
@@ -77,8 +79,58 @@ namespace MarkDownEditor
 
         private void ScrollAsync()
         {
-            string src = $"scrollTo(0, {EditorScrollYRatio} * document.body.scrollHeight)";
-            webBrowser.ExecuteScriptAsync(src);
+            if (mainViewModel.IsSynchronize)
+            {
+                string src = $"scrollTo(0, {EditorScrollYRatio} * document.body.scrollHeight)";
+                webBrowser.ExecuteScriptAsync(src);
+            }                
         }
+
+
+        #region Full Screen
+        public static readonly DependencyProperty ToggleFullScreenProperty =
+            DependencyProperty.Register("ToggleFullScreen",
+                                typeof(bool),
+                                typeof(MainWindow),
+                                new PropertyMetadata(false, ToggleFullScreenPropertyChangedCallback));
+
+        private static WindowState oldWindowState = WindowState.Normal;
+        private static void ToggleFullScreenPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var metroWindow = (MetroWindow)dependencyObject;
+            if (e.OldValue != e.NewValue)
+            {
+                var fullScreen = (bool)e.NewValue;
+                if (fullScreen)
+                {
+                    oldWindowState = metroWindow.WindowState;
+                    metroWindow.WindowState = WindowState.Maximized;
+                    metroWindow.UseNoneWindowStyle = true;
+                    metroWindow.IgnoreTaskbarOnMaximize = true;
+                }
+                else
+                {
+                    metroWindow.WindowState = WindowState.Normal;
+                    metroWindow.UseNoneWindowStyle = false;
+                    metroWindow.ShowTitleBar = true; // <-- this must be set to true
+                    metroWindow.IgnoreTaskbarOnMaximize = false;
+                    metroWindow.WindowState = oldWindowState;
+                }
+            }
+        }
+
+        public bool ToggleFullScreen
+        {
+            get { return (bool)GetValue(ToggleFullScreenProperty); }
+            set { SetValue(ToggleFullScreenProperty, value); }
+        }
+
+        private void ExitFullScreenButton_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleFullScreen = false;
+        }
+        #endregion
+
+
     }
 }

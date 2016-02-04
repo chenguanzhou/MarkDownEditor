@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"/>
                 <ResourceDictionary Source="/MarkDownEditor;component/Resources/Icons.xaml" />
+                <ResourceDictionary Source="Converters.xaml" />                
                 <ResourceDictionary>
                     <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:MarkDownEditor.ViewModel" />
                 </ResourceDictionary>

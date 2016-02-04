@@ -140,6 +140,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\OppositeConverter.cs" />
     <Compile Include="Model\DocumentExporter.cs" />
     <Compile Include="MvvmChromiumWebBrowser.cs" />
     <Compile Include="MvvmTextEditor.cs" />
@@ -147,6 +149,10 @@
     <Compile Include="SimpleHelpers\FileEncoding.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Converters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

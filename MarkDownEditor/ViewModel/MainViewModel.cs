@@ -65,6 +65,76 @@ namespace MarkDownEditor.ViewModel
 
         public string PreviewSource => previewSourceTempPath;
 
+        public bool showPreview = true;
+        public bool IsShowPreview
+        {
+            get { return showPreview; }
+            set
+            {
+                if (showPreview == value)
+                    return;
+                showPreview = value;
+                PreviewWidth = showPreview ? "*" : "0";
+                if (showPreview)
+                    UpdatePreview();
+                RaisePropertyChanged("IsShowPreview");
+            }
+        }
+
+        public bool isSynchronize = true;
+        public bool IsSynchronize
+        {
+            get { return isSynchronize; }
+            set
+            {
+                if (isSynchronize == value)
+                    return;
+                isSynchronize = value;
+                RaisePropertyChanged("IsSynchronize");
+            }
+        }
+
+
+        public bool isReadingMode = false;
+        public bool IsReadingMode
+        {
+            get { return isReadingMode; }
+            set
+            {
+                if (isReadingMode == value)
+                    return;
+                isReadingMode = value;
+                RaisePropertyChanged("IsReadingMode");
+                SourceCodeWidth = isReadingMode ? "0":"*";
+            }
+        }
+
+        public string sourceCodeWidth = "*";
+        public string SourceCodeWidth
+        {
+            get { return sourceCodeWidth; }
+            set
+            {
+                if (sourceCodeWidth == value)
+                    return;
+                sourceCodeWidth = value;
+                RaisePropertyChanged("SourceCodeWidth");
+            }
+        }
+
+        public string previewWidth = "*";
+        public string PreviewWidth
+        {
+            get { return previewWidth; }
+            set
+            {
+                if (previewWidth == value)
+                    return;
+                previewWidth = value;
+                RaisePropertyChanged("PreviewWidth");
+            }
+        }
+
         public string documentTitle = Properties.Resources.UntitledTitle;
         public string DocumentTitle
         {
@@ -204,8 +274,8 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        private string editorFont = "Consolas";
-        public string EditorFont
+        private FontFamily editorFont = new FontFamily("Consolas");
+        public FontFamily EditorFont
         {
             get { return editorFont; }
             set
@@ -227,6 +297,32 @@ namespace MarkDownEditor.ViewModel
                     return;
                 editorFontSize = value;
                 RaisePropertyChanged("EditorFontSize");
+            }
+        }
+
+        private bool wordWrap = false;
+        public bool WordWrap
+        {
+            get { return wordWrap; }
+            set
+            {
+                if (wordWrap == value)
+                    return;
+                wordWrap = value;
+                RaisePropertyChanged("WordWrap");
+            }
+        }
+
+        private bool showLineNumbers = true;
+        public bool ShowLineNumbers
+        {
+            get { return showLineNumbers; }
+            set
+            {
+                if (showLineNumbers == value)
+                    return;
+                showLineNumbers = value;
+                RaisePropertyChanged("ShowLineNumbers");
             }
         }
 
@@ -868,6 +964,7 @@ namespace MarkDownEditor.ViewModel
             Process.Start(previewSourceTempPath);
         });
         #endregion
+
         private async void LoadDefaultDocument()
         {
             var args = Environment.GetCommandLineArgs();
@@ -910,18 +1007,21 @@ namespace MarkDownEditor.ViewModel
 
         private void UpdatePreview()
         {
-            StreamWriter sw = new StreamWriter(markdownSourceTempPath);
-            sw.Write(SourceCode.Text);
-            sw.Close();
+            if (IsShowPreview)
+            {
+                StreamWriter sw = new StreamWriter(markdownSourceTempPath);
+                sw.Write(SourceCode.Text);
+                sw.Close();
 
-            Process process = new Process();
-            process.StartInfo.FileName = "pandoc";
-            process.StartInfo.Arguments = $"\"{markdownSourceTempPath}\" -f {MarkDownType[CurrentMarkdownTypeText]} -t html --ascii -s -H theme.css -o \"{previewSourceTempPath}\"";
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.Start();
-            process.WaitForExit();
+                Process process = new Process();
+                process.StartInfo.FileName = "pandoc";
+                process.StartInfo.Arguments = $"\"{markdownSourceTempPath}\" -f {MarkDownType[CurrentMarkdownTypeText]} -t html --ascii -s -H theme.css -o \"{previewSourceTempPath}\"";
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.Start();
+                process.WaitForExit();
 
-            RaisePropertyChanged("PreviewSource");
+                RaisePropertyChanged("PreviewSource");
+            }            
 
             //DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[A-Za-z0-9]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
             DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[\S]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
