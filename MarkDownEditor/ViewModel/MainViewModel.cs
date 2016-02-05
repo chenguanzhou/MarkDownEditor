@@ -367,9 +367,9 @@ namespace MarkDownEditor.ViewModel
                         });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
-                            "Completed", $"Export file :\"{dlg.FileName}\" successfully!\nOpen it right now?",
+                            "Completed", $"Successfully\n\n{dlg.FileName}",
                             MessageDialogStyle.AffirmativeAndNegative,
-                            new MetroDialogSettings() { AffirmativeButtonText="Open",NegativeButtonText="Cancel",ColorScheme=MetroDialogColorScheme.Accented});
+                            new MetroDialogSettings() { AffirmativeButtonText= "Open Right Now", NegativeButtonText="Cancel",ColorScheme=MetroDialogColorScheme.Accented});
                         if (ret == MessageDialogResult.Affirmative)
                         {
                             Process.Start(dlg.FileName);
@@ -403,7 +403,8 @@ namespace MarkDownEditor.ViewModel
             { "Strict Markdown", "markdown_strict"},
             { "GitHub Flavored Markdown", "markdown_github" },
             { "PHP Markdown Extra", "markdown_mmd" },
-            { "MultiMarkdown", "markdown_mmd" }
+            { "MultiMarkdown", "markdown_mmd" },
+            { "CommonMark", "commonmark" }
         };
 
         private string currentMarkdownTypeText = "Markdown";
@@ -549,7 +550,8 @@ namespace MarkDownEditor.ViewModel
         {
             try
             {
-                Save();                
+                Save();
+                IsModified = false;
             }
             catch (Exception ex)
             {
@@ -568,15 +570,15 @@ namespace MarkDownEditor.ViewModel
                 try
                 {
                     SaveDoc2File(dlg.FileName);
+                    DocumentPath = dlg.FileName;
+                    DocumentTitle = Path.GetFileName(dlg.FileName);
+                    IsModified = false;
                 }
                 catch (Exception ex)
                 {
                     await DialogCoordinator.Instance.ShowMessageAsync(this, "Save file failed", ex.Message, 
                         MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                 }
-                DocumentPath = dlg.FileName;
-                DocumentTitle = Path.GetFileName(dlg.FileName);
-                IsModified = false;
             }
         });
 
