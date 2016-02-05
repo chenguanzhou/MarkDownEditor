@@ -1,9 +1,12 @@
+using CefSharp;
+using CefSharp.Wpf;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ICSharpCode.AvalonEdit.Document;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using MarkDownEditor.Model;
+using MarkDownEditor.View;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using System;
@@ -58,6 +61,12 @@ namespace MarkDownEditor.ViewModel
             File.Delete(previewSourceTempPath);
         }
 
+        #region SubViewModels
+
+        public SettingsViewModel SettingsViewModel { get; } = new SettingsViewModel();
+
+        #endregion //SubViewModels
+
         private string markdownSourceTempPath = Path.GetTempFileName();
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
@@ -80,6 +89,19 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("IsShowPreview");
             }
         }
+
+        //public MvvmChromiumWebBrowser webBrowser = new MvvmChromiumWebBrowser();
+        //public MvvmChromiumWebBrowser WebBrowser
+        //{
+        //    get { return webBrowser; }
+        //    set
+        //    {
+        //        if (webBrowser == value)
+        //            return;
+        //        webBrowser = value;
+        //        RaisePropertyChanged("WebBrowser");
+        //    }
+        //}
 
         public bool isSynchronize = true;
         public bool IsSynchronize
@@ -178,7 +200,7 @@ namespace MarkDownEditor.ViewModel
                     LoadDefaultDocument();                    
                 }
             }
-        }
+        }        
 
         public bool isModified = false;
         public bool IsModified
@@ -204,6 +226,32 @@ namespace MarkDownEditor.ViewModel
                     return;
                 sourceCode = value;
                 RaisePropertyChanged("SourceCode");
+            }
+        }
+
+        private int selectionStart = 0;
+        public int SelectionStart
+        {
+            get { return selectionStart; }
+            set
+            {
+                if (selectionStart == value)
+                    return;
+                selectionStart = value;
+                RaisePropertyChanged("SelectionStart");
+            }
+        }
+
+        private int selectionLength = 0;
+        public int SelectionLength
+        {
+            get { return selectionLength; }
+            set
+            {
+                if (selectionLength == value)
+                    return;
+                selectionLength = value;
+                RaisePropertyChanged("SelectionLength");
             }
         }
 
@@ -248,6 +296,19 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
+        private double scrollOffsetRatio = 0;
+        public double ScrollOffsetRatio
+        {
+            get { return scrollOffsetRatio; }
+            set
+            {
+                //if (scrollOffsetRatio == value)
+                //    return;
+                scrollOffsetRatio = value;
+                RaisePropertyChanged("ScrollOffsetRatio");
+            }
+        }
+
         private string currentCaretStatisticsInfo = "";
         public string CurrentCaretStatisticsInfo
         {
@@ -272,61 +333,7 @@ namespace MarkDownEditor.ViewModel
                 documrntStatisticsInfo = value;
                 RaisePropertyChanged("DocumrntStatisticsInfo");
             }
-        }
-
-        private FontFamily editorFont = new FontFamily("Consolas");
-        public FontFamily EditorFont
-        {
-            get { return editorFont; }
-            set
-            {
-                if (editorFont == value)
-                    return;
-                editorFont = value;
-                RaisePropertyChanged("EditorFont");
-            }
-        }
-
-        private int editorFontSize = 16;
-        public int EditorFontSize
-        {
-            get { return editorFontSize; }
-            set
-            {
-                if (editorFontSize == value)
-                    return;
-                editorFontSize = value;
-                RaisePropertyChanged("EditorFontSize");
-            }
-        }
-
-        private bool wordWrap = false;
-        public bool WordWrap
-        {
-            get { return wordWrap; }
-            set
-            {
-                if (wordWrap == value)
-                    return;
-                wordWrap = value;
-                RaisePropertyChanged("WordWrap");
-            }
-        }
-
-        private bool showLineNumbers = true;
-        public bool ShowLineNumbers
-        {
-            get { return showLineNumbers; }
-            set
-            {
-                if (showLineNumbers == value)
-                    return;
-                showLineNumbers = value;
-                RaisePropertyChanged("ShowLineNumbers");
-            }
-        }
-
-        public double ScrollbarPos { get; set; }
+        }        
 
         public class ExportFileType
         {
@@ -651,94 +658,90 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("CanRedo");
             }
         }
+
         public ICommand RedoCommand => new RelayCommand<object>((obj) =>
         {
             var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
             editor.Redo();
         });
 
-        public ICommand BoldCommand => new RelayCommand<object>((obj) => 
+        public ICommand BoldCommand => new RelayCommand(() => 
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            if (editor.SelectionStart>1 && editor.SelectionStart+editor.SelectionLength+1 < sourceCode.TextLength)
+            if (SelectionStart>1 && SelectionStart+SelectionLength+1 < sourceCode.TextLength)
             {
-                if (sourceCode.GetText(editor.SelectionStart-2,2)=="**" && sourceCode.GetText(editor.SelectionStart+ editor.SelectionLength, 2) == "**")
+                if (sourceCode.GetText(SelectionStart-2,2)=="**" && sourceCode.GetText(SelectionStart+ SelectionLength, 2) == "**")
                 {
-                    sourceCode.Remove(editor.SelectionStart + editor.SelectionLength, 2);
-                    sourceCode.Remove(editor.SelectionStart - 2, 2);
+                    sourceCode.Remove(SelectionStart + SelectionLength, 2);
+                    sourceCode.Remove(SelectionStart - 2, 2);
                     return;
                 }
             }
 
-            if (editor.SelectionLength == 0)
+            if (SelectionLength == 0)
             {
-                int OriginalStart = editor.SelectionStart;
-                sourceCode.Insert(editor.SelectionStart,$"**{Properties.Resources.EmptyBoldAreaText}**");
-                editor.SelectionStart = OriginalStart + 2;
-                editor.SelectionLength = Properties.Resources.EmptyBoldAreaText.Length;
+                int OriginalStart = SelectionStart;
+                sourceCode.Insert(SelectionStart,$"**{Properties.Resources.EmptyBoldAreaText}**");
+                SelectionStart = OriginalStart + 2;
+                SelectionLength = Properties.Resources.EmptyBoldAreaText.Length;
                 return;
             }
             else
             {
-                int OriginalStart = editor.SelectionStart;
-                sourceCode.Insert(editor.SelectionStart, "**");
-                sourceCode.Insert(editor.SelectionStart+ editor.SelectionLength, "**");
+                int OriginalStart = SelectionStart;
+                sourceCode.Insert(SelectionStart, "**");
+                sourceCode.Insert(SelectionStart+ SelectionLength, "**");
             }
         });
 
-        public ICommand ItalicCommand => new RelayCommand<object>((obj) =>
+        public ICommand ItalicCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            if (editor.SelectionStart > 0 && editor.SelectionStart + editor.SelectionLength < sourceCode.TextLength)
+            if (SelectionStart > 0 && SelectionStart + SelectionLength < sourceCode.TextLength)
             {
-                if (sourceCode.GetText(editor.SelectionStart - 1, 1) == "*" && sourceCode.GetText(editor.SelectionStart + editor.SelectionLength, 1) == "*")
+                if (sourceCode.GetText(SelectionStart - 1, 1) == "*" && sourceCode.GetText(SelectionStart + SelectionLength, 1) == "*")
                 {
-                    sourceCode.Remove(editor.SelectionStart + editor.SelectionLength, 1);
-                    sourceCode.Remove(editor.SelectionStart - 1, 1);
+                    sourceCode.Remove(SelectionStart + SelectionLength, 1);
+                    sourceCode.Remove(SelectionStart - 1, 1);
                     return;
                 }
             }
 
-            if (editor.SelectionLength == 0)
+            if (SelectionLength == 0)
             {
-                int OriginalStart = editor.SelectionStart;
-                sourceCode.Insert(editor.SelectionStart, $"*{Properties.Resources.EmptyItalicAreaText}*");
-                editor.SelectionStart = OriginalStart + 1;
-                editor.SelectionLength = Properties.Resources.EmptyItalicAreaText.Length;
+                int OriginalStart = SelectionStart;
+                sourceCode.Insert(SelectionStart, $"*{Properties.Resources.EmptyItalicAreaText}*");
+                SelectionStart = OriginalStart + 1;
+                SelectionLength = Properties.Resources.EmptyItalicAreaText.Length;
                 return;
             }
             else
             {
-                int OriginalStart = editor.SelectionStart;
-                sourceCode.Insert(editor.SelectionStart, "*");
-                sourceCode.Insert(editor.SelectionStart + editor.SelectionLength, "*");
+                int OriginalStart = SelectionStart;
+                sourceCode.Insert(SelectionStart, "*");
+                sourceCode.Insert(SelectionStart + SelectionLength, "*");
             }
         });
 
-        public ICommand QuoteCommand => new RelayCommand<object>((obj) =>
+        public ICommand QuoteCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-
-            if (editor.SelectionLength == 0)
-                sourceCode.Insert(editor.SelectionStart, "\r\n>");
+            if (SelectionLength == 0)
+                sourceCode.Insert(SelectionStart, "\r\n>");
             else
             {
-                var selectedText = sourceCode.GetText(editor.SelectionStart, editor.SelectionLength);
+                var selectedText = sourceCode.GetText(SelectionStart, SelectionLength);
                 selectedText = selectedText.Replace("\r\n", " ");
                 selectedText = "\r\n\r\n>" + selectedText;
-                sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, selectedText,OffsetChangeMappingType.RemoveAndInsert);
+                sourceCode.Replace(SelectionStart, SelectionLength, selectedText,OffsetChangeMappingType.RemoveAndInsert);
             }
         });
 
-        public ICommand GeneralCodeCommand => new RelayCommand<object>((obj) =>
+        public ICommand GeneralCodeCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-
-            if (editor.SelectionStart > 0)
+            var SelectedText = sourceCode.GetText(SelectionStart,SelectionLength);
+            if (SelectionStart > 0)
             {
-                if (editor.SelectedText.Contains("\t") || editor.SelectedText.Contains("    "))
+                if (SelectedText.Contains("\t") || SelectedText.Contains("    "))
                 {
-                    var selectedText = editor.SelectedText.Replace("\r\n", "\n");
+                    var selectedText = SelectedText.Replace("\r\n", "\n");
                     string[] lines = selectedText.Split('\n');
 
                     int count = 0;
@@ -757,85 +760,85 @@ namespace MarkDownEditor.ViewModel
                     }
                     if (count != 0)
                     {
-                        sourceCode.Replace(editor.SelectionStart,editor.SelectionLength, string.Join("\r\n", lines),OffsetChangeMappingType.RemoveAndInsert);
+                        sourceCode.Replace(SelectionStart,SelectionLength, string.Join("\r\n", lines),OffsetChangeMappingType.RemoveAndInsert);
                         return;
                     }
                 }
                 else
                 {
-                    if (sourceCode.GetText(editor.SelectionStart - 1, 1) == "`" && sourceCode.GetText(editor.SelectionStart + editor.SelectionLength, 1) == "`")
+                    if (sourceCode.GetText(SelectionStart - 1, 1) == "`" && sourceCode.GetText(SelectionStart + SelectionLength, 1) == "`")
                     {
-                        sourceCode.Remove(editor.SelectionStart + editor.SelectionLength, 1);
-                        sourceCode.Remove(editor.SelectionStart - 1, 1);
+                        sourceCode.Remove(SelectionStart + SelectionLength, 1);
+                        sourceCode.Remove(SelectionStart - 1, 1);
                         return;
                     }
                 }
             }
 
-            if (editor.SelectionLength == 0)
+            if (SelectionLength == 0)
             {
                 var toInsert = $"`{Properties.Resources.EmptyCode}`";
-                sourceCode.Insert(editor.SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
-                editor.SelectionStart += 1;
-                editor.SelectionLength = Properties.Resources.EmptyCode.Length;
+                sourceCode.Insert(SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
+                SelectionStart += 1;
+                SelectionLength = Properties.Resources.EmptyCode.Length;
             }
-            else if (editor.SelectedText.Contains("\n"))//Multiline
+            else if (SelectedText.Contains("\n"))//Multiline
             {
-                var selectedText = sourceCode.GetText(editor.SelectionStart, editor.SelectionLength);
+                var selectedText = sourceCode.GetText(SelectionStart, SelectionLength);
                 selectedText = selectedText.Replace("\r\n", "\r\n\t");
 
                 selectedText = $"\r\n\t{selectedText}\r\n\r\n";
-                if (editor.SelectionStart > 0 && sourceCode.GetText(editor.SelectionStart - 1, 1) != "\n")
+                if (SelectionStart > 0 && sourceCode.GetText(SelectionStart - 1, 1) != "\n")
                     selectedText = "\r\n\t" + selectedText;
 
-                sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, selectedText, OffsetChangeMappingType.RemoveAndInsert);
+                sourceCode.Replace(SelectionStart, SelectionLength, selectedText, OffsetChangeMappingType.RemoveAndInsert);
             }
             else//Single line
             {
-                int oldSelectionStart = editor.SelectionStart;
-                int oldLength = editor.SelectedText.Length;
-                sourceCode.Replace(editor.SelectionStart,editor.SelectionLength, $"`{editor.SelectedText}`", OffsetChangeMappingType.RemoveAndInsert);
-                editor.SelectionStart = oldSelectionStart + 1;
-                editor.SelectionLength = oldLength;
+                int oldSelectionStart = SelectionStart;
+                int oldLength = SelectedText.Length;
+                sourceCode.Replace(SelectionStart,SelectionLength, $"`{SelectedText}`", OffsetChangeMappingType.RemoveAndInsert);
+                SelectionStart = oldSelectionStart + 1;
+                SelectionLength = oldLength;
             }
         });
 
-        public ICommand UnorderedListCommand => new RelayCommand<object>((obj) =>
+        public ICommand UnorderedListCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            if (editor.SelectionLength == 0)
+            if (SelectionLength == 0)
             {
-                SourceCode.Insert(editor.SelectionStart, $"\r\n\r\n- {Properties.Resources.ListItem}\r\n\r\n", AnchorMovementType.BeforeInsertion);
-                editor.SelectionStart += 6;
-                editor.SelectionLength = Properties.Resources.ListItem.Length;
+                SourceCode.Insert(SelectionStart, $"\r\n\r\n- {Properties.Resources.ListItem}\r\n\r\n", AnchorMovementType.BeforeInsertion);
+                SelectionStart += 6;
+                SelectionLength = Properties.Resources.ListItem.Length;
             }
             else
             {
-                if (editor.SelectionLength == 0 || editor.SelectedText.Contains("\n"))//MultiLine
+                var SelectedText = sourceCode.GetText(SelectionStart, SelectionLength);
+                if (SelectionLength == 0 || SelectedText.Contains("\n"))//MultiLine
                 {
-                    var t = editor.SelectedText.Replace("\r\n", " ");
-                    int oldStart = editor.SelectionStart;
-                    SourceCode.Replace(editor.SelectionStart, editor.SelectionLength, $"\r\n\r\n- {t}\r\n\r\n",OffsetChangeMappingType.RemoveAndInsert);
-                    editor.SelectionStart = oldStart + 6;
-                    editor.SelectionLength = t.Length;
+                    var t = SelectedText.Replace("\r\n", " ");
+                    int oldStart = SelectionStart;
+                    SourceCode.Replace(SelectionStart, SelectionLength, $"\r\n\r\n- {t}\r\n\r\n",OffsetChangeMappingType.RemoveAndInsert);
+                    SelectionStart = oldStart + 6;
+                    SelectionLength = t.Length;
                 }
                 else//SingleLine
                 {
-                    var lineDocument = SourceCode.GetLineByOffset(editor.SelectionStart);
+                    var lineDocument = SourceCode.GetLineByOffset(SelectionStart);
                     int lineStartOffset = lineDocument.Offset;
-                    if ((editor.SelectionStart - lineStartOffset) >= 2 &&
-                            SourceCode.GetText(editor.SelectionStart - 2, 2) == "- " &&
-                            string.IsNullOrWhiteSpace(SourceCode.GetText(lineStartOffset, editor.SelectionStart - 2 - lineStartOffset)))
-                        SourceCode.Remove(lineStartOffset, editor.SelectionStart- lineStartOffset);
+                    if ((SelectionStart - lineStartOffset) >= 2 &&
+                            SourceCode.GetText(SelectionStart - 2, 2) == "- " &&
+                            string.IsNullOrWhiteSpace(SourceCode.GetText(lineStartOffset, SelectionStart - 2 - lineStartOffset)))
+                        SourceCode.Remove(lineStartOffset, SelectionStart- lineStartOffset);
                     else
                     {
-                        SourceCode.Replace(editor.SelectionStart, editor.SelectionLength, $"\r\n\r\n- {editor.SelectedText}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
+                        SourceCode.Replace(SelectionStart, SelectionLength, $"\r\n\r\n- {SelectedText}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
                     }
                 }
             }
         });
 
-        public ICommand OrderedListCommand => new RelayCommand<object>((obj) =>
+        public ICommand OrderedListCommand => new RelayCommand(() =>
         {
             Func<string, bool> isNumeric = (string message) =>
             {
@@ -850,122 +853,116 @@ namespace MarkDownEditor.ViewModel
                 }
             };
 
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            if (editor.SelectionLength == 0)
+            if (SelectionLength == 0)
             {
-                SourceCode.Insert(editor.SelectionStart, $"\r\n\r\n1. {Properties.Resources.ListItem}\r\n\r\n", AnchorMovementType.BeforeInsertion);
-                editor.SelectionStart += 7;
-                editor.SelectionLength = Properties.Resources.ListItem.Length;
+                SourceCode.Insert(SelectionStart, $"\r\n\r\n1. {Properties.Resources.ListItem}\r\n\r\n", AnchorMovementType.BeforeInsertion);
+                SelectionStart += 7;
+                SelectionLength = Properties.Resources.ListItem.Length;
             }
             else
             {
-                if (editor.SelectionLength == 0 || editor.SelectedText.Contains("\n"))//MultiLine
+                var SelectedText = sourceCode.GetText(SelectionStart, SelectionLength);
+                if (SelectionLength == 0 || SelectedText.Contains("\n"))//MultiLine
                 {
-                    var t = editor.SelectedText.Replace("\r\n", " ");
-                    int oldStart = editor.SelectionStart;
-                    SourceCode.Replace(editor.SelectionStart, editor.SelectionLength, $"\r\n\r\n1. {t}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
-                    editor.SelectionStart = oldStart + 7;
-                    editor.SelectionLength = t.Length;
+                    var t = SelectedText.Replace("\r\n", " ");
+                    int oldStart = SelectionStart;
+                    SourceCode.Replace(SelectionStart, SelectionLength, $"\r\n\r\n1. {t}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
+                    SelectionStart = oldStart + 7;
+                    SelectionLength = t.Length;
                 }
                 else//SingleLine
                 {          
-                    var lineDocument = SourceCode.GetLineByOffset(editor.SelectionStart);
+                    var lineDocument = SourceCode.GetLineByOffset(SelectionStart);
                     int lineStartOffset = lineDocument.Offset;
-                    if ((editor.SelectionStart - lineStartOffset) >= 3 &&
-                            SourceCode.GetText(editor.SelectionStart - 2, 2) == ". " &&
-                            isNumeric(SourceCode.GetText(editor.SelectionStart - 3, 1)) &&
-                            string.IsNullOrWhiteSpace(SourceCode.GetText(lineStartOffset, editor.SelectionStart - 3 - lineStartOffset)))
-                        SourceCode.Remove(lineStartOffset, editor.SelectionStart - lineStartOffset);
+                    if ((SelectionStart - lineStartOffset) >= 3 &&
+                            SourceCode.GetText(SelectionStart - 2, 2) == ". " &&
+                            isNumeric(SourceCode.GetText(SelectionStart - 3, 1)) &&
+                            string.IsNullOrWhiteSpace(SourceCode.GetText(lineStartOffset, SelectionStart - 3 - lineStartOffset)))
+                        SourceCode.Remove(lineStartOffset, SelectionStart - lineStartOffset);
                     else
                     {
-                        SourceCode.Replace(editor.SelectionStart, editor.SelectionLength, $"\r\n\r\n1. {editor.SelectedText}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
+                        SourceCode.Replace(SelectionStart, SelectionLength, $"\r\n\r\n1. {SelectedText}\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
                     }
                 }
             }
         });
 
-        public ICommand TitleCommand => new RelayCommand<object>((obj) =>
+        public ICommand TitleCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            if (editor.SelectionLength == 0)
+            if (SelectionLength == 0)
             {
-                SourceCode.Insert(editor.SelectionStart, $"\r\n\r\n{Properties.Resources.EmptyTitle}\r\n--\r\n\r\n", AnchorMovementType.BeforeInsertion);
-                editor.SelectionStart += 4;
-                editor.SelectionLength = Properties.Resources.EmptyTitle.Length;
+                SourceCode.Insert(SelectionStart, $"\r\n\r\n{Properties.Resources.EmptyTitle}\r\n--\r\n\r\n", AnchorMovementType.BeforeInsertion);
+                SelectionStart += 4;
+                SelectionLength = Properties.Resources.EmptyTitle.Length;
             }
             else
             {
-                int oldStart = editor.SelectionStart;
-                var t = SourceCode.GetText(editor.SelectionStart,editor.SelectionLength).Replace("\r\n"," ");
-                SourceCode.Replace(editor.SelectionStart, editor.SelectionLength, $"\r\n\r\n{t}\r\n--\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
-                editor.SelectionStart = oldStart + 4;
-                editor.SelectionLength = t.Length;
+                int oldStart = SelectionStart;
+                var t = SourceCode.GetText(SelectionStart,SelectionLength).Replace("\r\n"," ");
+                SourceCode.Replace(SelectionStart, SelectionLength, $"\r\n\r\n{t}\r\n--\r\n\r\n", OffsetChangeMappingType.RemoveAndInsert);
+                SelectionStart = oldStart + 4;
+                SelectionLength = t.Length;
             }
 
         });
 
-        public ICommand HyperlinkCommand => new RelayCommand<object>(async (obj) =>
+        public ICommand HyperlinkCommand => new RelayCommand(async () =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
             string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Hyperlink", "Please input an URL",
                 new MetroDialogSettings() { DefaultText = "http://example.com/ \"Optional Title\"", ColorScheme = MetroDialogColorScheme.Accented });
             if (url != null)
             {
-                if (editor.SelectionLength == 0)
+                if (SelectionLength == 0)
                 {
                     var toInsert = $"[{Properties.Resources.EmptyHyperlinkDescription}]({url})";
-                    sourceCode.Insert(editor.SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
-                    editor.SelectionStart += 1;
-                    editor.SelectionLength = Properties.Resources.EmptyHyperlinkDescription.Length;
+                    sourceCode.Insert(SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
+                    SelectionStart += 1;
+                    SelectionLength = Properties.Resources.EmptyHyperlinkDescription.Length;
                 }
                 else
                 {
-                    var toInsert = $"[{editor.SelectedText}]({url})";
-                    sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
-                    editor.SelectionLength = 0;
+                    var toInsert = $"[{sourceCode.GetText(SelectionStart, SelectionLength)}]({url})";
+                    sourceCode.Replace(SelectionStart, SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
+                    SelectionLength = 0;
                 }
             }
         });
 
-        public ICommand ImageCommand => new RelayCommand<object>(async (obj) =>
+        public ICommand ImageCommand => new RelayCommand(async () =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
             string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Image", "Please input an image URL", 
                 new MetroDialogSettings() { DefaultText = "http://example.com/graph.jpg \"Optional Title\"", ColorScheme = MetroDialogColorScheme.Accented });
             if (url != null)
             {
-                if (editor.SelectionLength == 0)
+                if (SelectionLength == 0)
                 {
                     var toInsert = $"![{Properties.Resources.EmptyImageDescription}]({url})";
-                    sourceCode.Insert(editor.SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
-                    editor.SelectionStart += 2;
-                    editor.SelectionLength = Properties.Resources.EmptyImageDescription.Length;
+                    sourceCode.Insert(SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
+                    SelectionStart += 2;
+                    SelectionLength = Properties.Resources.EmptyImageDescription.Length;
                 }
                 else
                 {
-                    var toInsert = $"![{editor.SelectedText}]({url})";
-                    sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
-                    editor.SelectionLength = 0;
+                    var toInsert = $"![{sourceCode.GetText(SelectionStart,SelectionLength)}]({url})";
+                    sourceCode.Replace(SelectionStart, SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
+                    SelectionLength = 0;
                 }
             }
         });
 
-        public ICommand SeparateLineCommand => new RelayCommand<object>((obj) =>
+        public ICommand SeparateLineCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, "\r\n\r\n--------\r\n\r\n");
+            sourceCode.Replace(SelectionStart, SelectionLength, "\r\n\r\n--------\r\n\r\n");
         });
 
-        public ICommand DateStampCommand => new RelayCommand<object>((obj) =>
+        public ICommand DateStampCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, DateTime.Now.ToLongDateString());
+            sourceCode.Replace(SelectionStart, SelectionLength, DateTime.Now.ToLongDateString());
         });
 
-        public ICommand TimeStampCommand => new RelayCommand<object>((obj) =>
+        public ICommand TimeStampCommand => new RelayCommand(() =>
         {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            sourceCode.Replace(editor.SelectionStart, editor.SelectionLength, DateTime.Now.ToString());
+            sourceCode.Replace(SelectionStart, SelectionLength, DateTime.Now.ToString());
         });
 
         #endregion
@@ -1024,6 +1021,7 @@ namespace MarkDownEditor.ViewModel
                 return true;
         }
 
+        
         private void UpdatePreview()
         {
             if (IsShowPreview)
@@ -1040,9 +1038,9 @@ namespace MarkDownEditor.ViewModel
                 process.WaitForExit();
 
                 RaisePropertyChanged("PreviewSource");
+                RaisePropertyChanged("ScrollOffsetRatio");
             }            
 
-            //DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[A-Za-z0-9]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
             DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[\S]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
         }
     }

@@ -22,7 +22,7 @@ using MarkDownEditor.ViewModel;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace MarkDownEditor
+namespace MarkDownEditor.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -31,10 +31,14 @@ namespace MarkDownEditor
     {
         public MainWindow()
         {
-            InitializeComponent();
-            webBrowser.RequestHandler = new RequestHandler();
-            editor.TextChanged += Editor_TextChanged;
+            InitializeComponent();            
             mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
+            webBrowser.Loaded += WebBrowser_Loaded;
+        }
+
+        private void WebBrowser_Loaded(object sender, RoutedEventArgs e)
+        {
+            int cgz = 0;
         }
 
         public MainViewModel mainViewModel;
@@ -55,38 +59,6 @@ namespace MarkDownEditor
                 }
             }
         }        
-
-        private void Editor_TextChanged(object sender, EventArgs e)
-        {
-            ScrollAsync();
-        }
-
-        private double EditorScrollYRatio { get; set; }
-
-        private void editor_ScrollChanged(object sender, RoutedEventArgs e)
-        {
-            ScrollChangedEventArgs args = (ScrollChangedEventArgs)e;
-            if (args.VerticalOffset == 0)
-            {
-                EditorScrollYRatio = 0;
-                return;
-            }
-
-            ScrollViewer viewer = (ScrollViewer)e.OriginalSource;
-            EditorScrollYRatio = args.VerticalOffset / viewer.ScrollableHeight;
-
-            ScrollAsync();
-        }
-
-        private void ScrollAsync()
-        {
-            if (mainViewModel.IsSynchronize)
-            {
-                string src = $"scrollTo(0, {EditorScrollYRatio} * document.body.scrollHeight)";
-                webBrowser.ExecuteScriptAsync(src);
-            }                
-        }
-
 
         #region Full Screen
         public static readonly DependencyProperty ToggleFullScreenProperty =
