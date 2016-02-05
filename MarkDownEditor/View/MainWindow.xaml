@@ -322,7 +322,7 @@
                             <Expander.Header>
                                 <TextBlock Margin="5" Text="SETTINGS" Foreground="{StaticResource WhiteBrush}"></TextBlock>
                             </Expander.Header>
-                            <ScrollViewer MaxHeight="300">
+                            <ScrollViewer Height="300">
                                 <view:SettingsControl DataContext="{Binding SettingsViewModel}"></view:SettingsControl>
                             </ScrollViewer>
                         </Expander>

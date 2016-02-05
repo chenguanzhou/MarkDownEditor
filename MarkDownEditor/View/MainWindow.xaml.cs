@@ -33,12 +33,6 @@ namespace MarkDownEditor.View
         {
             InitializeComponent();            
             mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
-            webBrowser.Loaded += WebBrowser_Loaded;
-        }
-
-        private void WebBrowser_Loaded(object sender, RoutedEventArgs e)
-        {
-            int cgz = 0;
         }
 
         public MainViewModel mainViewModel;
