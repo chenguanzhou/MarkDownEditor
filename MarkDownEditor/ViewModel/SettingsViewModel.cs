@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace MarkDownEditor.ViewModel
@@ -45,7 +46,7 @@ namespace MarkDownEditor.ViewModel
             base.Cleanup();
         }
 
-        private FontFamily editorFont = new FontFamily("Consolas");
+        private FontFamily editorFont = new FontFamily(Properties.Settings.Default.EditorFont);
         public FontFamily EditorFont
         {
             get { return editorFont; }
@@ -54,11 +55,13 @@ namespace MarkDownEditor.ViewModel
                 if (editorFont == value)
                     return;
                 editorFont = value;
+                Properties.Settings.Default.EditorFont = value.Source;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("EditorFont");
             }
         }
 
-        private int editorFontSize = 16;
+        private int editorFontSize = Properties.Settings.Default.EditorFontSize;
         public int EditorFontSize
         {
             get { return editorFontSize; }
@@ -67,11 +70,13 @@ namespace MarkDownEditor.ViewModel
                 if (editorFontSize == value)
                     return;
                 editorFontSize = value;
+                Properties.Settings.Default.EditorFontSize = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("EditorFontSize");
             }
         }
 
-        private bool wordWrap = false;
+        private bool wordWrap = Properties.Settings.Default.WordWrap;
         public bool WordWrap
         {
             get { return wordWrap; }
@@ -80,11 +85,13 @@ namespace MarkDownEditor.ViewModel
                 if (wordWrap == value)
                     return;
                 wordWrap = value;
+                Properties.Settings.Default.WordWrap = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("WordWrap");
             }
         }
 
-        private bool showLineNumbers = true;
+        private bool showLineNumbers = Properties.Settings.Default.ShowLineNumbers;
         public bool ShowLineNumbers
         {
             get { return showLineNumbers; }
@@ -93,11 +100,13 @@ namespace MarkDownEditor.ViewModel
                 if (showLineNumbers == value)
                     return;
                 showLineNumbers = value;
+                Properties.Settings.Default.ShowLineNumbers = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("ShowLineNumbers");
             }
         }
 
-        private bool showTabs = false;
+        private bool showTabs = Properties.Settings.Default.ShowTabs;
         public bool ShowTabs
         {
             get { return showTabs; }
@@ -106,11 +115,13 @@ namespace MarkDownEditor.ViewModel
                 if (showTabs == value)
                     return;
                 showTabs = value;
+                Properties.Settings.Default.ShowTabs = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("ShowTabs");
             }
         }
 
-        private bool showSpaces = false;
+        private bool showSpaces = Properties.Settings.Default.ShowSpaces;
         public bool ShowSpaces
         {
             get { return showSpaces; }
@@ -119,11 +130,13 @@ namespace MarkDownEditor.ViewModel
                 if (showSpaces == value)
                     return;
                 showSpaces = value;
+                Properties.Settings.Default.ShowSpaces = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("ShowSpaces");
             }
         }
 
-        private bool showEndOfLine = false;
+        private bool showEndOfLine = Properties.Settings.Default.ShowEndOfLine;
         public bool ShowEndOfLine
         {
             get { return showEndOfLine; }
@@ -132,11 +145,13 @@ namespace MarkDownEditor.ViewModel
                 if (showEndOfLine == value)
                     return;
                 showEndOfLine = value;
+                Properties.Settings.Default.ShowEndOfLine = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("ShowEndOfLine");
             }
         }
 
-        private bool highlightCurrentLine = true;
+        private bool highlightCurrentLine = Properties.Settings.Default.HighlightCurrentLine;
         public bool HighlightCurrentLine
         {
             get { return highlightCurrentLine; }
@@ -145,11 +160,13 @@ namespace MarkDownEditor.ViewModel
                 if (highlightCurrentLine == value)
                     return;
                 highlightCurrentLine = value;
+                Properties.Settings.Default.HighlightCurrentLine = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("HighlightCurrentLine");
             }
         }
 
-        private bool showColumnRuler = true;
+        private bool showColumnRuler = Properties.Settings.Default.ShowColumnRuler;
         public bool ShowColumnRuler
         {
             get { return showColumnRuler; }
@@ -158,11 +175,13 @@ namespace MarkDownEditor.ViewModel
                 if (showColumnRuler == value)
                     return;
                 showColumnRuler = value;
+                Properties.Settings.Default.ShowColumnRuler = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("ShowColumnRuler");
             }
         }
 
-        private int rulerPosition = 80;
+        private int rulerPosition = Properties.Settings.Default.RulerPosition;
         public int RulerPosition
         {
             get { return rulerPosition; }
@@ -171,6 +190,8 @@ namespace MarkDownEditor.ViewModel
                 if (rulerPosition == value)
                     return;
                 rulerPosition = value;
+                Properties.Settings.Default.RulerPosition = value;
+                Properties.Settings.Default.Save();
                 RaisePropertyChanged("RulerPosition");
             }
         }

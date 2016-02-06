@@ -15,13 +15,14 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
-    <TabControl Padding="20,10,20,10">
+    <TabControl Padding="10,10,10,0">
         <TabControl.Resources>
             <Style TargetType="DockPanel">
                 <Setter Property="Margin" Value="8"></Setter>
             </Style>
             <Style TargetType="Controls:MetroTabItem">
-                <Setter Property="Padding" Value="10"></Setter>
+                <Setter Property="Padding" Value="3"></Setter>
+                <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="18"></Setter>
             </Style>
         </TabControl.Resources>
 

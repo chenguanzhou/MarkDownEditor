@@ -29,7 +29,7 @@
         <Controls:WindowCommands>
             <ToggleButton Content="Show Preview Browser" IsChecked="{Binding IsShowPreview}" IsEnabled="{Binding IsReadingMode,Converter={StaticResource OppositeConverter}}"></ToggleButton>
             <ToggleButton Content="Full Screen" IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}"></ToggleButton>
-            <Button Content="About"></Button>
+            <Button Content="About" Command="{Binding AboutViewModel.ShowAboutCommand}"></Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
@@ -53,6 +53,14 @@
         <KeyBinding Gesture="F5" Command="{Binding RefreshPreviewCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
         <KeyBinding Gesture="F6" Command="{Binding ExternalBrowserCommand}" CommandParameter="{Binding ElementName=editor}"></KeyBinding>
     </Controls:MetroWindow.InputBindings>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Position="Right" IsModal="True" Theme="Accent" Width="300" IsOpen="{Binding AboutViewModel.ShowAboutControl}">
+                <view:AboutControl DataContext="{Binding AboutViewModel}"></view:AboutControl>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -428,9 +436,14 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="ExitFullScreenButton" Grid.Row="0" Grid.Column="1" FontSize="25" Padding="10" BorderThickness="5" Opacity="0.6" 
-                            Content="Exit Full Screen" Click="ExitFullScreenButton_Click"
-                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen,Converter={StaticResource BooleanToVisibilityConverter}}"></Button>
+                    <Button x:Name="ExitFullScreenButton" Grid.Row="0" Grid.Column="1"  Padding="5" 
+                            BorderThickness="5" Opacity="0.6" Click="ExitFullScreenButton_Click"
+                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen,Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel>
+                            <TextBlock Text="Exit" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Full Screen" FontSize="10"></TextBlock>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
         </Grid>

@@ -147,6 +147,10 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\OppositeConverter.cs" />
     <Compile Include="Model\DocumentExporter.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="View\AboutControl.xaml.cs">
+      <DependentUpon>AboutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditorToolBarControl.xaml.cs">
       <DependentUpon>EditorToolBarControl.xaml</DependentUpon>
     </Compile>
@@ -163,6 +167,10 @@
     <Page Include="Converters.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AboutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditorToolBarControl.xaml">
       <SubType>Designer</SubType>

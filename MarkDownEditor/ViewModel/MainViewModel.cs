@@ -63,6 +63,7 @@ namespace MarkDownEditor.ViewModel
         #region SubViewModels
 
         public SettingsViewModel SettingsViewModel { get; } = new SettingsViewModel();
+        public AboutViewModel AboutViewModel { get; } = new AboutViewModel();
 
         #endregion //SubViewModels
 
@@ -110,8 +111,9 @@ namespace MarkDownEditor.ViewModel
             {
                 if (isSynchronize == value)
                     return;
-                isSynchronize = value;
-                RaisePropertyChanged("IsSynchronize");
+                isSynchronize = value; 
+                 RaisePropertyChanged("IsSynchronize");
+                 RaisePropertyChanged("ScrollOffsetRatio");
             }
         }
 
@@ -314,7 +316,8 @@ namespace MarkDownEditor.ViewModel
             set
             {
                 scrollOffsetRatio = value;
-                RaisePropertyChanged("ScrollOffsetRatio");
+                if (IsSynchronize)
+                    RaisePropertyChanged("ScrollOffsetRatio");
             }
         }
 
