@@ -409,7 +409,8 @@
                                 </StackPanel>
                             </WrapPanel>
                             <view:MvvmChromiumWebBrowser
-                                Grid.Row="1" x:Name="webBrowser" Focusable="False" Margin="10"
+                                Grid.Row="1" Focusable="False" Margin="10"
+                                ShouldReload="{Binding ShouldReload,Mode=TwoWay}"
                                 ScrollOffsetRatio="{Binding ScrollOffsetRatio,Mode=TwoWay}"
                                 Address="{Binding PreviewSource}" IsBrowserInitialized="{Binding IsBrowserInitialized,Mode=OneWayToSource}"></view:MvvmChromiumWebBrowser>
                         </Grid>

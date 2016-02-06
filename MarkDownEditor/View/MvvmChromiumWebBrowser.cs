@@ -42,6 +42,31 @@ namespace MarkDownEditor.View
         #endregion //IsBrowserInitialized
 
         /// <summary>
+        /// DependencyProperty for the ShouldReload binding. 
+        /// </summary>
+        public static DependencyProperty ShouldReloadProperty =
+            DependencyProperty.Register("ShouldReload", typeof(bool), typeof(MvvmChromiumWebBrowser),
+            new PropertyMetadata(default(bool), (obj, args) =>
+            {
+                MvvmChromiumWebBrowser target = (MvvmChromiumWebBrowser)obj;
+                target.ShouldReload = (bool)args.NewValue;
+
+                target.Reload();
+                string src = $"scrollTo(0, {target.ScrollOffsetRatio} * (document.body.offsetHeight - window.innerHeight))";
+                target.ExecuteScriptAsync(src);
+            }));
+
+        /// <summary>
+        /// Provide access to the ScrollOffsetRatio.
+        /// </summary>
+        public bool ShouldReload
+        {
+            get { return (bool)GetValue(ShouldReloadProperty); }
+            set { SetValue(ShouldReloadProperty, value); }
+        }
+
+
+        /// <summary>
         /// DependencyProperty for the ScrollOffsetRatio binding. 
         /// </summary>
         public static DependencyProperty ScrollOffsetRatioProperty =

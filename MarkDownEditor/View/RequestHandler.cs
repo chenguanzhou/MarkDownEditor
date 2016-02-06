@@ -19,7 +19,7 @@ namespace MarkDownEditor
 
         public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect)
         {
-            if (request.TransitionType == TransitionType.Explicit)
+            if (request.TransitionType == TransitionType.Explicit || request.TransitionType== TransitionType.Reload)
                 return false;
             else
             {

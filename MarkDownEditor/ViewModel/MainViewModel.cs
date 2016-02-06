@@ -47,7 +47,6 @@ namespace MarkDownEditor.ViewModel
             CurrentMarkdownTypeText = Properties.Settings.Default.MarkdownProcessor;
 
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
-            UpdatePreview();
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
 
             var line = SourceCode.GetLineByOffset(CaretOffset);
@@ -197,10 +196,22 @@ namespace MarkDownEditor.ViewModel
 
                 if (isBrowserInitialized)
                 {
-                    LoadDefaultDocument();                    
+                    UpdatePreview();
+                    LoadDefaultDocument();
                 }
             }
-        }        
+        }
+
+        public bool shouldReload = false;
+        public bool ShouldReload
+        {
+            get { return shouldReload; }
+            set
+            {
+                shouldReload = value;
+                RaisePropertyChanged("ShouldReload");
+            }
+        }
 
         public bool isModified = false;
         public bool IsModified
@@ -1037,8 +1048,9 @@ namespace MarkDownEditor.ViewModel
                 process.Start();
                 process.WaitForExit();
 
-                RaisePropertyChanged("PreviewSource");
-                RaisePropertyChanged("ScrollOffsetRatio");
+                //RaisePropertyChanged("PreviewSource");
+
+                ShouldReload = !ShouldReload;
             }            
 
             DocumrntStatisticsInfo = $"Words: {Regex.Matches(SourceCode.Text, @"[\S]+").Count}       Characters: {SourceCode.TextLength}       Lines: {SourceCode.LineCount}";
