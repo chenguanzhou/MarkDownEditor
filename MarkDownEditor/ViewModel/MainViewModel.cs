@@ -313,8 +313,6 @@ namespace MarkDownEditor.ViewModel
             get { return scrollOffsetRatio; }
             set
             {
-                //if (scrollOffsetRatio == value)
-                //    return;
                 scrollOffsetRatio = value;
                 RaisePropertyChanged("ScrollOffsetRatio");
             }
@@ -1047,8 +1045,6 @@ namespace MarkDownEditor.ViewModel
                 process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 process.Start();
                 process.WaitForExit();
-
-                //RaisePropertyChanged("PreviewSource");
 
                 ShouldReload = !ShouldReload;
             }            

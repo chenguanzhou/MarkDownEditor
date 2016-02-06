@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{41744844-6623-45C6-8239-DF0E8754B588}" Name="MarkDownEditor" Language="1033" Version="0.2.1" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+  <Product Id="{41744844-6623-45C6-8239-DF0E8754B588}" Name="MarkDownEditor" Language="1033" Version="0.2.2" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
     <Package Id="{3729D113-26F9-436F-BAFA-CAF699D0452F}" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"

@@ -37,7 +37,7 @@
         <Setter Property="FontWeight" Value="Normal"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Setter Property="Margin" Value="15,0,0,2"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}"></Setter>
         <Setter Property="FontSize" Value="18"></Setter>
     </Style>
