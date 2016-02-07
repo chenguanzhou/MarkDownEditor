@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="EmptyBoldAreaText" xml:space="preserve">
     <value>Bold Text Area</value>
   </data>
@@ -135,11 +147,50 @@
   <data name="EmptyTitle" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="ExportTo" xml:space="preserve">
+    <value>Export To</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full Screen</value>
+  </data>
   <data name="ListItem" xml:space="preserve">
     <value>List Item</value>
   </data>
   <data name="MarkDownFileFilter" xml:space="preserve">
     <value>Markdown Documents|*.md;*.markdown|All Files|*.*</value>
+  </data>
+  <data name="Open_In_External_Browser" xml:space="preserve">
+    <value>Open In External Browser (F6)</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Reading_Preview_Mode" xml:space="preserve">
+    <value>Reading Mode/Preview Mode</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="RefreshCommand" xml:space="preserve">
+    <value>Refresh (F5)</value>
+  </data>
+  <data name="Scrollbar_Synchronization" xml:space="preserve">
+    <value>Scrollbar Synchronization</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="SETTINGS" xml:space="preserve">
+    <value>SETTINGS</value>
+  </data>
+  <data name="ShowPreview" xml:space="preserve">
+    <value>Show Preview</value>
   </data>
   <data name="TypeDocxFilter" xml:space="preserve">
     <value>Microsoft Word|*.docx</value>
@@ -182,6 +233,9 @@
   </data>
   <data name="TypeRTFTip" xml:space="preserve">
     <value>Rich Text Format</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Undo</value>
   </data>
   <data name="UntitledTitle" xml:space="preserve">
     <value>Untitled</value>

@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
   <data name="EmptyBoldAreaText" xml:space="preserve">
     <value>加粗字体区域</value>
   </data>
@@ -135,11 +147,50 @@
   <data name="EmptyTitle" xml:space="preserve">
     <value>标题</value>
   </data>
+  <data name="ExportTo" xml:space="preserve">
+    <value>导出为</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>格式化代码</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>全屏</value>
+  </data>
   <data name="ListItem" xml:space="preserve">
     <value>列表项</value>
   </data>
   <data name="MarkDownFileFilter" xml:space="preserve">
     <value>Markdown文档|*.md;*.markdown|All Files|*.*</value>
+  </data>
+  <data name="Open_In_External_Browser" xml:space="preserve">
+    <value>系统浏览器打开 (F6)</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="Reading_Preview_Mode" xml:space="preserve">
+    <value>阅读模式/预览模式</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>恢复</value>
+  </data>
+  <data name="RefreshCommand" xml:space="preserve">
+    <value>刷新 (F5)</value>
+  </data>
+  <data name="Scrollbar_Synchronization" xml:space="preserve">
+    <value>滚动条同步</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="SETTINGS" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="ShowPreview" xml:space="preserve">
+    <value>显示预览</value>
   </data>
   <data name="TypeDocxFilter" xml:space="preserve">
     <value>Microsoft Word|*.docx</value>
@@ -182,6 +233,9 @@
   </data>
   <data name="TypeRTFTip" xml:space="preserve">
     <value>富文本格式（RTF）</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>撤销</value>
   </data>
   <data name="UntitledTitle" xml:space="preserve">
     <value>无标题</value>

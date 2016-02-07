@@ -7,6 +7,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:MarkDownEditor"
     xmlns:view="clr-namespace:MarkDownEditor.View"
+    xmlns:p="clr-namespace:MarkDownEditor.Properties"
     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:MetroDialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
     xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
@@ -27,9 +28,9 @@
     
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <ToggleButton Content="Show Preview Browser" IsChecked="{Binding IsShowPreview}" IsEnabled="{Binding IsReadingMode,Converter={StaticResource OppositeConverter}}"></ToggleButton>
-            <ToggleButton Content="Full Screen" IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}"></ToggleButton>
-            <Button Content="About" Command="{Binding AboutViewModel.ShowAboutCommand}"></Button>
+            <ToggleButton Content="{x:Static p:Resources.ShowPreview}" IsChecked="{Binding IsShowPreview}" IsEnabled="{Binding IsReadingMode,Converter={StaticResource OppositeConverter}}"></ToggleButton>
+            <ToggleButton Content="{x:Static p:Resources.FullScreen}" IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}"></ToggleButton>
+            <Button Content="{x:Static p:Resources.About}" Command="{Binding AboutViewModel.ShowAboutCommand}"></Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
@@ -108,29 +109,29 @@
                             FontSize="{Binding SettingsViewModel.EditorFontSize}">
                             <view:MvvmTextEditor.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Undo" Command="Undo"></MenuItem>
-                                    <MenuItem Header="Redo" Command="Redo"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Undo}" Command="Undo"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Redo}" Command="Redo"></MenuItem>
                                     <Separator></Separator>
-                                    <MenuItem Header="Select All" Command="SelectAll"></MenuItem>
-                                    <MenuItem Header="Cut" Command="Cut"></MenuItem>
-                                    <MenuItem Header="Copy" Command="Copy"></MenuItem>
-                                    <MenuItem Header="Paste" Command="Paste"></MenuItem>
-                                    <MenuItem Header="Delete" Command="Delete"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.SelectAll}" Command="SelectAll"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Cut}" Command="Cut"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Copy}" Command="Copy"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Paste}" Command="Paste"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Delete}" Command="Delete"></MenuItem>
                                     <Separator></Separator>
-                                    <MenuItem Header="Format" Command="{Binding FormatCodeCommand}"></MenuItem>
+                                    <MenuItem Header="{x:Static p:Resources.Format}" Command="{Binding FormatCodeCommand}"></MenuItem>
                                 </ContextMenu>
                             </view:MvvmTextEditor.ContextMenu>
                         </view:MvvmTextEditor>
                         <Expander Grid.Row="2" ExpandDirection="Up">
                             <Expander.Header>
-                                <TextBlock Margin="5" Text="SETTINGS" Foreground="{StaticResource WhiteBrush}"></TextBlock>
+                                <TextBlock Margin="5" Text="{x:Static p:Resources.SETTINGS}" Foreground="{StaticResource WhiteBrush}"></TextBlock>
                             </Expander.Header>
                             <view:SettingsControl DataContext="{Binding SettingsViewModel}" Height="250"></view:SettingsControl>
                         </Expander>
                     </Grid>
                 </GroupBox>
                 <Grid Grid.Column="1">
-                    <GroupBox Header="Preview">
+                    <GroupBox Header="{x:Static p:Resources.Preview}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
@@ -144,7 +145,7 @@
                                     </Style>
                                 </WrapPanel.Resources>
                                 <StackPanel>
-                                    <ToggleButton ToolTip="Reading Mode/Preview Mode" IsChecked="{Binding IsReadingMode}"
+                                    <ToggleButton ToolTip="{x:Static p:Resources.Reading_Preview_Mode}" IsChecked="{Binding IsReadingMode}"
                                             Style="{DynamicResource EditorToggleButton}" >
                                         <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}">
                                             <Rectangle.OpacityMask>
@@ -153,7 +154,7 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </ToggleButton>
-                                    <ToggleButton ToolTip="Scrollbar Synchronization" IsChecked="{Binding IsSynchronize}"
+                                    <ToggleButton ToolTip="{x:Static p:Resources.Scrollbar_Synchronization}" IsChecked="{Binding IsSynchronize}"
                                         Style="{DynamicResource EditorToggleButton}" >
                                         <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}">
                                             <Rectangle.OpacityMask>
@@ -164,7 +165,7 @@
                                     </ToggleButton>
                                 </StackPanel>
                                 <StackPanel>
-                                    <Button ToolTip="Refresh (F5)" Command="{Binding RefreshPreviewCommand}"
+                                    <Button ToolTip="{x:Static p:Resources.RefreshCommand}" Command="{Binding RefreshPreviewCommand}"
                                             Style="{DynamicResource EditorButton}" >
                                         <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                             <Rectangle.OpacityMask>
@@ -173,7 +174,7 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
-                                    <Button ToolTip="Open In External Browser (F6)" Command="{Binding ExternalBrowserCommand}"
+                                    <Button ToolTip="{x:Static p:Resources.Open_In_External_Browser}" Command="{Binding ExternalBrowserCommand}"
                                         Style="{DynamicResource EditorButton}" >
                                         <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                                             <Rectangle.OpacityMask>
@@ -184,7 +185,7 @@
                                     </Button>
                                 </StackPanel>
                                 <StackPanel>
-                                    <Controls:DropDownButton ToolTip="Export To" Style="{StaticResource CircleDropDownButton}"
+                                    <Controls:DropDownButton ToolTip="{x:Static p:Resources.ExportTo}" Style="{StaticResource CircleDropDownButton}"
                                                              ItemsSource="{Binding ExportFileTypes}" DisplayMemberPath="Name">
                                         <Controls:DropDownButton.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">

@@ -61,6 +61,42 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   查找类似 About 的本地化字符串。
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Copy 的本地化字符串。
+        /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Cut 的本地化字符串。
+        /// </summary>
+        public static string Cut {
+            get {
+                return ResourceManager.GetString("Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete 的本地化字符串。
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Bold Text Area 的本地化字符串。
         /// </summary>
         public static string EmptyBoldAreaText {
@@ -115,6 +151,33 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Export To 的本地化字符串。
+        /// </summary>
+        public static string ExportTo {
+            get {
+                return ResourceManager.GetString("ExportTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Format 的本地化字符串。
+        /// </summary>
+        public static string Format {
+            get {
+                return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Full Screen 的本地化字符串。
+        /// </summary>
+        public static string FullScreen {
+            get {
+                return ResourceManager.GetString("FullScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 List Item 的本地化字符串。
         /// </summary>
         public static string ListItem {
@@ -129,6 +192,96 @@ namespace MarkDownEditor.Properties {
         public static string MarkDownFileFilter {
             get {
                 return ResourceManager.GetString("MarkDownFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open In External Browser (F6) 的本地化字符串。
+        /// </summary>
+        public static string Open_In_External_Browser {
+            get {
+                return ResourceManager.GetString("Open_In_External_Browser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Paste 的本地化字符串。
+        /// </summary>
+        public static string Paste {
+            get {
+                return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Preview 的本地化字符串。
+        /// </summary>
+        public static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Reading Mode/Preview Mode 的本地化字符串。
+        /// </summary>
+        public static string Reading_Preview_Mode {
+            get {
+                return ResourceManager.GetString("Reading_Preview_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Redo 的本地化字符串。
+        /// </summary>
+        public static string Redo {
+            get {
+                return ResourceManager.GetString("Redo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Refresh (F5) 的本地化字符串。
+        /// </summary>
+        public static string RefreshCommand {
+            get {
+                return ResourceManager.GetString("RefreshCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Scrollbar Synchronization 的本地化字符串。
+        /// </summary>
+        public static string Scrollbar_Synchronization {
+            get {
+                return ResourceManager.GetString("Scrollbar_Synchronization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Select All 的本地化字符串。
+        /// </summary>
+        public static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SETTINGS 的本地化字符串。
+        /// </summary>
+        public static string SETTINGS {
+            get {
+                return ResourceManager.GetString("SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Show Preview 的本地化字符串。
+        /// </summary>
+        public static string ShowPreview {
+            get {
+                return ResourceManager.GetString("ShowPreview", resourceCulture);
             }
         }
         
@@ -255,6 +408,15 @@ namespace MarkDownEditor.Properties {
         public static string TypeRTFTip {
             get {
                 return ResourceManager.GetString("TypeRTFTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Undo 的本地化字符串。
+        /// </summary>
+        public static string Undo {
+            get {
+                return ResourceManager.GetString("Undo", resourceCulture);
             }
         }
         

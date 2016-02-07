@@ -91,13 +91,7 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        private List<CultureInfo> allLanguages = new List<CultureInfo>()
-        {
-            new CultureInfo("en-US"),
-            new CultureInfo("zh-CN")
-        };
-        public List<CultureInfo> AllLanguages => allLanguages;
-
+        public List<CultureInfo> AllLanguages => App.AllLanguages;
 
         public string PreviewSource => previewSourceTempPath;
 

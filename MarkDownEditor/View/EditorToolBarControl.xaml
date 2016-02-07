@@ -15,7 +15,7 @@
             </Style>
         </WrapPanel.Resources>
         <StackPanel>
-            <Button ToolTip="New (Ctrl+N)" 
+            <Button ToolTip="New (Ctrl+N)"
                                             Command="{Binding NewDocumentCommand}"
                                             Style="{StaticResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
