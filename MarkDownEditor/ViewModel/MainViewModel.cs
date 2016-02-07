@@ -636,7 +636,31 @@ namespace MarkDownEditor.ViewModel
         #endregion
 
 
-        #region Editor Commands
+        #region Editor Commands        
+        public ICommand FormatCodeCommand => new RelayCommand(async () =>
+        {
+            string inputPath = Path.GetTempFileName();
+            string outputPath = Path.GetTempFileName();
+
+            StreamWriter sw = new StreamWriter(inputPath);
+            sw.Write(SourceCode.Text);
+            sw.Close();
+
+            Process process = new Process();
+            process.StartInfo.FileName = "pandoc";
+            process.StartInfo.Arguments = $"\"{inputPath}\" -f {MarkDownType[CurrentMarkdownTypeText]} -t {MarkDownType[CurrentMarkdownTypeText]} -o \"{outputPath}\"";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            process.WaitForExit();
+
+            StreamReader sr = new StreamReader(outputPath);
+            var content = await sr.ReadToEndAsync();
+            sr.Close();
+
+            SourceCode.Text = content;
+            File.Delete(inputPath);
+            File.Delete(outputPath);
+        });
 
         private bool canUndo;
         public bool CanUndo
@@ -652,12 +676,6 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        public ICommand UndoCommand => new RelayCommand<object>((obj) =>
-        {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            editor.Undo();
-        });
-
         private bool canRedo;
         public bool CanRedo
         {
@@ -670,12 +688,6 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("CanRedo");
             }
         }
-
-        public ICommand RedoCommand => new RelayCommand<object>((obj) =>
-        {
-            var editor = (ICSharpCode.AvalonEdit.TextEditor)obj;
-            editor.Redo();
-        });
 
         public ICommand BoldCommand => new RelayCommand(() => 
         {

@@ -45,7 +45,7 @@ namespace MarkDownEditor.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main
+        public static MainViewModel Main
         {
             get
             {
