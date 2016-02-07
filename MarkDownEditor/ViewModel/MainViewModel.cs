@@ -12,12 +12,15 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace MarkDownEditor.ViewModel
@@ -71,6 +74,30 @@ namespace MarkDownEditor.ViewModel
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
         public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDown Editor Alpha";
+
+        private CultureInfo cultureInfo = new CultureInfo(Properties.Settings.Default.Language);
+        public CultureInfo CultureInfo
+        {
+            get { return cultureInfo; }
+            set
+            {
+                if (cultureInfo == value)
+                    return;
+                cultureInfo = value;
+                Properties.Settings.Default.Language = value?.Name;
+                Properties.Settings.Default.Save();
+                StatusBarText = "Language will changed after restart";
+                RaisePropertyChanged("CultureInfo");
+            }
+        }
+
+        private List<CultureInfo> allLanguages = new List<CultureInfo>()
+        {
+            new CultureInfo("en-US"),
+            new CultureInfo("zh-CN")
+        };
+        public List<CultureInfo> AllLanguages => allLanguages;
+
 
         public string PreviewSource => previewSourceTempPath;
 

@@ -22,7 +22,7 @@ namespace MarkDownEditor.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MarkDownEditor.Properties {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MarkDownEditor.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace MarkDownEditor.Properties {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,18 +61,9 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   查找类似 CancelException 的本地化字符串。
-        /// </summary>
-        internal static string CancelException {
-            get {
-                return ResourceManager.GetString("CancelException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Bold Text Area 的本地化字符串。
         /// </summary>
-        internal static string EmptyBoldAreaText {
+        public static string EmptyBoldAreaText {
             get {
                 return ResourceManager.GetString("EmptyBoldAreaText", resourceCulture);
             }
@@ -81,7 +72,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Code 的本地化字符串。
         /// </summary>
-        internal static string EmptyCode {
+        public static string EmptyCode {
             get {
                 return ResourceManager.GetString("EmptyCode", resourceCulture);
             }
@@ -90,7 +81,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Description of the link 的本地化字符串。
         /// </summary>
-        internal static string EmptyHyperlinkDescription {
+        public static string EmptyHyperlinkDescription {
             get {
                 return ResourceManager.GetString("EmptyHyperlinkDescription", resourceCulture);
             }
@@ -99,7 +90,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Description of the image 的本地化字符串。
         /// </summary>
-        internal static string EmptyImageDescription {
+        public static string EmptyImageDescription {
             get {
                 return ResourceManager.GetString("EmptyImageDescription", resourceCulture);
             }
@@ -108,7 +99,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Italic Text Area 的本地化字符串。
         /// </summary>
-        internal static string EmptyItalicAreaText {
+        public static string EmptyItalicAreaText {
             get {
                 return ResourceManager.GetString("EmptyItalicAreaText", resourceCulture);
             }
@@ -117,7 +108,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Title 的本地化字符串。
         /// </summary>
-        internal static string EmptyTitle {
+        public static string EmptyTitle {
             get {
                 return ResourceManager.GetString("EmptyTitle", resourceCulture);
             }
@@ -126,7 +117,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 List Item 的本地化字符串。
         /// </summary>
-        internal static string ListItem {
+        public static string ListItem {
             get {
                 return ResourceManager.GetString("ListItem", resourceCulture);
             }
@@ -135,7 +126,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Markdown Documents|*.md;*.markdown|All Files|*.* 的本地化字符串。
         /// </summary>
-        internal static string MarkDownFileFilter {
+        public static string MarkDownFileFilter {
             get {
                 return ResourceManager.GetString("MarkDownFileFilter", resourceCulture);
             }
@@ -144,7 +135,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Microsoft Word|*.docx 的本地化字符串。
         /// </summary>
-        internal static string TypeDocxFilter {
+        public static string TypeDocxFilter {
             get {
                 return ResourceManager.GetString("TypeDocxFilter", resourceCulture);
             }
@@ -153,7 +144,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Microsoft Word 2007-2016 Document Format 的本地化字符串。
         /// </summary>
-        internal static string TypeDocxToolTip {
+        public static string TypeDocxToolTip {
             get {
                 return ResourceManager.GetString("TypeDocxToolTip", resourceCulture);
             }
@@ -162,7 +153,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Electronic Publication|*.epub 的本地化字符串。
         /// </summary>
-        internal static string TypeEpubFilter {
+        public static string TypeEpubFilter {
             get {
                 return ResourceManager.GetString("TypeEpubFilter", resourceCulture);
             }
@@ -171,7 +162,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Electronic Publication Format 的本地化字符串。
         /// </summary>
-        internal static string TypeEpubToolTip {
+        public static string TypeEpubToolTip {
             get {
                 return ResourceManager.GetString("TypeEpubToolTip", resourceCulture);
             }
@@ -180,7 +171,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 HTML Web Page|*.html 的本地化字符串。
         /// </summary>
-        internal static string TypeHtmlFilter {
+        public static string TypeHtmlFilter {
             get {
                 return ResourceManager.GetString("TypeHtmlFilter", resourceCulture);
             }
@@ -189,7 +180,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 HyperText Markup Language 的本地化字符串。
         /// </summary>
-        internal static string TypeHtmlToolTip {
+        public static string TypeHtmlToolTip {
             get {
                 return ResourceManager.GetString("TypeHtmlToolTip", resourceCulture);
             }
@@ -198,7 +189,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 LATEX Document|*.tex 的本地化字符串。
         /// </summary>
-        internal static string TypeLatexFilter {
+        public static string TypeLatexFilter {
             get {
                 return ResourceManager.GetString("TypeLatexFilter", resourceCulture);
             }
@@ -207,7 +198,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 We suggest to compile exported tex files using XeLatex command if CJK characters exist in document 的本地化字符串。
         /// </summary>
-        internal static string TypeLatexToolTip {
+        public static string TypeLatexToolTip {
             get {
                 return ResourceManager.GetString("TypeLatexToolTip", resourceCulture);
             }
@@ -216,7 +207,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Portable Document Format|*.pdf 的本地化字符串。
         /// </summary>
-        internal static string TypePdfFilter {
+        public static string TypePdfFilter {
             get {
                 return ResourceManager.GetString("TypePdfFilter", resourceCulture);
             }
@@ -225,7 +216,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Portable Document Format 的本地化字符串。
         /// </summary>
-        internal static string TypePdfToolTip {
+        public static string TypePdfToolTip {
             get {
                 return ResourceManager.GetString("TypePdfToolTip", resourceCulture);
             }
@@ -234,7 +225,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Plain HTML Web Page|*.html 的本地化字符串。
         /// </summary>
-        internal static string TypePlainHtmlFilter {
+        public static string TypePlainHtmlFilter {
             get {
                 return ResourceManager.GetString("TypePlainHtmlFilter", resourceCulture);
             }
@@ -243,7 +234,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 HyperText Markup Language without any css 的本地化字符串。
         /// </summary>
-        internal static string TypePlainHtmlToolTip {
+        public static string TypePlainHtmlToolTip {
             get {
                 return ResourceManager.GetString("TypePlainHtmlToolTip", resourceCulture);
             }
@@ -252,7 +243,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Rich Text Format|*.rtf 的本地化字符串。
         /// </summary>
-        internal static string TypeRTFFilter {
+        public static string TypeRTFFilter {
             get {
                 return ResourceManager.GetString("TypeRTFFilter", resourceCulture);
             }
@@ -261,7 +252,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Rich Text Format 的本地化字符串。
         /// </summary>
-        internal static string TypeRTFTip {
+        public static string TypeRTFTip {
             get {
                 return ResourceManager.GetString("TypeRTFTip", resourceCulture);
             }
@@ -270,7 +261,7 @@ namespace MarkDownEditor.Properties {
         /// <summary>
         ///   查找类似 Untitled 的本地化字符串。
         /// </summary>
-        internal static string UntitledTitle {
+        public static string UntitledTitle {
             get {
                 return ResourceManager.GetString("UntitledTitle", resourceCulture);
             }

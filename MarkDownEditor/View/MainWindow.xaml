@@ -240,13 +240,14 @@
                 </Grid>
             </Border>
         </Grid>
-        <StatusBar Grid.Row="2" x:Name="statusBar" FontSize="14">
+        <StatusBar Grid.Row="2" x:Name="statusBar" FontSize="12">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="auto" />
@@ -269,14 +270,22 @@
             </StatusBarItem>
             <Separator Grid.Column="5" Margin="10,0,10,0"/>
             <StatusBarItem Grid.Column="6">
-                <ComboBox ItemsSource="{Binding MarkDownType.Keys}" FontSize="14" BorderThickness="0"
+                <ComboBox ItemsSource="{Binding MarkDownType.Keys}" FontSize="12" BorderThickness="0"
                           SelectedItem="{Binding CurrentMarkdownTypeText}"
                           Background="{DynamicResource AccentColorBrush3}"
                           Foreground="{DynamicResource WhiteBrush}">
                 </ComboBox>
             </StatusBarItem>
             <StatusBarItem Grid.Column="7">
-                <Menu FontSize="14"
+                <ComboBox ItemsSource="{Binding AllLanguages}" FontSize="12" BorderThickness="0"
+                          SelectedItem="{Binding CultureInfo}"
+                          DisplayMemberPath="NativeName"
+                          Background="{DynamicResource AccentColorBrush3}"
+                          Foreground="{DynamicResource WhiteBrush}">
+                </ComboBox>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="8">
+                <Menu FontSize="12"
                       Background="{DynamicResource AccentColorBrush}"
                       Foreground="{DynamicResource WhiteBrush}">
                     <MenuItem Header="Accent" BorderThickness="0"

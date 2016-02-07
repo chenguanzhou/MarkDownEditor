@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EmptyBoldAreaText" xml:space="preserve">
-    <value>Bold Text Area</value>
+    <value>加粗字体区域</value>
   </data>
   <data name="EmptyCode" xml:space="preserve">
-    <value>Code</value>
+    <value>代码</value>
   </data>
   <data name="EmptyHyperlinkDescription" xml:space="preserve">
-    <value>Description of the link</value>
+    <value>链接描述</value>
   </data>
   <data name="EmptyImageDescription" xml:space="preserve">
-    <value>Description of the image</value>
+    <value>图片描述</value>
   </data>
   <data name="EmptyItalicAreaText" xml:space="preserve">
-    <value>Italic Text Area</value>
+    <value>倾斜字体区域</value>
   </data>
   <data name="EmptyTitle" xml:space="preserve">
-    <value>Title</value>
+    <value>标题</value>
   </data>
   <data name="ListItem" xml:space="preserve">
-    <value>List Item</value>
+    <value>列表项</value>
   </data>
   <data name="MarkDownFileFilter" xml:space="preserve">
-    <value>Markdown Documents|*.md;*.markdown|All Files|*.*</value>
+    <value>Markdown文档|*.md;*.markdown|All Files|*.*</value>
   </data>
   <data name="TypeDocxFilter" xml:space="preserve">
     <value>Microsoft Word|*.docx</value>
   </data>
   <data name="TypeDocxToolTip" xml:space="preserve">
-    <value>Microsoft Word 2007-2016 Document Format</value>
+    <value>Microsoft Word 2007-2016 文档格式</value>
   </data>
   <data name="TypeEpubFilter" xml:space="preserve">
     <value>Electronic Publication|*.epub</value>
@@ -154,36 +154,36 @@
     <value>Electronic Publication Format</value>
   </data>
   <data name="TypeHtmlFilter" xml:space="preserve">
-    <value>HTML Web Page|*.html</value>
+    <value>HTML网页|*.html</value>
   </data>
   <data name="TypeHtmlToolTip" xml:space="preserve">
     <value>HyperText Markup Language</value>
   </data>
   <data name="TypeLatexFilter" xml:space="preserve">
-    <value>LATEX Document|*.tex</value>
+    <value>LATEX文档|*.tex</value>
   </data>
   <data name="TypeLatexToolTip" xml:space="preserve">
-    <value>We suggest to compile exported tex files using XeLatex command if CJK characters exist in document</value>
+    <value>如果代码中包含CJK（中日韩）文字，我们建议用XeLatex编译</value>
   </data>
   <data name="TypePdfFilter" xml:space="preserve">
     <value>Portable Document Format|*.pdf</value>
   </data>
   <data name="TypePdfToolTip" xml:space="preserve">
-    <value>Portable Document Format</value>
+    <value>PDF</value>
   </data>
   <data name="TypePlainHtmlFilter" xml:space="preserve">
     <value>Plain HTML Web Page|*.html</value>
   </data>
   <data name="TypePlainHtmlToolTip" xml:space="preserve">
-    <value>HyperText Markup Language without any css</value>
+    <value>不带CSS的HTML</value>
   </data>
   <data name="TypeRTFFilter" xml:space="preserve">
     <value>Rich Text Format|*.rtf</value>
   </data>
   <data name="TypeRTFTip" xml:space="preserve">
-    <value>Rich Text Format</value>
+    <value>富文本格式（RTF）</value>
   </data>
   <data name="UntitledTitle" xml:space="preserve">
-    <value>Untitled</value>
+    <value>无标题</value>
   </data>
 </root>
