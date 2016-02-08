@@ -2,19 +2,24 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{41744844-6623-45C6-8239-DF0E8754B588}" Name="MarkDownEditor" Language="1033" Version="0.2.2" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{3729D113-26F9-436F-BAFA-CAF699D0452F}" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{0F039263-6539-45E8-8142-2CE005D6CC17}" Name="MarkDownEditor" Language="1033" Version="0.2.3" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{201013C2-9026-4021-815C-16D9028C35BF}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
-      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>   
-    
+      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
+
     <MediaTemplate EmbedCab="yes"/>
 
     <Feature Id="ProductFeature" Title="MarkDownEditor" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ZH_CN_Components" />
       <ComponentRef Id="RegistryFileAssociation" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="DesktopFolderShortcut" />
+    </Feature>
+
+    <Feature Id="VCRedist" Title="Visual C++ 2013 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <MergeRef Id="VCRedist"/>
     </Feature>
 
     <PropertyRef Id="NETFRAMEWORK45"/>
@@ -29,26 +34,29 @@
     </UI>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <UIRef Id="WixUI_ErrorProgressText" />
-    
+
     <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch MarkDownEditor" />
     <Property Id="WixShellExecTarget" Value="[INSTALLFOLDER]MarkDownEditor.exe" />
     <CustomAction Id="LaunchApplication"
         BinaryKey="WixCA"
         DllEntry="WixShellExec"
         Impersonate="yes" />
-    
+
   </Product>
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="MarkDownEditor" />
+        <Directory Id="INSTALLFOLDER" Name="MarkDownEditor">
+          <Directory Id="ZH_CN_FOLDER" Name="zh-CN"></Directory>
+        </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="MarkDownEditor"/>
+        <Directory Id="ApplicationProgramsFolder" Name="MarkDownEditor">
+        </Directory>
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop" />
-    </Directory>    
+    </Directory>
   </Fragment>
 
   <Fragment>
@@ -91,6 +99,9 @@
         </Shortcut>
         <RegistryValue Root="HKCU" Key="Software\Microsoft\MarkDownEditor" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Merge Id="VCRedist" SourceFile="Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0"/>
     </DirectoryRef>
   </Fragment>
 
@@ -137,6 +148,11 @@
                           Description="Uninstalls MarkDownEditor"
                           Target="[SystemFolder]msiexec.exe"
                           Arguments="/x [ProductCode]"/>
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="ZH_CN_Components" Directory="ZH_CN_FOLDER">
+      <Component Id="ZH_CN_Component" Guid="{81460AA3-D569-4DA4-977B-BCC9383AD3E5}">
+        <File Id="MarkDownEditor.resources.dll" Name="MarkDownEditor.resources.dll" Source="$(var.MarkDownEditor_TargetDir)zh-CN/MarkDownEditor.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
