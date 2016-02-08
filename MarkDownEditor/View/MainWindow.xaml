@@ -234,8 +234,8 @@
                             BorderThickness="5" Opacity="0.6" Click="ExitFullScreenButton_Click"
                             Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen,Converter={StaticResource BooleanToVisibilityConverter}}">
                         <StackPanel>
-                            <TextBlock Text="Exit" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
-                            <TextBlock Text="Full Screen" FontSize="10"></TextBlock>
+                            <TextBlock Text="{x:Static p:Resources.Exit}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{x:Static p:Resources.FullScreen}" FontSize="10" HorizontalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </Button>
                 </Grid>
@@ -289,7 +289,7 @@
                 <Menu FontSize="12"
                       Background="{DynamicResource AccentColorBrush}"
                       Foreground="{DynamicResource WhiteBrush}">
-                    <MenuItem Header="Accent" BorderThickness="0"
+                    <MenuItem Header="{x:Static p:Resources.Accent}" BorderThickness="0"
                               ItemsSource="{Binding AccentColors, Mode=OneWay}"                              
                               Background="{DynamicResource AccentColorBrush}"
                               Foreground="{DynamicResource WhiteBrush}">

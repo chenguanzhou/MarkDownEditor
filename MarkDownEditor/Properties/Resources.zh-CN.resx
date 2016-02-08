@@ -240,4 +240,67 @@
   <data name="UntitledTitle" xml:space="preserve">
     <value>无标题</value>
   </data>
+  <data name="Accent" xml:space="preserve">
+    <value>主题色</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>字体系列</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>字体大小</value>
+  </data>
+  <data name="HighlightCurrentLine" xml:space="preserve">
+    <value>光标所在行高亮</value>
+  </data>
+  <data name="NewCommand" xml:space="preserve">
+    <value>新建 (Ctrl+N)</value>
+  </data>
+  <data name="OpenCommand" xml:space="preserve">
+    <value>打开 (Ctrl+O)</value>
+  </data>
+  <data name="Ruler" xml:space="preserve">
+    <value>标尺</value>
+  </data>
+  <data name="RulerPosition" xml:space="preserve">
+    <value>标尺位置</value>
+  </data>
+  <data name="SaveAsCommand" xml:space="preserve">
+    <value>另存为 (Ctrl+Shift+S)</value>
+  </data>
+  <data name="SaveCommand" xml:space="preserve">
+    <value>保存 (Ctrl+S)</value>
+  </data>
+  <data name="ShowColumnRuler" xml:space="preserve">
+    <value>显示列标尺</value>
+  </data>
+  <data name="ShowEndOfLine" xml:space="preserve">
+    <value>显示行尾</value>
+  </data>
+  <data name="ShowLineNumbers" xml:space="preserve">
+    <value>显示行号</value>
+  </data>
+  <data name="ShowSpaces" xml:space="preserve">
+    <value>显示空格</value>
+  </data>
+  <data name="ShowTabs" xml:space="preserve">
+    <value>显示制表位</value>
+  </data>
+  <data name="SourceCode" xml:space="preserve">
+    <value>源代码</value>
+  </data>
+  <data name="Symbols" xml:space="preserve">
+    <value>符号</value>
+  </data>
+  <data name="WordWrap" xml:space="preserve">
+    <value>自动换行</value>
+  </data>
 </root>

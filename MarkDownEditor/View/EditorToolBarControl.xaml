@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:p="clr-namespace:MarkDownEditor.Properties"
              xmlns:local="clr-namespace:MarkDownEditor.View"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
@@ -15,29 +16,27 @@
             </Style>
         </WrapPanel.Resources>
         <StackPanel>
-            <Button ToolTip="New (Ctrl+N)"
-                                            Command="{Binding NewDocumentCommand}"
-                                            Style="{StaticResource EditorButton}">
+            <Button ToolTip="{x:Static p:Resources.NewCommand}"
+                    Command="{Binding NewDocumentCommand}"
+                    Style="{StaticResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform"
-                                            Visual="{DynamicResource appbar_page_add}" />
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_page_add}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Open (Ctrl+O)" 
-                                            Command="{Binding OpenDocumentCommand}"
-                                            Style="{StaticResource EditorButton}">
+            <Button ToolTip="{x:Static p:Resources.OpenCommand}" 
+                    Command="{Binding OpenDocumentCommand}"
+                    Style="{StaticResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform"
-                                            Visual="{DynamicResource appbar_folder_open}" />
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_folder_open}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Save (Ctrl+S)" 
-                                            Command="{Binding SaveDocumentCommand}"
-                                            Style="{DynamicResource EditorButton}" >
+            <Button ToolTip="{x:Static p:Resources.SaveCommand}" 
+                    Command="{Binding SaveDocumentCommand}"
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -45,9 +44,9 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Save As (Ctrl+Shift+S)" 
-                                            Command="{Binding SaveAsDocumentCommand}"
-                                            Style="{DynamicResource EditorButton}" >
+            <Button ToolTip="{x:Static p:Resources.SaveAsCommand}" 
+                    Command="{Binding SaveAsDocumentCommand}"
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -58,8 +57,8 @@
         </StackPanel>
         <StackPanel>
             <Button ToolTip="Bold (Ctrl+B)" 
-                                            Command="{Binding BoldCommand}" 
-                                            Style="{DynamicResource EditorButton}" >
+                    Command="{Binding BoldCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -68,8 +67,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Italic (Ctrl+I)" 
-                                            Command="{Binding ItalicCommand}" 
-                                            Style="{DynamicResource EditorButton}" >
+                    Command="{Binding ItalicCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -78,8 +77,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Quote (Ctrl+Q)" 
-                                            Command="{Binding QuoteCommand}" 
-                                            Style="{DynamicResource EditorButton}" >
+                    Command="{Binding QuoteCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -88,8 +87,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Code (Ctrl+K)" 
-                                            Command="{Binding GeneralCodeCommand}" 
-                                            Style="{DynamicResource EditorButton}" >
+                    Command="{Binding GeneralCodeCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -100,8 +99,8 @@
         </StackPanel>
         <StackPanel>
             <Button ToolTip="Unordered List (Ctrl+U)" 
-                                            Command="{Binding UnorderedListCommand}"
-                                            Style="{DynamicResource EditorButton}">
+                    Command="{Binding UnorderedListCommand}"
+                    Style="{DynamicResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -110,8 +109,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Ordered List (Ctrl+Shift+O)" 
-                                            Command="{Binding OrderedListCommand}" 
-                                    Style="{DynamicResource EditorButton}">
+                    Command="{Binding OrderedListCommand}" 
+                    Style="{DynamicResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -120,8 +119,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Title (Ctrl+H)" 
-                                            Command="{Binding TitleCommand}" 
-                                    Style="{DynamicResource EditorButton}" >
+                    Command="{Binding TitleCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -132,9 +131,9 @@
         </StackPanel>
         <StackPanel>
             <Button ToolTip="Hyperlink (Ctrl+L)" 
-                                            Command="{Binding HyperlinkCommand}" 
-                                    Style="{DynamicResource EditorButton}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                    Command="{Binding HyperlinkCommand}" 
+                    Style="{DynamicResource EditorButton}" 
+                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -143,9 +142,9 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Image (Ctrl+G)" 
-                                            Command="{Binding ImageCommand}" 
-                                    Style="{DynamicResource EditorButton}" 
-                                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
+                    Command="{Binding ImageCommand}" 
+                    Style="{DynamicResource EditorButton}" 
+                    BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -156,8 +155,8 @@
         </StackPanel>
         <StackPanel>
             <Button ToolTip="Horizontal Rule (Ctrl+R)" 
-                                            Command="{Binding SeparateLineCommand}" 
-                                            Style="{DynamicResource EditorButton}">
+                    Command="{Binding SeparateLineCommand}" 
+                    Style="{DynamicResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -166,8 +165,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Date Stamp (Ctrl++Shift+D)" 
-                                            Command="{Binding DateStampCommand}" 
-                                            Style="{DynamicResource EditorButton}" >
+                    Command="{Binding DateStampCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
@@ -176,8 +175,8 @@
                 </Rectangle>
             </Button>
             <Button ToolTip="Time Stamp (Ctrl+T)" 
-                                            Command="{Binding TimeStampCommand}" 
-                                            Style="{DynamicResource EditorButton}" >
+                    Command="{Binding TimeStampCommand}" 
+                    Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
