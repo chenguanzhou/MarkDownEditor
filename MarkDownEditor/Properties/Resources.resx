@@ -303,4 +303,124 @@
   <data name="WordWrap" xml:space="preserve">
     <value>Word Wrap</value>
   </data>
+  <data name="BoldCommand" xml:space="preserve">
+    <value>Bold (Ctrl+B)</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Characters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="CodeCommand" xml:space="preserve">
+    <value>Code (Ctrl+K)</value>
+  </data>
+  <data name="Col" xml:space="preserve">
+    <value>Col</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="DateStampCommand" xml:space="preserve">
+    <value>Date Stamp (Ctrl++Shift+D)</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="DoNotSave" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error_ExportError" xml:space="preserve">
+    <value>can't be exported in this version!</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Exporting" xml:space="preserve">
+    <value>Exporting</value>
+  </data>
+  <data name="FailedToExport" xml:space="preserve">
+    <value>Failed to export</value>
+  </data>
+  <data name="HorizontalRuleCommand" xml:space="preserve">
+    <value>Horizontal Rule (Ctrl+R)</value>
+  </data>
+  <data name="HyperlinkCommand" xml:space="preserve">
+    <value>Hyperlink (Ctrl+L)</value>
+  </data>
+  <data name="ImageCommand" xml:space="preserve">
+    <value>Image (Ctrl+G)</value>
+  </data>
+  <data name="ItalicCommand" xml:space="preserve">
+    <value>Italic (Ctrl+I)</value>
+  </data>
+  <data name="LanguageSwitch" xml:space="preserve">
+    <value>Language will switched after restart</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="Ln" xml:space="preserve">
+    <value>Ln</value>
+  </data>
+  <data name="NewDocumentCreated" xml:space="preserve">
+    <value>New Document Created</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="OpenedSuccessfully" xml:space="preserve">
+    <value>opened successfully</value>
+  </data>
+  <data name="OpenFileFailed" xml:space="preserve">
+    <value>Open file failed!</value>
+  </data>
+  <data name="OpenRightNow" xml:space="preserve">
+    <value>Open Right Now</value>
+  </data>
+  <data name="OrderedListCommand" xml:space="preserve">
+    <value>Ordered List (Ctrl+Shift+O)</value>
+  </data>
+  <data name="QuoteCommand" xml:space="preserve">
+    <value>Quote (Ctrl+Q)</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="SavedSuccessfully" xml:space="preserve">
+    <value>saved successfully</value>
+  </data>
+  <data name="SaveFileFailed" xml:space="preserve">
+    <value>Save file failed!</value>
+  </data>
+  <data name="SuccessfullyExported" xml:space="preserve">
+    <value>Successfully Exported</value>
+  </data>
+  <data name="TimeStampCommand" xml:space="preserve">
+    <value>Time Stamp (Ctrl+T)</value>
+  </data>
+  <data name="TitleCommand" xml:space="preserve">
+    <value>Heading (Ctrl+H)</value>
+  </data>
+  <data name="UnorderedListCommand" xml:space="preserve">
+    <value>Unordered List (Ctrl+U)</value>
+  </data>
+  <data name="UnsavedChanges" xml:space="preserve">
+    <value>Unsaved Changes</value>
+  </data>
+  <data name="WhetherSaveChanges" xml:space="preserve">
+    <value>Would you want to save your changes?</value>
+  </data>
+  <data name="Words" xml:space="preserve">
+    <value>Words</value>
+  </data>
 </root>

@@ -56,7 +56,7 @@
             </Button>
         </StackPanel>
         <StackPanel>
-            <Button ToolTip="Bold (Ctrl+B)" 
+            <Button ToolTip="{x:Static p:Resources.BoldCommand}" 
                     Command="{Binding BoldCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -66,7 +66,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Italic (Ctrl+I)" 
+            <Button ToolTip="{x:Static p:Resources.ItalicCommand}" 
                     Command="{Binding ItalicCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -76,7 +76,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Quote (Ctrl+Q)" 
+            <Button ToolTip="{x:Static p:Resources.QuoteCommand}" 
                     Command="{Binding QuoteCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -86,7 +86,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Code (Ctrl+K)" 
+            <Button ToolTip="{x:Static p:Resources.CodeCommand}" 
                     Command="{Binding GeneralCodeCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -98,7 +98,7 @@
             </Button>
         </StackPanel>
         <StackPanel>
-            <Button ToolTip="Unordered List (Ctrl+U)" 
+            <Button ToolTip="{x:Static p:Resources.UnorderedListCommand}" 
                     Command="{Binding UnorderedListCommand}"
                     Style="{DynamicResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -108,7 +108,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Ordered List (Ctrl+Shift+O)" 
+            <Button ToolTip="{x:Static p:Resources.OrderedListCommand}" 
                     Command="{Binding OrderedListCommand}" 
                     Style="{DynamicResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -118,7 +118,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Title (Ctrl+H)" 
+            <Button ToolTip="{x:Static p:Resources.TitleCommand}" 
                     Command="{Binding TitleCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -130,7 +130,7 @@
             </Button>
         </StackPanel>
         <StackPanel>
-            <Button ToolTip="Hyperlink (Ctrl+L)" 
+            <Button ToolTip="{x:Static p:Resources.HyperlinkCommand}" 
                     Command="{Binding HyperlinkCommand}" 
                     Style="{DynamicResource EditorButton}" 
                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
@@ -141,7 +141,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Image (Ctrl+G)" 
+            <Button ToolTip="{x:Static p:Resources.ImageCommand}" 
                     Command="{Binding ImageCommand}" 
                     Style="{DynamicResource EditorButton}" 
                     BorderBrush="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource AccentColorBrush}">
@@ -154,7 +154,7 @@
             </Button>
         </StackPanel>
         <StackPanel>
-            <Button ToolTip="Horizontal Rule (Ctrl+R)" 
+            <Button ToolTip="{x:Static p:Resources.HorizontalRuleCommand}" 
                     Command="{Binding SeparateLineCommand}" 
                     Style="{DynamicResource EditorButton}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -164,7 +164,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Date Stamp (Ctrl++Shift+D)" 
+            <Button ToolTip="{x:Static p:Resources.DateStampCommand}" 
                     Command="{Binding DateStampCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
@@ -174,7 +174,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
-            <Button ToolTip="Time Stamp (Ctrl+T)" 
+            <Button ToolTip="{x:Static p:Resources.TimeStampCommand}" 
                     Command="{Binding TimeStampCommand}" 
                     Style="{DynamicResource EditorButton}" >
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
