@@ -73,7 +73,7 @@ namespace MarkDownEditor.ViewModel
         private string markdownSourceTempPath = Path.GetTempFileName();
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
-        public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDown Editor Alpha";
+        public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDown Editor Beta";
 
         private CultureInfo cultureInfo = new CultureInfo(Properties.Settings.Default.Language);
         public CultureInfo CultureInfo
