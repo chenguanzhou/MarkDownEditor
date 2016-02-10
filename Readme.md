@@ -40,3 +40,11 @@ The editor has the following `features`:
 
 
 # Download
+> [All Release](https://github.com/chenguanzhou/MarkDownEditor/releases)
+
+For Win7 and Win8/8.1 users, please install [.Net Framework  4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) before running MarkDown Editor. 
+
+For Win10 users, the .Net Framework 4.5 has been preinstalled.
+
+# Dev
+For a WPF project, I recommand VS2015 Community Edition to build.
