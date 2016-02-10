@@ -17,6 +17,7 @@
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="DesktopFolderShortcut" />
     </Feature>
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
 
     <Feature Id="VCRedist" Title="Visual C++ 2013 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
       <MergeRef Id="VCRedist"/>
