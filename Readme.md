@@ -1,3 +1,5 @@
+![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
+
 # MarkDown Editor
 An open-source metro-style desktop markdown editor for Windows 7 and above. 
 
