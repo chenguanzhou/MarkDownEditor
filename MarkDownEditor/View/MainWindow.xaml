@@ -137,79 +137,8 @@
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <WrapPanel Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
-                                <WrapPanel.Resources>
-                                    <Style TargetType="StackPanel">
-                                        <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                                        <Setter Property="Orientation" Value="Horizontal"></Setter>
-                                    </Style>
-                                </WrapPanel.Resources>
-                                <StackPanel>
-                                    <ToggleButton ToolTip="{x:Static p:Resources.Reading_Preview_Mode}" IsChecked="{Binding IsReadingMode}"
-                                            Style="{DynamicResource EditorToggleButton}" >
-                                        <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                Visual="{DynamicResource appbar_arrow_expand}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </ToggleButton>
-                                    <ToggleButton ToolTip="{x:Static p:Resources.Scrollbar_Synchronization}" IsChecked="{Binding IsSynchronize}"
-                                        Style="{DynamicResource EditorToggleButton}" >
-                                        <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                             Visual="{DynamicResource appbar_arrow_up_down}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </ToggleButton>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Button ToolTip="{x:Static p:Resources.RefreshCommand}" Command="{Binding RefreshPreviewCommand}"
-                                            Style="{DynamicResource EditorButton}" >
-                                        <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                Visual="{DynamicResource appbar_refresh}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </Button>
-                                    <Button ToolTip="{x:Static p:Resources.Open_In_External_Browser}" Command="{Binding ExternalBrowserCommand}"
-                                        Style="{DynamicResource EditorButton}" >
-                                        <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                             Visual="{DynamicResource appbar_browser}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </Button>
-                                </StackPanel>
-                                <StackPanel>
-                                    <Controls:DropDownButton ToolTip="{x:Static p:Resources.ExportTo}" Style="{StaticResource CircleDropDownButton}"
-                                                             ItemsSource="{Binding ExportFileTypes}" DisplayMemberPath="Name">
-                                        <Controls:DropDownButton.Icon>
-                                            <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform"
-                                                 Visual="{DynamicResource appbar_chevron_right}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </Controls:DropDownButton.Icon>
-                                        <Controls:DropDownButton.ItemContainerStyle>
-                                            <Style TargetType="MenuItem">
-                                                <Setter Property="Padding" Value="3"></Setter>
-                                                <Setter Property="FontSize" Value="15"></Setter>
-                                                <Setter Property="Command" Value="{Binding ExportCommand}"/>
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock Text="{Binding ToolTip}" TextWrapping="WrapWithOverflow" MaxWidth="250"></TextBlock>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </Controls:DropDownButton.ItemContainerStyle>
-                                    </Controls:DropDownButton>
-                                </StackPanel>
-                            </WrapPanel>
+                            <view:PreviewToolBarControl Margin="5" HorizontalAlignment="Right">
+                            </view:PreviewToolBarControl>
                             <view:MvvmChromiumWebBrowser
                                 Grid.Row="1" Focusable="False" Margin="10"
                                 ShouldReload="{Binding ShouldReload,Mode=TwoWay}"

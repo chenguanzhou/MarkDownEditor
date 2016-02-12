@@ -6,6 +6,7 @@ An open-source metro-style desktop markdown editor for Windows 7 and above.
 
 The license of this project is General Public License(GPL). 
 
+Official Website: [http://chenguanzhou.github.io/MarkDownEditor/](http://chenguanzhou.github.io/MarkDownEditor/)
 
 # Screenshot
 ![](screenshot.jpg)

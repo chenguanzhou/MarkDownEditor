@@ -108,7 +108,7 @@ namespace MarkDownEditor.Model
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
-            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -s -o --latex-engin=xelatex --template=xelatex.template \"{outputPath}\"";
+            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -s --latex-engine=xelatex --template=xelatex.template -o \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();

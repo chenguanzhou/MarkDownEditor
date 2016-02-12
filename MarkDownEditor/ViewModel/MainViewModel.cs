@@ -419,7 +419,8 @@ namespace MarkDownEditor.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        await progress.CloseAsync();
+                        if (progress.IsOpen)
+                            await progress.CloseAsync();
                         await DialogCoordinator.Instance.ShowMessageAsync(context,
                             Properties.Resources.Error, $"{Properties.Resources.FailedToExport}!\n{Properties.Resources.Detail}: {ex.Message}",
                             MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });

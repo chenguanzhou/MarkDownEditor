@@ -161,6 +161,9 @@
     </Compile>
     <Compile Include="View\MvvmChromiumWebBrowser.cs" />
     <Compile Include="View\MvvmTextEditor.cs" />
+    <Compile Include="View\PreviewToolBarControl.xaml.cs">
+      <DependentUpon>PreviewToolBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RequestHandler.cs" />
     <Compile Include="SimpleHelpers\FileEncoding.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
@@ -196,6 +199,10 @@
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PreviewToolBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingsControl.xaml">
       <SubType>Designer</SubType>
