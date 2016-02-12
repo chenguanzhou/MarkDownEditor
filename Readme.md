@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/f82df8y5yojgmai4?svg=true)](https://ci.appveyor.com/project/chenguanzhou/markdowneditor)
 ![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
 
 # MarkDown Editor
