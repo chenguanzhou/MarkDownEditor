@@ -2,6 +2,8 @@
 ![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
 
 # MarkDown Editor
+
+[![Join the chat at https://gitter.im/chenguanzhou/MarkDownEditor](https://badges.gitter.im/chenguanzhou/MarkDownEditor.svg)](https://gitter.im/chenguanzhou/MarkDownEditor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 An open-source metro-style desktop markdown editor for Windows 7 and above. 
 
 The license of this project is General Public License(GPL). 
