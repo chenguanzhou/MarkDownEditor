@@ -51,9 +51,12 @@ namespace MarkDownEditor.View
                 MvvmChromiumWebBrowser target = (MvvmChromiumWebBrowser)obj;
                 target.ShouldReload = (bool)args.NewValue;
 
-                target.Reload();
-                string src = $"scrollTo(0, {target.ScrollOffsetRatio} * (document.body.offsetHeight - window.innerHeight))";
-                target.ExecuteScriptAsync(src);
+                if (target.IsBrowserInitialized)
+                {
+                    target.Reload();
+                    string src = $"scrollTo(0, {target.ScrollOffsetRatio} * (document.body.offsetHeight - window.innerHeight))";
+                    target.ExecuteScriptAsync(src);
+                }                
             }));
 
         /// <summary>
