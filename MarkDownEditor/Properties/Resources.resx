@@ -423,4 +423,40 @@
   <data name="Words" xml:space="preserve">
     <value>Words</value>
   </data>
+  <data name="Hyperlink" xml:space="preserve">
+    <value>Hyperlink</value>
+  </data>
+  <data name="OnlineImage" xml:space="preserve">
+    <value>Online Image</value>
+  </data>
+  <data name="InputImage" xml:space="preserve">
+    <value>Please input an image URL</value>
+  </data>
+  <data name="InputLink" xml:space="preserve">
+    <value>Please input an URL</value>
+  </data>
+  <data name="OptionalTitle" xml:space="preserve">
+    <value>Optional Title</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ImageFilter" xml:space="preserve">
+    <value>Images|*.bmp;*.jpg;*.gif;*.png;*.tif</value>
+  </data>
+  <data name="ImageSizeError" xml:space="preserve">
+    <value>The size of file is larger than 10MB, unable to upload!</value>
+  </data>
+  <data name="SelectImageType" xml:space="preserve">
+    <value>Select Image Type</value>
+  </data>
+  <data name="UploadImagesTitle" xml:space="preserve">
+    <value>Upload Images (Don't upload illegal images)</value>
+  </data>
+  <data name="Uploading" xml:space="preserve">
+    <value>Uploading</value>
+  </data>
+  <data name="UploadLocalImage" xml:space="preserve">
+    <value>Upload Local Image（It's may not available in Mainland China）</value>
+  </data>
 </root>

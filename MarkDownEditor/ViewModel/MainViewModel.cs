@@ -3,6 +3,9 @@ using CefSharp.Wpf;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ICSharpCode.AvalonEdit.Document;
+using Imgur.API.Authentication.Impl;
+using Imgur.API.Endpoints.Impl;
+using Imgur.API.Models;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using MarkDownEditor.Model;
@@ -962,8 +965,8 @@ namespace MarkDownEditor.ViewModel
 
         public ICommand HyperlinkCommand => new RelayCommand(async () =>
         {
-            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Hyperlink", "Please input an URL",
-                new MetroDialogSettings() { DefaultText = "http://example.com/ \"Optional Title\"", ColorScheme = MetroDialogColorScheme.Accented });
+            string url = await DialogCoordinator.Instance.ShowInputAsync(this, Properties.Resources.Hyperlink, Properties.Resources.InputLink,
+                new MetroDialogSettings() { DefaultText = $"http://example.com/ \"{Properties.Resources.OptionalTitle}\"", ColorScheme = MetroDialogColorScheme.Accented });
             if (url != null)
             {
                 if (SelectionLength == 0)
@@ -984,24 +987,87 @@ namespace MarkDownEditor.ViewModel
 
         public ICommand ImageCommand => new RelayCommand(async () =>
         {
-            string url = await DialogCoordinator.Instance.ShowInputAsync(this, "Image", "Please input an image URL", 
-                new MetroDialogSettings() { DefaultText = "http://example.com/graph.jpg \"Optional Title\"", ColorScheme = MetroDialogColorScheme.Accented });
-            if (url != null)
+            Action<string> insertUrl = (string url) => 
             {
-                if (SelectionLength == 0)
+                if (url != null)
                 {
-                    var toInsert = $"![{Properties.Resources.EmptyImageDescription}]({url})";
-                    sourceCode.Insert(SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
-                    SelectionStart += 2;
-                    SelectionLength = Properties.Resources.EmptyImageDescription.Length;
+                    if (SelectionLength == 0)
+                    {
+                        var toInsert = $"![{Properties.Resources.EmptyImageDescription}]({url})";
+                        sourceCode.Insert(SelectionStart, toInsert, AnchorMovementType.BeforeInsertion);
+                        SelectionStart += 2;
+                        SelectionLength = Properties.Resources.EmptyImageDescription.Length;
+                    }
+                    else
+                    {
+                        var toInsert = $"![{sourceCode.GetText(SelectionStart, SelectionLength)}]({url})";
+                        sourceCode.Replace(SelectionStart, SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
+                        SelectionLength = 0;
+                    }
                 }
-                else
+            };
+
+            Func<string, Task<string>> uploadImage = async (string filePath) =>
+            {
+                var client = new ImgurClient(Properties.Settings.Default.ClientID, Properties.Settings.Default.ClientSecret);
+                var endpoint = new ImageEndpoint(client);
+                IImage image;
+                using (var fs = new FileStream(filePath, FileMode.Open))
                 {
-                    var toInsert = $"![{sourceCode.GetText(SelectionStart,SelectionLength)}]({url})";
-                    sourceCode.Replace(SelectionStart, SelectionLength, toInsert, OffsetChangeMappingType.RemoveAndInsert);
-                    SelectionLength = 0;
+                    image = await endpoint.UploadImageStreamAsync(fs);
                 }
+                return image.Link;
+            };
+
+            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Image, Properties.Resources.SelectImageType,
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings()
+                {
+                    AffirmativeButtonText = Properties.Resources.OnlineImage,
+                    NegativeButtonText = Properties.Resources.UploadLocalImage,
+                    FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                    ColorScheme = MetroDialogColorScheme.Accented
+                });
+
+            if (ret == MessageDialogResult.FirstAuxiliary)
+                return;
+            else if (ret == MessageDialogResult.Affirmative)
+            {
+                string link = await DialogCoordinator.Instance.ShowInputAsync(this, Properties.Resources.OnlineImage, Properties.Resources.InputImage,
+                new MetroDialogSettings() { DefaultText = $"http://example.com/graph.jpg \"{Properties.Resources.OptionalTitle}\"", ColorScheme = MetroDialogColorScheme.Accented });
+
+                insertUrl(link);
             }
+            else
+            //upload
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Title = Properties.Resources.UploadImagesTitle;
+                dlg.Filter = Properties.Resources.ImageFilter;
+                if (dlg.ShowDialog() == true)
+                {
+                    ProgressDialogController progress = await DialogCoordinator.Instance.
+                        ShowProgressAsync(this, Properties.Resources.Uploading, "", false, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
+                    try
+                    {
+                        FileInfo info = new FileInfo(dlg.FileName);
+                        if (info.Length > 10240000)
+                            throw new Exception(Properties.Resources.ImageSizeError);
+
+                        progress.SetIndeterminate();
+                        string link = await uploadImage(dlg.FileName);
+                        await progress.CloseAsync();
+                        insertUrl(link);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (progress.IsOpen)
+                            await progress.CloseAsync();
+
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Error, ex.Message,
+                            MessageDialogStyle.Affirmative, new MetroDialogSettings(){ ColorScheme = MetroDialogColorScheme.Accented });
+                    }                    
+                }
+            }            
         });
 
         public ICommand SeparateLineCommand => new RelayCommand(() =>
