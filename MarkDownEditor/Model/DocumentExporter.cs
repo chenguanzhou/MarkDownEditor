@@ -126,6 +126,10 @@ namespace MarkDownEditor.Model
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new Exception(Properties.Resources.FailedToExport + "\n" 
+                    + "pandoc error: " + process.ExitCode + "\n"
+                    + process.StartInfo.FileName + " " + process.StartInfo.Arguments);
 
             process = new Process();
             process.StartInfo.FileName = "wkhtmltopdf";
@@ -133,6 +137,8 @@ namespace MarkDownEditor.Model
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltopdf error" + process.ExitCode);
 
             File.Delete(tmpFilePath);
         }

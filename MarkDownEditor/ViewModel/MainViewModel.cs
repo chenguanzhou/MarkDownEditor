@@ -404,7 +404,7 @@ namespace MarkDownEditor.ViewModel
                     {
                         await Task.Run(()=> 
                         {
-                            DocumentExporter.Export(Name, context.CurrentMarkdownTypeText, SourceCodePath, dlg.FileName);
+                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText], SourceCodePath, dlg.FileName);
                         });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
@@ -440,7 +440,7 @@ namespace MarkDownEditor.ViewModel
             new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter }
         };
 
-        public Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
+        public static Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
         {
             { "Markdown", "markdown" },
             { "Strict Markdown", "markdown_strict"},
