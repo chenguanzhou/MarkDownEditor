@@ -116,8 +116,10 @@ namespace MarkDownEditor.View
              DependencyProperty.Register("SelectionLength", typeof(int), typeof(MvvmTextEditor),
              new PropertyMetadata((obj, args) =>
              {
-                 MvvmTextEditor target = (MvvmTextEditor)obj;
-                 target.SelectionLength = (int)args.NewValue;
+                 TextEditor editor = (TextEditor)obj;
+                 if (editor.SelectionLength == (int)args.NewValue)
+                     return;
+                 editor.SelectionLength = (int)args.NewValue;
              }));
 
         /// <summary>
@@ -126,7 +128,12 @@ namespace MarkDownEditor.View
         public new int SelectionLength
         {
             get { return base.SelectionLength; }
-            set { SetValue(SelectionLengthProperty, value); }
+            set
+            {
+                if ((int)GetValue(SelectionLengthProperty) == value)
+                    return;
+                SetValue(SelectionLengthProperty, value);
+            }
         }
 
         /// <summary>
@@ -136,8 +143,10 @@ namespace MarkDownEditor.View
              DependencyProperty.Register("SelectionStart", typeof(int), typeof(MvvmTextEditor),
              new PropertyMetadata((obj, args) =>
              {
-                 MvvmTextEditor target = (MvvmTextEditor)obj;
-                 target.SelectionStart = (int)args.NewValue;
+                 TextEditor editor = (TextEditor)obj;
+                 if (editor.SelectionStart == (int)args.NewValue)
+                     return;
+                 ((TextEditor)obj).SelectionStart = (int)args.NewValue;
              }));
 
         /// <summary>
@@ -146,7 +155,12 @@ namespace MarkDownEditor.View
         public new int SelectionStart
         {
             get { return base.SelectionStart; }
-            set { SetValue(SelectionStartProperty, value); }
+            set
+            {
+                if ((int)GetValue(SelectionStartProperty) == value)
+                    return;
+                SetValue(SelectionStartProperty,value);
+            }
         }
         #endregion // Selection.
 

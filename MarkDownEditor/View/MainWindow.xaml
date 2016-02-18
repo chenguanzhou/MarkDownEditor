@@ -90,25 +90,25 @@
                         </Controls:MetroContentControl>
                         <Grid Grid.Row="1" Margin="10">
                             <view:MvvmTextEditor
-                            SyntaxHighlighting="MarkDown"     
-                            Document="{Binding SourceCode}"
-                            SelectionStart="{Binding SelectionStart,Mode=TwoWay}"
-                            SelectionLength="{Binding SelectionLength,Mode=TwoWay}"
-                            CaretOffset="{Binding CaretOffset,Mode=TwoWay}"
-                            ScrollOffsetRatio="{Binding ScrollOffsetRatio,Mode=TwoWay}"
-                            CanUndo="{Binding CanUndo,Mode=OneWayToSource}"
-                            CanRedo="{Binding CanRedo,Mode=OneWayToSource}"
-                            ShowLineNumbers="{Binding SettingsViewModel.ShowLineNumbers}"
-                            WordWrap="{Binding SettingsViewModel.WordWrap}"
-                            ShowTabs="{Binding SettingsViewModel.ShowTabs}"
-                            ShowSpaces="{Binding SettingsViewModel.ShowSpaces}"
-                            ShowEndOfLine="{Binding SettingsViewModel.ShowEndOfLine}"
-                            ShowColumnRuler="{Binding SettingsViewModel.ShowColumnRuler}"
-                            RulerPosition="{Binding SettingsViewModel.RulerPosition}"
-                            HighlightCurrentLine="{Binding SettingsViewModel.HighlightCurrentLine}"
-                            LineNumbersForeground="{DynamicResource AccentColorBrush}"
-                            FontFamily="{Binding SettingsViewModel.EditorFont}"
-                            FontSize="{Binding SettingsViewModel.EditorFontSize}">
+                                SyntaxHighlighting="MarkDown"     
+                                Document="{Binding SourceCode}"
+                                SelectionStart="{Binding SelectionStart,Mode=TwoWay}"
+                                SelectionLength="{Binding SelectionLength,Mode=TwoWay}"
+                                CaretOffset="{Binding CaretOffset,Mode=TwoWay}"
+                                ScrollOffsetRatio="{Binding ScrollOffsetRatio,Mode=OneWayToSource}"
+                                CanUndo="{Binding CanUndo,Mode=OneWayToSource}"
+                                CanRedo="{Binding CanRedo,Mode=OneWayToSource}"
+                                ShowLineNumbers="{Binding SettingsViewModel.ShowLineNumbers}"
+                                WordWrap="{Binding SettingsViewModel.WordWrap}"
+                                ShowTabs="{Binding SettingsViewModel.ShowTabs}"
+                                ShowSpaces="{Binding SettingsViewModel.ShowSpaces}"
+                                ShowEndOfLine="{Binding SettingsViewModel.ShowEndOfLine}"
+                                ShowColumnRuler="{Binding SettingsViewModel.ShowColumnRuler}"
+                                RulerPosition="{Binding SettingsViewModel.RulerPosition}"
+                                HighlightCurrentLine="{Binding SettingsViewModel.HighlightCurrentLine}"
+                                LineNumbersForeground="{DynamicResource AccentColorBrush}"
+                                FontFamily="{Binding SettingsViewModel.EditorFont}"
+                                FontSize="{Binding SettingsViewModel.EditorFontSize}">
                                 <view:MvvmTextEditor.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="{x:Static p:Resources.Undo}" Command="Undo"></MenuItem>
@@ -154,7 +154,7 @@
                             <view:PreviewToolBarControl Margin="5" HorizontalAlignment="Right">
                             </view:PreviewToolBarControl>
                             <view:MvvmChromiumWebBrowser
-                                Grid.Row="1" Focusable="False" Margin="10"
+                                Grid.Row="1" Margin="10"
                                 ShouldReload="{Binding ShouldReload,Mode=TwoWay}"
                                 ScrollOffsetRatio="{Binding ScrollOffsetRatio,Mode=TwoWay}"
                                 Address="{Binding PreviewSource}" IsBrowserInitialized="{Binding IsBrowserInitialized,Mode=OneWayToSource}"></view:MvvmChromiumWebBrowser>

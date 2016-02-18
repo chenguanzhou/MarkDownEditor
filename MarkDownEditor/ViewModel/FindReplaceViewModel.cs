@@ -121,6 +121,7 @@ namespace MarkDownEditor.ViewModel
                     return;
                 isMatchCase = value;
                 RaisePropertyChanged("IsMatchCase");
+                UpdateCommandsState();
             }
         }
 
@@ -134,6 +135,7 @@ namespace MarkDownEditor.ViewModel
                     return;
                 isMatchWholeWord = value;
                 RaisePropertyChanged("IsMatchWholeWord");
+                UpdateCommandsState();
             }
         }
 
@@ -147,6 +149,7 @@ namespace MarkDownEditor.ViewModel
                     return;
                 useRegExp = value;
                 RaisePropertyChanged("UseRegExp");
+                UpdateCommandsState();
             }
         }
 
@@ -160,6 +163,7 @@ namespace MarkDownEditor.ViewModel
                     return;
                 useWildcards = value;
                 RaisePropertyChanged("UseWildcards");
+                UpdateCommandsState();
             }
         }
 
@@ -190,7 +194,31 @@ namespace MarkDownEditor.ViewModel
                 UpdateCommandsState();
             }
         }
+        
+        public MatchCollection MatchedCollection
+        {
+            get; set;
+        }
 
+        public int currentMatch = 0;
+        public int CurrentMatch
+        {
+            get { return currentMatch; }
+            set
+            {
+                currentMatch = value;
+                if (MatchedCollection == null || MatchedCollection.Count == 0)
+                    return;
+
+                IsFindPreviousEnabled = CurrentMatch > 0;
+                IsFindNextEnabled = CurrentMatch < MatchedCollection.Count - 1;
+
+                var match = MatchedCollection[currentMatch];
+                ViewModelLocator.Main.SelectionStart = match.Index;
+                ViewModelLocator.Main.SelectionLength = match.Length;
+            }
+        }
+    
         #region Commands
         public ICommand SwitchFindReplaceCommand => new RelayCommand(() => ShowFindReplaceControl = !ShowFindReplaceControl);
         public ICommand ShowFindReplaceCommand => new RelayCommand(() => ShowFindReplaceControl = true);
@@ -199,12 +227,12 @@ namespace MarkDownEditor.ViewModel
 
         public ICommand FindPreviousCommand => new RelayCommand(() =>
         {
-
+            CurrentMatch--;
         });
 
         public ICommand FindNextCommand => new RelayCommand(() =>
         {
-
+            CurrentMatch++;
         });
 
         public ICommand ReplaceNextCommand => new RelayCommand(() =>
@@ -223,30 +251,60 @@ namespace MarkDownEditor.ViewModel
         private void UpdateCommandsState()
         {
             if (string.IsNullOrEmpty(SearchText))
+            {
+                MatchedCollection = null;
                 ClearFindState();
+            }
             else
             {
-                var mainVM = ViewModelLocator.Main;
-                RegexOptions options = RegexOptions.None;
-                if (!IsMatchCase)
-                    options |= RegexOptions.IgnoreCase;
-                Regex regex = new Regex(SearchText, options);
-                var collections = regex.Matches(mainVM.SourceCode.Text);
-                if (collections.Count == 0)//nothing matched
+                Regex regex = GetRegEx(SearchText);
+                MatchedCollection = regex.Matches(ViewModelLocator.Main.SourceCode.Text);
+                
+                if (MatchedCollection.Count == 0)//nothing matched
                 {
                     ClearFindState();
+                    ViewModelLocator.Main.SelectionLength = 0;
                     return;
                 }
-
+                else
+                {
+                    CurrentMatch = 0;
+                    IsFindPreviousEnabled = false;
+                    IsFindNextEnabled = MatchedCollection.Count > 1;
+                    IsReplaceNextEnabled = !string.IsNullOrEmpty(ReplaceText);
+                    IsReplaceAllEnabled = !string.IsNullOrEmpty(ReplaceText);
+                }
             }   
         }
-        
+
+        private Regex GetRegEx(string textToFind)
+        {
+            RegexOptions options = RegexOptions.None;
+            if (!IsMatchCase)
+                options |= RegexOptions.IgnoreCase;
+
+            if (UseRegExp)
+            {
+                return new Regex(textToFind, options);
+            }
+            else
+            {
+                string pattern = Regex.Escape(textToFind);
+                if (UseWildcards)
+                    pattern = pattern.Replace("\\*", ".*").Replace("\\?", ".");
+                if (IsMatchWholeWord)
+                    pattern = "\\b" + pattern + "\\b";
+                return new Regex(pattern, options);
+            }
+        }
+
         private void ClearFindState()
         {
             IsFindPreviousEnabled = false;
             IsFindNextEnabled = false;
             IsReplaceNextEnabled = false;
-            IsReplaceAllEnabled = false;            
+            IsReplaceAllEnabled = false;
+            CurrentMatch = 0;
         }
         #endregion //Functions
     }
