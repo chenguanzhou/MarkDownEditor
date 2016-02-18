@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="MarkDownEditor.View.FindReplaceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MarkDownEditor.View"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:p="clr-namespace:MarkDownEditor.Properties"
+             mc:Ignorable="d" 
+             Padding="3"
+             BorderThickness="1"
+             BorderBrush="{DynamicResource AccentColorBrush}"
+             Background="White"
+             Visibility="{Binding ShowFindReplaceControl,Converter={StaticResource BooleanToVisibilityConverter}}">
+    <UserControl.Resources>
+        <Style x:Key="ClearButtonStyle" TargetType="{x:Type TextBox}"
+                               BasedOn="{StaticResource MetroTextBox}">
+            <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="BorderThickness" Value="1,1,1,1"></Setter>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"></Setter>
+            <Setter Property="Margin" Value="1"></Setter>
+            <Style.Triggers>
+                <Trigger Property="Controls:TextBoxHelper.HasText" Value="False">
+                    <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="False" />
+                    <Setter Property="Controls:TextBoxHelper.Watermark" Value="Find" />
+                </Trigger>
+                <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                    <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FindReplaceButtonStyle" TargetType="Button" BasedOn="{StaticResource MetroButton}">
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Padding" Value="5,1,5,1"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Controls:ControlsHelper.CornerRadius" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="150" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}"
+                     Controls:TextBoxHelper.Watermark="{x:Static p:Resources.Find}" 
+                     Style="{StaticResource ClearButtonStyle}"
+                 Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}">
+            </TextBox>
+            <Button Style="{StaticResource FindReplaceButtonStyle}" ToolTip="{x:Static p:Resources.FindPrevious}"
+                    Command="{Binding FindPreviousCommand}" IsEnabled="{Binding IsFindPreviousEnabled}">
+                <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_arrow_left}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Style="{StaticResource FindReplaceButtonStyle}" ToolTip="{x:Static p:Resources.FindNext}"
+                    Command="{Binding FindNextCommand}" IsEnabled="{Binding IsFindNextEnabled}">
+                <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_arrow_right}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Style="{StaticResource FindReplaceButtonStyle}" ToolTip="{x:Static p:Resources.Close}" 
+                    Command="{Binding HideFindReplaceCommand}">
+                <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_close}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="150" Text="{Binding ReplaceText,UpdateSourceTrigger=PropertyChanged}"
+                     Controls:TextBoxHelper.Watermark="{x:Static p:Resources.Replace}" 
+                     Style="{StaticResource ClearButtonStyle}"
+                 Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}">
+            </TextBox>
+            <Button Style="{StaticResource FindReplaceButtonStyle}" Command="{Binding ReplaceNextCommand}" 
+                    ToolTip="{x:Static p:Resources.ReplaceNext}" IsEnabled="{Binding IsReplaceNextEnabled}">
+                <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_transform_rotate_clockwise}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Style="{StaticResource FindReplaceButtonStyle}" Command="{Binding ReplaceAllCommand}" 
+                    ToolTip="{x:Static p:Resources.ReplaceAll}" IsEnabled="{Binding IsReplaceAllEnabled}">
+                <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_arrow_left_right}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </StackPanel>
+        <Expander Header="{x:Static p:Resources.MoreOptions}" Margin="1">
+            <Expander.Resources>
+                <Style TargetType="Controls:ToggleSwitch">
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Foreground="{DynamicResource GrayBrush3}" FontSize="14"></TextBlock>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Expander.Resources>
+            <StackPanel Orientation="Vertical">
+                <Controls:ToggleSwitch Header="{x:Static p:Resources.MatchCase}" IsChecked="{Binding IsMatchCase}"></Controls:ToggleSwitch>
+                <Controls:ToggleSwitch Header="{x:Static p:Resources.MatchWholeWord}" IsChecked="{Binding IsMatchWholeWord}"></Controls:ToggleSwitch>
+                <Controls:ToggleSwitch Header="{x:Static p:Resources.RegularExpression}" IsChecked="{Binding UseRegExp}"></Controls:ToggleSwitch>
+                <Controls:ToggleSwitch Header="{x:Static p:Resources.Wildcards}" IsChecked="{Binding UseWildcards}"></Controls:ToggleSwitch>
+            </StackPanel>
+        </Expander>
+    </StackPanel>
+</UserControl>

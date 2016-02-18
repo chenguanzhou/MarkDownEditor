@@ -106,6 +106,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code (Ctrl+K).
         /// </summary>
         public static string CodeCommand {
@@ -322,6 +331,42 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find.
+        /// </summary>
+        public static string Find {
+            get {
+                return ResourceManager.GetString("Find", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Next.
+        /// </summary>
+        public static string FindNext {
+            get {
+                return ResourceManager.GetString("FindNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Previous.
+        /// </summary>
+        public static string FindPrevious {
+            get {
+                return ResourceManager.GetString("FindPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find &amp; Replace.
+        /// </summary>
+        public static string FindReplace {
+            get {
+                return ResourceManager.GetString("FindReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Font.
         /// </summary>
         public static string Font {
@@ -511,6 +556,33 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match Case.
+        /// </summary>
+        public static string MatchCase {
+            get {
+                return ResourceManager.GetString("MatchCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Whole Word.
+        /// </summary>
+        public static string MatchWholeWord {
+            get {
+                return ResourceManager.GetString("MatchWholeWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More Options.
+        /// </summary>
+        public static string MoreOptions {
+            get {
+                return ResourceManager.GetString("MoreOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New (Ctrl+N).
         /// </summary>
         public static string NewCommand {
@@ -660,6 +732,42 @@ namespace MarkDownEditor.Properties {
         public static string RefreshCommand {
             get {
                 return ResourceManager.GetString("RefreshCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regular Expression.
+        /// </summary>
+        public static string RegularExpression {
+            get {
+                return ResourceManager.GetString("RegularExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string Replace {
+            get {
+                return ResourceManager.GetString("Replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace All.
+        /// </summary>
+        public static string ReplaceAll {
+            get {
+                return ResourceManager.GetString("ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Next.
+        /// </summary>
+        public static string ReplaceNext {
+            get {
+                return ResourceManager.GetString("ReplaceNext", resourceCulture);
             }
         }
         
@@ -1065,6 +1173,15 @@ namespace MarkDownEditor.Properties {
         public static string WhetherSaveChanges {
             get {
                 return ResourceManager.GetString("WhetherSaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wildcards.
+        /// </summary>
+        public static string Wildcards {
+            get {
+                return ResourceManager.GetString("Wildcards", resourceCulture);
             }
         }
         

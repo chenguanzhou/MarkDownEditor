@@ -459,4 +459,43 @@
   <data name="UploadLocalImage" xml:space="preserve">
     <value>上传本地图片（中国大陆地区可能无法正常使用）</value>
   </data>
+  <data name="Find" xml:space="preserve">
+    <value>查找</value>
+  </data>
+  <data name="FindReplace" xml:space="preserve">
+    <value>查找与替换</value>
+  </data>
+  <data name="Replace" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="FindNext" xml:space="preserve">
+    <value>查找下一个</value>
+  </data>
+  <data name="FindPrevious" xml:space="preserve">
+    <value>查找上一个</value>
+  </data>
+  <data name="MatchCase" xml:space="preserve">
+    <value>匹配大小写</value>
+  </data>
+  <data name="MatchWholeWord" xml:space="preserve">
+    <value>匹配全词</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="RegularExpression" xml:space="preserve">
+    <value>正则表达式</value>
+  </data>
+  <data name="ReplaceAll" xml:space="preserve">
+    <value>替换全部</value>
+  </data>
+  <data name="ReplaceNext" xml:space="preserve">
+    <value>替换下一个</value>
+  </data>
+  <data name="Wildcards" xml:space="preserve">
+    <value>通配符</value>
+  </data>
 </root>

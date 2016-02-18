@@ -160,12 +160,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ViewModel\FindReplaceViewModel.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="View\AboutControl.xaml.cs">
       <DependentUpon>AboutControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditorToolBarControl.xaml.cs">
       <DependentUpon>EditorToolBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FindReplaceControl.xaml.cs">
+      <DependentUpon>FindReplaceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MvvmChromiumWebBrowser.cs" />
     <Compile Include="View\MvvmTextEditor.cs" />
@@ -189,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditorToolBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FindReplaceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

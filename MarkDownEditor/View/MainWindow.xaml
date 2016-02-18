@@ -39,6 +39,7 @@
         <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenDocumentCommand}"></KeyBinding>
         <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveDocumentCommand}"></KeyBinding>
         <KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveAsDocumentCommand}"></KeyBinding>
+        <KeyBinding Gesture="Ctrl+F" Command="{Binding FindReplaceViewModel.SwitchFindReplaceCommand}"></KeyBinding>
         <KeyBinding Gesture="Ctrl+B" Command="{Binding BoldCommand}"></KeyBinding>
         <KeyBinding Gesture="Ctrl+I" Command="{Binding ItalicCommand}"></KeyBinding>
         <KeyBinding Gesture="Ctrl+Q" Command="{Binding QuoteCommand}"></KeyBinding>
@@ -82,12 +83,13 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Controls:MetroContentControl BorderBrush="Red" BorderThickness="2">
                             <view:EditorToolBarControl></view:EditorToolBarControl>
                         </Controls:MetroContentControl>
-                        <view:MvvmTextEditor
-                            Grid.Row="1" Margin="10"
+                        <Grid Grid.Row="1" Margin="10">
+                            <view:MvvmTextEditor
                             SyntaxHighlighting="MarkDown"     
                             Document="{Binding SourceCode}"
                             SelectionStart="{Binding SelectionStart,Mode=TwoWay}"
@@ -107,22 +109,34 @@
                             LineNumbersForeground="{DynamicResource AccentColorBrush}"
                             FontFamily="{Binding SettingsViewModel.EditorFont}"
                             FontSize="{Binding SettingsViewModel.EditorFontSize}">
-                            <view:MvvmTextEditor.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="{x:Static p:Resources.Undo}" Command="Undo"></MenuItem>
-                                    <MenuItem Header="{x:Static p:Resources.Redo}" Command="Redo"></MenuItem>
-                                    <Separator></Separator>
-                                    <MenuItem Header="{x:Static p:Resources.SelectAll}" Command="SelectAll"></MenuItem>
-                                    <MenuItem Header="{x:Static p:Resources.Cut}" Command="Cut"></MenuItem>
-                                    <MenuItem Header="{x:Static p:Resources.Copy}" Command="Copy"></MenuItem>
-                                    <MenuItem Header="{x:Static p:Resources.Paste}" Command="Paste"></MenuItem>
-                                    <MenuItem Header="{x:Static p:Resources.Delete}" Command="Delete"></MenuItem>
-                                    <Separator></Separator>
-                                    <MenuItem Header="{x:Static p:Resources.Format}" Command="{Binding FormatCodeCommand}"></MenuItem>
-                                </ContextMenu>
-                            </view:MvvmTextEditor.ContextMenu>
-                        </view:MvvmTextEditor>
-                        <Expander Grid.Row="2" ExpandDirection="Up">
+                                <view:MvvmTextEditor.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="{x:Static p:Resources.Undo}" Command="Undo"></MenuItem>
+                                        <MenuItem Header="{x:Static p:Resources.Redo}" Command="Redo"></MenuItem>
+                                        <Separator></Separator>
+                                        <MenuItem Header="{x:Static p:Resources.SelectAll}" Command="SelectAll"></MenuItem>
+                                        <MenuItem Header="{x:Static p:Resources.Cut}" Command="Cut"></MenuItem>
+                                        <MenuItem Header="{x:Static p:Resources.Copy}" Command="Copy"></MenuItem>
+                                        <MenuItem Header="{x:Static p:Resources.Paste}" Command="Paste"></MenuItem>
+                                        <MenuItem Header="{x:Static p:Resources.Delete}" Command="Delete"></MenuItem>
+                                        <Separator></Separator>
+                                        <MenuItem Header="{x:Static p:Resources.FindReplace}" 
+                                                  Command="{Binding FindReplaceViewModel.SwitchFindReplaceCommand}"
+                                                  IsCheckable="True"
+                                                  IsChecked="{Binding Binding FindReplaceViewModel.ShowFindReplaceControl}"
+                                                  InputGestureText="Ctrl+F"></MenuItem>
+                                        <Separator></Separator>
+                                        <MenuItem Header="{x:Static p:Resources.Format}" Command="{Binding FormatCodeCommand}"></MenuItem>
+                                    </ContextMenu>
+                                </view:MvvmTextEditor.ContextMenu>
+                            </view:MvvmTextEditor>
+                            <Border HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <view:FindReplaceControl DataContext="{Binding FindReplaceViewModel}"></view:FindReplaceControl>
+                            </Border>
+                        </Grid>
+                        
+                        
+                        <Expander Grid.Row="3" ExpandDirection="Up">
                             <Expander.Header>
                                 <TextBlock Margin="5" Text="{x:Static p:Resources.SETTINGS}" Foreground="{StaticResource WhiteBrush}"></TextBlock>
                             </Expander.Header>

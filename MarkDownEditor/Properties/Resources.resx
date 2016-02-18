@@ -459,4 +459,43 @@
   <data name="UploadLocalImage" xml:space="preserve">
     <value>Upload Local Image（It's may not available in Mainland China）</value>
   </data>
+  <data name="Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="FindReplace" xml:space="preserve">
+    <value>Find &amp; Replace</value>
+  </data>
+  <data name="Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="FindNext" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="FindPrevious" xml:space="preserve">
+    <value>Find Previous</value>
+  </data>
+  <data name="MatchCase" xml:space="preserve">
+    <value>Match Case</value>
+  </data>
+  <data name="MatchWholeWord" xml:space="preserve">
+    <value>Match Whole Word</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>More Options</value>
+  </data>
+  <data name="RegularExpression" xml:space="preserve">
+    <value>Regular Expression</value>
+  </data>
+  <data name="ReplaceAll" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="ReplaceNext" xml:space="preserve">
+    <value>Replace Next</value>
+  </data>
+  <data name="Wildcards" xml:space="preserve">
+    <value>Wildcards</value>
+  </data>
 </root>
