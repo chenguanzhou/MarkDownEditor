@@ -122,6 +122,8 @@
         <File Id="GalaSoft.MvvmLight.Platform.dll" Name="GalaSoft.MvvmLight.Platform.dll" Source="$(var.MarkDownEditor_TargetDir)GalaSoft.MvvmLight.Platform.dll" />
         <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.MarkDownEditor_TargetDir)System.Windows.Interactivity.dll" />
         <File Id="Ude.dll" Name="Ude.dll" Source="$(var.MarkDownEditor_TargetDir)Ude.dll" />
+        <File Id="Imgur.API.dll" Name="Imgur.API.dll" Source="$(var.MarkDownEditor_TargetDir)Imgur.API.dll" />
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.MarkDownEditor_TargetDir)Newtonsoft.Json.dll" />
 
         <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.MarkDownEditor_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
         <File Id="libcef.dll" Name="libcef.dll" Source="$(var.MarkDownEditor_TargetDir)libcef.dll" />
