@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -163,6 +164,33 @@ namespace MarkDownEditor.View
             }
         }
         #endregion // Selection.
+
+        #region ScrollToSelectionStart
+
+        /// <summary>
+        /// DependencyProperty for the ShouldReload binding. 
+        /// </summary>
+        public static DependencyProperty ScrollToSelectionStartProperty =
+            DependencyProperty.Register("ScrollToSelectionStart", typeof(bool), typeof(MvvmTextEditor),
+            new PropertyMetadata(default(bool), (obj, args) =>
+            {
+                MvvmTextEditor editor = (MvvmTextEditor)obj;
+                editor.ScrollToSelectionStart = (bool)args.NewValue;
+
+                TextLocation loc = editor.Document.GetLocation(editor.SelectionStart);
+                editor.ScrollTo(loc.Line, loc.Column);
+            }));
+
+        /// <summary>
+        /// Provide access to the ScrollOffsetRatio.
+        /// </summary>
+        public bool ScrollToSelectionStart
+        {
+            get { return (bool)GetValue(ScrollToSelectionStartProperty); }
+            set { SetValue(ScrollToSelectionStartProperty, value); }
+        }
+
+        #endregion //ScrollToSelectionStart
 
 
         #region Undo/Redo.

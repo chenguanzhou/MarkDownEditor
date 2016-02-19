@@ -94,6 +94,7 @@
                                 Document="{Binding SourceCode}"
                                 SelectionStart="{Binding SelectionStart,Mode=TwoWay}"
                                 SelectionLength="{Binding SelectionLength,Mode=TwoWay}"
+                                ScrollToSelectionStart="{Binding ScrollToSelectionStart,Mode=TwoWay}"
                                 CaretOffset="{Binding CaretOffset,Mode=TwoWay}"
                                 ScrollOffsetRatio="{Binding ScrollOffsetRatio,Mode=OneWayToSource}"
                                 CanUndo="{Binding CanUndo,Mode=OneWayToSource}"

@@ -55,6 +55,14 @@ namespace MarkDownEditor.ViewModel
                 if (showFindReplaceControl == value)
                     return;
                 showFindReplaceControl = value;
+                if (showFindReplaceControl)
+                {
+                    ViewModelLocator.Main.SourceCode.TextChanged += SourceCode_TextChanged;                    
+                    UpdateCommandsState();
+                }
+                else
+                    ViewModelLocator.Main.SourceCode.TextChanged -= SourceCode_TextChanged;
+
                 RaisePropertyChanged("ShowFindReplaceControl");
             }
         }
@@ -85,16 +93,16 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        private bool isReplaceNextEnabled = false;
-        public bool IsReplaceNextEnabled
+        private bool isReplaceEnabled = false;
+        public bool IsReplaceEnabled
         {
-            get { return isReplaceNextEnabled; }
+            get { return isReplaceEnabled; }
             set
             {
-                if (isReplaceNextEnabled == value)
+                if (isReplaceEnabled == value)
                     return;
-                isReplaceNextEnabled = value;
-                RaisePropertyChanged("IsReplaceNextEnabled");
+                isReplaceEnabled = value;
+                RaisePropertyChanged("IsReplaceEnabled");
             }
         }
 
@@ -167,7 +175,7 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        private string searchText;
+        private string searchText = "";
         public string SearchText
         {
             get { return searchText; }
@@ -181,7 +189,7 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        private string replaceText;
+        private string replaceText = "";
         public string ReplaceText
         {
             get { return replaceText; }
@@ -194,8 +202,13 @@ namespace MarkDownEditor.ViewModel
                 UpdateCommandsState();
             }
         }
-        
-        public MatchCollection MatchedCollection
+
+        public class MatchObject
+        {
+            public int Start { get; set; }
+            public int Length { get; set; }
+        }
+        public List<MatchObject> MatchedCollection
         {
             get; set;
         }
@@ -208,14 +221,21 @@ namespace MarkDownEditor.ViewModel
             {
                 currentMatch = value;
                 if (MatchedCollection == null || MatchedCollection.Count == 0)
+                {
+                    IsReplaceEnabled = IsReplaceAllEnabled = false;
                     return;
+                }
 
                 IsFindPreviousEnabled = CurrentMatch > 0;
                 IsFindNextEnabled = CurrentMatch < MatchedCollection.Count - 1;
 
                 var match = MatchedCollection[currentMatch];
-                ViewModelLocator.Main.SelectionStart = match.Index;
+                ViewModelLocator.Main.SelectionStart = 0;
                 ViewModelLocator.Main.SelectionLength = match.Length;
+                ViewModelLocator.Main.SelectionStart = match.Start;
+                ViewModelLocator.Main.ScrollToSelectionStart = !ViewModelLocator.Main.ScrollToSelectionStart;
+
+                IsReplaceEnabled = IsReplaceAllEnabled = true;
             }
         }
     
@@ -235,14 +255,59 @@ namespace MarkDownEditor.ViewModel
             CurrentMatch++;
         });
 
-        public ICommand ReplaceNextCommand => new RelayCommand(() =>
+        public ICommand ReplaceCommand => new RelayCommand(async () =>
         {
+            if (string.IsNullOrEmpty(SearchText))
+                return;
 
+            int oldStartOffset = MatchedCollection[CurrentMatch].Start;
+            int oldLength = MatchedCollection[CurrentMatch].Length;
+
+            ViewModelLocator.Main.SourceCode.TextChanged -= SourceCode_TextChanged;
+            ViewModelLocator.Main.SourceCode.Replace(MatchedCollection[CurrentMatch].Start, MatchedCollection[CurrentMatch].Length, ReplaceText);
+            ViewModelLocator.Main.SourceCode.TextChanged += SourceCode_TextChanged;
+
+
+            MatchedCollection.RemoveAt(CurrentMatch);
+            for (int i = CurrentMatch; i < MatchedCollection.Count; ++i)
+            {
+                MatchedCollection[i].Start += ReplaceText.Length - oldLength;
+            }
+
+            if (CurrentMatch == MatchedCollection.Count)
+            {
+                await DialogCoordinator.Instance.ShowMessageAsync(ViewModelLocator.Main, Properties.Resources.Completed, "Completed Replace!",
+                    MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
+                CurrentMatch = 0;
+            }
+
+            CurrentMatch = CurrentMatch;
         });
-
+       
         public ICommand ReplaceAllCommand => new RelayCommand(() =>
         {
+            if (string.IsNullOrEmpty(SearchText))
+                return;
 
+            ViewModelLocator.Main.SourceCode.TextChanged -= SourceCode_TextChanged;
+            var content = ViewModelLocator.Main.SourceCode.Text;
+            for (int i= 0; i < MatchedCollection.Count; )
+            {
+                int oldLength = MatchedCollection[i].Length;
+                //ViewModelLocator.Main.SourceCode.Replace(MatchedCollection[i].Start, MatchedCollection[i].Length, ReplaceText);
+                content = content.Remove(MatchedCollection[i].Start, MatchedCollection[i].Length)
+                .Insert(MatchedCollection[i].Start, ReplaceText);
+
+                MatchedCollection.RemoveAt(i);
+                for (int j = i; j < MatchedCollection.Count; ++j)
+                {
+                    MatchedCollection[j].Start += ReplaceText.Length - oldLength;
+                }
+            }
+
+            ViewModelLocator.Main.SourceCode.Text = content;
+            ViewModelLocator.Main.SourceCode.TextChanged += SourceCode_TextChanged;
+            UpdateCommandsState();
         });
         #endregion //Commands
 
@@ -258,7 +323,8 @@ namespace MarkDownEditor.ViewModel
             else
             {
                 Regex regex = GetRegEx(SearchText);
-                MatchedCollection = regex.Matches(ViewModelLocator.Main.SourceCode.Text);
+                MatchedCollection = regex.Matches(ViewModelLocator.Main.SourceCode.Text).Cast<Match>()
+                    .Select(s=>new MatchObject() {Start=s.Index,Length=s.Length }).ToList();
                 
                 if (MatchedCollection.Count == 0)//nothing matched
                 {
@@ -271,8 +337,7 @@ namespace MarkDownEditor.ViewModel
                     CurrentMatch = 0;
                     IsFindPreviousEnabled = false;
                     IsFindNextEnabled = MatchedCollection.Count > 1;
-                    IsReplaceNextEnabled = !string.IsNullOrEmpty(ReplaceText);
-                    IsReplaceAllEnabled = !string.IsNullOrEmpty(ReplaceText);
+                    IsReplaceEnabled = IsReplaceAllEnabled = MatchedCollection.Count > 0;
                 }
             }   
         }
@@ -302,10 +367,17 @@ namespace MarkDownEditor.ViewModel
         {
             IsFindPreviousEnabled = false;
             IsFindNextEnabled = false;
-            IsReplaceNextEnabled = false;
+            IsReplaceEnabled = false;
             IsReplaceAllEnabled = false;
             CurrentMatch = 0;
         }
+
+        private void SourceCode_TextChanged(object sender, EventArgs e)
+        {
+            //UpdateCommandsState();
+            this.ShowFindReplaceControl = false;
+        }
+
         #endregion //Functions
     }
 }

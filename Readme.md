@@ -20,6 +20,7 @@ The editor has the following `features`:
 
 - Full-function markdown editor
 - Real-time synchronization preview
+- Upload local image (Not available in Mainland China)
 - Multiple markdown standards support:
 	- Markdown
 	- Strict Markdown

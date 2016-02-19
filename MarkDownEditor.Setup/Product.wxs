@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{E333BF0E-12F7-4A0E-9B67-CD4C2A5F5EF0}" Name="MarkDownEditor" Language="1033" Version="0.2.6" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{901C8E9F-FFEC-47C7-8C54-A8840CAAE9C7}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{2D113EBE-8352-4AEF-8FB1-7FC273919709}" Name="MarkDownEditor" Language="1033" Version="0.3.0" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{E9B9E4B4-B415-42A7-9C34-9DF92B10C17C}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
@@ -18,6 +18,8 @@
       <ComponentRef Id="DesktopFolderShortcut" />
     </Feature>
     <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+    <Icon Id="icon.ico" SourceFile="..\MarkDOwnEditor\MarkdownEditorLogo.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
     <Feature Id="VCRedist" Title="Visual C++ 2013 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
       <MergeRef Id="VCRedist"/>

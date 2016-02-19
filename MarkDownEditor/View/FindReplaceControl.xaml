@@ -8,9 +8,10 @@
              xmlns:p="clr-namespace:MarkDownEditor.Properties"
              mc:Ignorable="d" 
              Padding="3"
-             BorderThickness="1"
+             BorderThickness="5,1,1,1"
              BorderBrush="{DynamicResource AccentColorBrush}"
              Background="White"
+             Opacity="0.5"
              Visibility="{Binding ShowFindReplaceControl,Converter={StaticResource BooleanToVisibilityConverter}}">
     <UserControl.Resources>
         <Style x:Key="ClearButtonStyle" TargetType="{x:Type TextBox}"
@@ -45,6 +46,27 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Control.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Control.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimation Duration="0:0:0.2" To="0.5" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+
+        </Style>
+    </UserControl.Style>
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Horizontal">
             <TextBox Width="150" Text="{Binding SearchText,UpdateSourceTrigger=PropertyChanged}"
@@ -83,8 +105,8 @@
                      Style="{StaticResource ClearButtonStyle}"
                  Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}">
             </TextBox>
-            <Button Style="{StaticResource FindReplaceButtonStyle}" Command="{Binding ReplaceNextCommand}" 
-                    ToolTip="{x:Static p:Resources.ReplaceNext}" IsEnabled="{Binding IsReplaceNextEnabled}">
+            <Button Style="{StaticResource FindReplaceButtonStyle}" Command="{Binding ReplaceCommand}" 
+                    ToolTip="{x:Static p:Resources.Replace}" IsEnabled="{Binding IsReplaceEnabled}">
                 <Rectangle Width="16" Height="16" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_transform_rotate_clockwise}" />

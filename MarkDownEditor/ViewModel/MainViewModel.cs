@@ -115,19 +115,6 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        //public MvvmChromiumWebBrowser webBrowser = new MvvmChromiumWebBrowser();
-        //public MvvmChromiumWebBrowser WebBrowser
-        //{
-        //    get { return webBrowser; }
-        //    set
-        //    {
-        //        if (webBrowser == value)
-        //            return;
-        //        webBrowser = value;
-        //        RaisePropertyChanged("WebBrowser");
-        //    }
-        //}
-
         public bool isSynchronize = true;
         public bool IsSynchronize
         {
@@ -229,6 +216,17 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
+        public bool scrollToSelectionStart = false;
+        public bool ScrollToSelectionStart
+        {
+            get { return scrollToSelectionStart; }
+            set
+            {
+                scrollToSelectionStart = value;
+                RaisePropertyChanged("ScrollToSelectionStart");
+            }
+        }
+
         public bool shouldReload = false;
         public bool ShouldReload
         {
@@ -264,6 +262,7 @@ namespace MarkDownEditor.ViewModel
                     return;
                 sourceCode = value;
                 RaisePropertyChanged("SourceCode");
+                FindReplaceViewModel.ShowFindReplaceControl = false;
             }
         }
 

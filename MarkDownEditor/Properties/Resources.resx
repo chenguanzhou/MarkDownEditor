@@ -492,10 +492,10 @@
   <data name="ReplaceAll" xml:space="preserve">
     <value>Replace All</value>
   </data>
-  <data name="ReplaceNext" xml:space="preserve">
-    <value>Replace Next</value>
-  </data>
   <data name="Wildcards" xml:space="preserve">
     <value>Wildcards</value>
+  </data>
+  <data name="ReplaceCompleted" xml:space="preserve">
+    <value>Replace Completed!</value>
   </data>
 </root>
