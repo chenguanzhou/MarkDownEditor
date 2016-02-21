@@ -53,8 +53,8 @@ namespace MarkDownEditor.ViewModel
 
             var css = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css"), "*.css")
                 .Select(s=>Path.GetFileName(s)).ToList();
-            css.Insert(0, "No CSS");
-            css.Add("Add custom css files");
+            css.Insert(0, Properties.Resources.NoCSS);
+            css.Add(Properties.Resources.AddCustomCSS);
             CssFiles = css;
 
             CurrentCssFileIndex = 2;
@@ -87,7 +87,7 @@ namespace MarkDownEditor.ViewModel
         private string markdownSourceTempPath = Path.GetTempFileName();
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
-        public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDown Editor Beta";
+        public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDownEditor";
 
         private CultureInfo cultureInfo = new CultureInfo(Properties.Settings.Default.Language);
         public CultureInfo CultureInfo
@@ -1178,9 +1178,9 @@ namespace MarkDownEditor.ViewModel
         private async void ShowCustomCSSMessage()
         {
             var path = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css");
-            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Please copy your custom css file into the following folder. It'll take effect after restart.",
+            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.CopyCSS,
                 path, MessageDialogStyle.AffirmativeAndNegative,
-                new MetroDialogSettings() { ColorScheme= MetroDialogColorScheme.Accented, AffirmativeButtonText="Open This Folder",
+                new MetroDialogSettings() { ColorScheme= MetroDialogColorScheme.Accented, AffirmativeButtonText=Properties.Resources.OpenThisFolder,
                     NegativeButtonText = Properties.Resources.Cancel});
             if (ret == MessageDialogResult.Affirmative)
                 Process.Start(path);

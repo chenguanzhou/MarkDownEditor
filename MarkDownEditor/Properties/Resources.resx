@@ -498,4 +498,16 @@
   <data name="ReplaceCompleted" xml:space="preserve">
     <value>Replace Completed!</value>
   </data>
+  <data name="AddCustomCSS" xml:space="preserve">
+    <value>Add custom css files</value>
+  </data>
+  <data name="CopyCSS" xml:space="preserve">
+    <value>Please copy your custom css file into the following folder. It'll take effect after restart.</value>
+  </data>
+  <data name="NoCSS" xml:space="preserve">
+    <value>No CSS</value>
+  </data>
+  <data name="OpenThisFolder" xml:space="preserve">
+    <value>Open This Folder</value>
+  </data>
 </root>

@@ -498,4 +498,16 @@
   <data name="ReplaceCompleted" xml:space="preserve">
     <value>替换完成</value>
   </data>
+  <data name="AddCustomCSS" xml:space="preserve">
+    <value>添加自定义CSS文件</value>
+  </data>
+  <data name="CopyCSS" xml:space="preserve">
+    <value>请将自定义CSS文件复制到以下文件夹（重启后生效）</value>
+  </data>
+  <data name="NoCSS" xml:space="preserve">
+    <value>无CSS</value>
+  </data>
+  <data name="OpenThisFolder" xml:space="preserve">
+    <value>打开该文件夹</value>
+  </data>
 </root>

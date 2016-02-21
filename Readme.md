@@ -57,3 +57,25 @@ For Win10 users, the .Net Framework 4.5 has been preinstalled.
 
 # Dev
 For a WPF project, I recommand VS2015 Community Edition to build.
+
+# 3rdParty
+
+- [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef)
+- [CefSharp](https://github.com/cefsharp/CefSharp)
+- [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
+- [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
+- [AvalonEdit](https://github.com/icsharpcode/AvalonEdit)
+- [MVVM Light Toolkit](http://www.mvvmlight.net/)
+- [Imgur.API](http://imgurapi.readthedocs.org/en/latest/)
+- [SimpleHelpers.Net](https://github.com/khalidsalomao/SimpleHelpers.Net)
+- [UDE.CSharp](https://github.com/errepi/ude)
+- [The WiX Toolset](http://wixtoolset.org/)
+
+# Thanks
+
+- [Making AvalonEdit MVVM compatible](http://stackoverflow.com/questions/12344367/making-avalonedit-mvvm-compatible)
+- [Wix 安装部署教程](http://www.cnblogs.com/stoneniqiu/category/522235.html)
+- [Markdown CSS](https://github.com/markdowncss/markdowncss.github.io)
+- [Markdown CSS](https://github.com/simonlc/Markdown-CSS)
+- [github.css](https://gist.github.com/andyferra/2554919)
+- [分享一个Markdown css](http://www.oschina.net/question/124879_76399?fromerr=LWBSwh1E)
