@@ -59,7 +59,7 @@
                 <EventTrigger RoutedEvent="Control.MouseLeave">
                     <BeginStoryboard>
                         <Storyboard >
-                            <DoubleAnimation Duration="0:0:0.2" To="0.5" Storyboard.TargetProperty="Opacity"/>
+                            <DoubleAnimation Duration="0:0:0.2" To="0.75" Storyboard.TargetProperty="Opacity"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

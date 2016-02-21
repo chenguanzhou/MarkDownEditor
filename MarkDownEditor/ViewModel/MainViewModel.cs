@@ -1150,12 +1150,7 @@ namespace MarkDownEditor.ViewModel
                 sw.Write(SourceCode.Text);
                 sw.Close();
 
-                Process process = new Process();
-                process.StartInfo.FileName = "pandoc";
-                process.StartInfo.Arguments = $"\"{markdownSourceTempPath}\" -f {MarkDownType[CurrentMarkdownTypeText]} -t html --ascii -s -H theme.css -o \"{previewSourceTempPath}\"";
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.Start();
-                process.WaitForExit();
+                DocumentExporter.Export("Html", MarkDownType[CurrentMarkdownTypeText], markdownSourceTempPath, previewSourceTempPath);
 
                 ShouldReload = !ShouldReload;
             }            

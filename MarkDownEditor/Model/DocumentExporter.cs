@@ -82,7 +82,7 @@ namespace MarkDownEditor.Model
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
-            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t docx -o \"{outputPath}\"";
+            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t docx -H theme.css -o \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();

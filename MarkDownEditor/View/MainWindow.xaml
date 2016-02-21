@@ -76,7 +76,7 @@
                     <ColumnDefinition Width="{Binding SourceCodeWidth}"></ColumnDefinition>
                     <ColumnDefinition Width="{Binding PreviewWidth}"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <GroupBox Grid.Column="0" Header="MarkDown">
+                <GroupBox Grid.Column="0" Margin="0,5,5,5" Header="MarkDown">
 
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
@@ -131,7 +131,7 @@
                                     </ContextMenu>
                                 </view:MvvmTextEditor.ContextMenu>
                             </view:MvvmTextEditor>
-                            <Border HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,15,0">
                                 <view:FindReplaceControl DataContext="{Binding FindReplaceViewModel}"></view:FindReplaceControl>
                             </Border>
                         </Grid>
@@ -146,7 +146,7 @@
                     </Grid>
                 </GroupBox>
                 <Grid Grid.Column="1">
-                    <GroupBox Header="{x:Static p:Resources.Preview}">
+                    <GroupBox Margin="5,5,0,5" Header="{x:Static p:Resources.Preview}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
@@ -185,76 +185,6 @@
                 </Grid>
             </Border>
         </Grid>
-        <StatusBar Grid.Row="2" x:Name="statusBar" FontSize="12">
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
-
-            <StatusBarItem Grid.Column="0">
-                <Controls:TransitioningContentControl Transition="Down" Content="{Binding StatusBarText}"></Controls:TransitioningContentControl>
-            </StatusBarItem>
-
-            <StatusBarItem Grid.Column="2" Content="{Binding CurrentCaretStatisticsInfo}">
-            </StatusBarItem>
-            <Separator Grid.Column="3" Margin="10,0,10,0"/>
-            <StatusBarItem Grid.Column="4" Content="{Binding DocumrntStatisticsInfo}">
-            </StatusBarItem>
-            <Separator Grid.Column="5" Margin="10,0,10,0"/>
-            <StatusBarItem Grid.Column="6">
-                <ComboBox ItemsSource="{Binding MarkDownType.Keys}" FontSize="12" BorderThickness="0"
-                          SelectedItem="{Binding CurrentMarkdownTypeText}"
-                          Background="{DynamicResource AccentColorBrush3}"
-                          Foreground="{DynamicResource WhiteBrush}">
-                </ComboBox>
-            </StatusBarItem>
-            <StatusBarItem Grid.Column="7">
-                <ComboBox ItemsSource="{Binding AllLanguages}" FontSize="12" BorderThickness="0"
-                          SelectedItem="{Binding CultureInfo}"
-                          DisplayMemberPath="NativeName"
-                          Background="{DynamicResource AccentColorBrush3}"
-                          Foreground="{DynamicResource WhiteBrush}">
-                </ComboBox>
-            </StatusBarItem>
-            <StatusBarItem Grid.Column="8">
-                <Menu FontSize="12"
-                      Background="{DynamicResource AccentColorBrush}"
-                      Foreground="{DynamicResource WhiteBrush}">
-                    <MenuItem Header="{x:Static p:Resources.Accent}" BorderThickness="0"
-                              ItemsSource="{Binding AccentColors, Mode=OneWay}"                              
-                              Background="{DynamicResource AccentColorBrush}"
-                              Foreground="{DynamicResource WhiteBrush}">
-                        <MenuItem.Resources>
-                            <Ellipse x:Key="AccentMenuIcon"
-                                 x:Shared="False"
-                                 Width="16"
-                                 Height="16"
-                                 Fill="{Binding ColorBrush, Mode=OneWay}" />
-                        </MenuItem.Resources>
-                        <MenuItem.ItemContainerStyle>
-                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
-                                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
-                                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
-                                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
-                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                            </Style>
-                        </MenuItem.ItemContainerStyle>
-                    </MenuItem>
-                </Menu>
-            </StatusBarItem>
-        </StatusBar>
+        <view:StatusBarControl Grid.Row="2"></view:StatusBarControl>
     </Grid>
 </Controls:MetroWindow>
