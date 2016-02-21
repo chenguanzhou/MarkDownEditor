@@ -25,21 +25,21 @@ namespace MarkDownEditor.Model
         static public bool CanExport(string typeName) 
             => Exporters.Keys.Contains(typeName);
 
-        static public void Export(string typeName, 
-            string markdownType,  string sourceCodePath,string outputPath)
+        static public void Export(string typeName, string markdownType, 
+            string cssFile, string sourceCodePath,string outputPath)
         {
-            Exporters[typeName].Export(markdownType, sourceCodePath, outputPath);
+            Exporters[typeName].Export(markdownType, sourceCodePath, cssFile, outputPath);
         }
     }
 
     public interface IDocumentExporter
     {
-         void Export(string markdownType, string sourceCodePath, string outputPath);
+         void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath);
     }
 
     public class PlainHTMLExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
@@ -52,20 +52,38 @@ namespace MarkDownEditor.Model
 
     public class HTMLExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
+            var tmpFile = Path.GetTempFileName();
+            if (cssFile!=null)
+            {
+                StreamReader sr = new StreamReader($"css/{cssFile}");
+                var cssContent = sr.ReadToEnd();
+                sr.Close();
+                StreamWriter sw = new StreamWriter(tmpFile);
+                sw.WriteLine("<style type=\"text/css\">");
+                sw.WriteLine(cssContent);
+                sw.WriteLine("</style>");
+                sw.Close();
+            }
+
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
-            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -H theme.css -o \"{outputPath}\"";
+            process.StartInfo.Arguments = 
+                cssFile == null 
+                ? $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -o \"{outputPath}\""
+                : $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -H {tmpFile} -o \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
+
+            File.Delete(tmpFile);
         }
     }
 
     public class RFTExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
@@ -78,11 +96,11 @@ namespace MarkDownEditor.Model
 
     public class DocxExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
-            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t docx -H theme.css -o \"{outputPath}\"";
+            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t docx -o \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
@@ -91,7 +109,7 @@ namespace MarkDownEditor.Model
 
     public class EpubExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
@@ -104,7 +122,7 @@ namespace MarkDownEditor.Model
 
     public class LatexExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
@@ -117,21 +135,13 @@ namespace MarkDownEditor.Model
 
     public class PdfExporter : IDocumentExporter
     {
-        public void Export(string markdownType, string sourceCodePath, string outputPath)
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
             var tmpFilePath = Path.GetTempFileName()+".html";
-            Process process = new Process();
-            process.StartInfo.FileName = "pandoc";
-            process.StartInfo.Arguments = $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -H theme.css -o \"{tmpFilePath}\"";
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.Start();
-            process.WaitForExit();
-            if (process.ExitCode != 0)
-                throw new Exception(Properties.Resources.FailedToExport + "\n" 
-                    + "pandoc error: " + process.ExitCode + "\n"
-                    + process.StartInfo.FileName + " " + process.StartInfo.Arguments);
 
-            process = new Process();
+            DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
+
+            Process process = new Process();
             process.StartInfo.FileName = "wkhtmltopdf";
             process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

@@ -27,6 +27,13 @@
                           Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=StatusBarItem}}">
                     </ComboBox>
                 </StatusBarItem>
+                <StatusBarItem>
+                    <ComboBox ItemsSource="{Binding CssFiles}" FontSize="12" BorderThickness="0"
+                          SelectedIndex="{Binding CurrentCssFileIndex}"
+                          Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType=StatusBarItem}}"
+                          Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=StatusBarItem}}">
+                    </ComboBox>
+                </StatusBarItem>
                 <StatusBarItem >
                     <ComboBox ItemsSource="{Binding AllLanguages}" FontSize="12" BorderThickness="0"
                           SelectedItem="{Binding CultureInfo}"

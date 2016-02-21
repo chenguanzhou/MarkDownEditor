@@ -1,4 +1,7 @@
-<style type="text/css">
+/*
+    http://www.oschina.net/question/124879_76399
+*/
+
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
  
 body{
@@ -127,4 +130,3 @@ td { vertical-align: top; }
 @media only screen and (min-width: 768px) {
     body{font-size:16px;}
 }
-</style>

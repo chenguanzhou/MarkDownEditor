@@ -47,10 +47,20 @@ namespace MarkDownEditor.ViewModel
         /// </summary>
         public MainViewModel()
         {
-            Directory.SetCurrentDirectory(System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
 
             ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(Properties.Settings.Default.DefaultAccent), ThemeManager.DetectAppStyle(Application.Current).Item1);
+
+            var css = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css"), "*.css")
+                .Select(s=>Path.GetFileName(s)).ToList();
+            css.Insert(0, "No CSS");
+            css.Add("Add custom css files");
+            CssFiles = css;
+
+            CurrentCssFileIndex = 2;
             CurrentMarkdownTypeText = Properties.Settings.Default.MarkdownProcessor;
+
+
 
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
@@ -407,7 +417,9 @@ namespace MarkDownEditor.ViewModel
                     {
                         await Task.Run(()=> 
                         {
-                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText], SourceCodePath, dlg.FileName);
+                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText],
+                                context.CurrentCssFileIndex == 0 || context.CurrentCssFileIndex == CssFiles.Count-1 ?
+                                null : CssFiles[context.CurrentCssFileIndex], SourceCodePath, dlg.FileName);
                         });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
@@ -466,6 +478,28 @@ namespace MarkDownEditor.ViewModel
                 Properties.Settings.Default.MarkdownProcessor = currentMarkdownTypeText;
                 Properties.Settings.Default.Save();
                 UpdatePreview();
+            }
+        }
+
+        public static List<string> CssFiles { get; private set; }
+
+        private int currentCssFileIndex;
+        public int CurrentCssFileIndex
+        {
+            get { return currentCssFileIndex; }
+            set
+            {
+                if (currentCssFileIndex == value)
+                    return;
+
+                currentCssFileIndex = value;
+                RaisePropertyChanged("CurrentCssFileIndex");
+                UpdatePreview();
+
+                if (value == CssFiles.Count - 1)
+                {
+                    ShowCustomCSSMessage();
+                }
             }
         }
 
@@ -1141,7 +1175,17 @@ namespace MarkDownEditor.ViewModel
                 return true;
         }
 
-        
+        private async void ShowCustomCSSMessage()
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css");
+            var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, "Please copy your custom css file into the following folder. It'll take effect after restart.",
+                path, MessageDialogStyle.AffirmativeAndNegative,
+                new MetroDialogSettings() { ColorScheme= MetroDialogColorScheme.Accented, AffirmativeButtonText="Open This Folder",
+                    NegativeButtonText = Properties.Resources.Cancel});
+            if (ret == MessageDialogResult.Affirmative)
+                Process.Start(path);
+        }
+
         private void UpdatePreview()
         {
             if (IsShowPreview)
@@ -1150,7 +1194,7 @@ namespace MarkDownEditor.ViewModel
                 sw.Write(SourceCode.Text);
                 sw.Close();
 
-                DocumentExporter.Export("Html", MarkDownType[CurrentMarkdownTypeText], markdownSourceTempPath, previewSourceTempPath);
+                DocumentExporter.Export("Html", MarkDownType[CurrentMarkdownTypeText], CurrentCssFileIndex==0|| CurrentCssFileIndex== CssFiles.Count-1? null:CssFiles[CurrentCssFileIndex], markdownSourceTempPath, previewSourceTempPath);
 
                 ShouldReload = !ShouldReload;
             }            
