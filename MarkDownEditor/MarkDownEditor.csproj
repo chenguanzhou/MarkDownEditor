@@ -154,6 +154,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\OppositeConverter.cs" />
+    <Compile Include="InvokeDelegateCommandAction.cs" />
     <Compile Include="Model\DocumentExporter.cs" />
     <Compile Include="Properties\Resources.zh-CN.Designer.cs">
       <DependentUpon>Resources.zh-CN.resx</DependentUpon>

@@ -561,6 +561,33 @@ namespace MarkDownEditor.ViewModel
                 CreateNewDoc();
         });
 
+        private async void OpenDoc(string path = null)
+        {
+            if (path == null)
+            {
+                var dlg = new OpenFileDialog();
+                dlg.Title = Properties.Resources.Open;
+                dlg.Filter = Properties.Resources.MarkDownFileFilter;
+                if (dlg.ShowDialog() != true)
+                    return;
+
+                path = dlg.FileName;
+            }            
+
+            string content = await Open(path);
+            if (content == null)
+                return;
+
+            SourceCode = new TextDocument(content);
+            SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
+            UpdatePreview();
+            SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
+            DocumentPath = path;
+            DocumentTitle = Path.GetFileName(path);
+            IsModified = false;
+            StatusBarText = $"{Properties.Resources.Document} \"{path}\" {Properties.Resources.OpenedSuccessfully}";
+        }
+
         private async Task<string> Open(string path)
         {
             try
@@ -571,45 +598,28 @@ namespace MarkDownEditor.ViewModel
                 sr.Close();
                 return content;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Error, 
-                    $"{Properties.Resources.OpenFileFailed}\n{path}\n{Properties.Resources.Detail}: {ex.Message}", 
+                await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Error,
+                    $"{Properties.Resources.OpenFileFailed}\n{path}\n{Properties.Resources.Detail}: {ex.Message}",
                     MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                 return null;
-            }            
+            }
         }
 
         public ICommand OpenDocumentCommand => new RelayCommand(async () =>
         {
-            Action OpenDoc = async () =>
-            {
-                var dlg = new OpenFileDialog();
-                dlg.Title = Properties.Resources.Open;
-                dlg.Filter = Properties.Resources.MarkDownFileFilter;
-                if (dlg.ShowDialog() == true)
-                {
-                    string content = await Open(dlg.FileName);
-                    if (content == null)
-                        return;
-
-                    SourceCode = new TextDocument(content);
-                    SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
-                    UpdatePreview();
-                    SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
-                    DocumentPath = dlg.FileName;
-                    DocumentTitle = Path.GetFileName(dlg.FileName);
-                    IsModified = false;
-                    StatusBarText = $"{Properties.Resources.Document} \"{dlg.FileName}\" {Properties.Resources.OpenedSuccessfully}";
-                }
-            };
-
             if (IsModified)
             {
                 var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.UnsavedChanges,
                     Properties.Resources.WhetherSaveChanges, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-                    new MetroDialogSettings() { AffirmativeButtonText = Properties.Resources.Save, NegativeButtonText = Properties.Resources.DoNotSave,
-                        FirstAuxiliaryButtonText = Properties.Resources.Cancel, ColorScheme = MetroDialogColorScheme.Accented });
+                    new MetroDialogSettings()
+                    {
+                        AffirmativeButtonText = Properties.Resources.Save,
+                        NegativeButtonText = Properties.Resources.DoNotSave,
+                        FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                        ColorScheme = MetroDialogColorScheme.Accented
+                    });
                 if (ret == MessageDialogResult.Affirmative)
                 {
                     try
@@ -619,7 +629,7 @@ namespace MarkDownEditor.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.SaveFileFailed, ex.Message, 
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.SaveFileFailed, ex.Message,
                             MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                         return;
                     }
@@ -631,6 +641,47 @@ namespace MarkDownEditor.ViewModel
             else
                 OpenDoc();
         });
+
+        public ICommand DropCommand => new RelayCommand<DragEventArgs>(async (e) =>
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (IsModified)
+                {
+                    var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.UnsavedChanges,
+                        Properties.Resources.WhetherSaveChanges, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                        new MetroDialogSettings()
+                        {
+                            AffirmativeButtonText = Properties.Resources.Save,
+                            NegativeButtonText = Properties.Resources.DoNotSave,
+                            FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                            ColorScheme = MetroDialogColorScheme.Accented
+                        });
+                    if (ret == MessageDialogResult.Affirmative)
+                    {
+                        try
+                        {
+                            if (Save() == false)
+                                return;
+                        }
+                        catch (Exception ex)
+                        {
+                            await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.SaveFileFailed, ex.Message,
+                                MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
+                            return;
+                        }
+                        OpenDoc(files[0]);
+                    }
+                    else if (ret == MessageDialogResult.Negative)
+                        OpenDoc(files[0]);
+                }
+                else
+                    OpenDoc(files[0]);
+            }
+        });        
 
         public ICommand SaveDocumentCommand => new RelayCommand(async () =>
         {
