@@ -37,6 +37,7 @@ namespace MarkDownEditor
             }
             else
                 MarkDownEditor.Properties.Resources.Culture = new CultureInfo(languageName);
+            ICSharpCode.AvalonEdit.AvalonEditCommands.IndentSelection.InputGestures.Clear();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
