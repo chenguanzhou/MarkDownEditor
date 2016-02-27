@@ -208,5 +208,29 @@ namespace MarkDownEditor.Properties {
                 return ((string)(this["ClientSecret"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DoNotRemindUpdate {
+            get {
+                return ((bool)(this["DoNotRemindUpdate"]));
+            }
+            set {
+                this["DoNotRemindUpdate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastLatestVersion {
+            get {
+                return ((string)(this["LastLatestVersion"]));
+            }
+            set {
+                this["LastLatestVersion"] = value;
+            }
+        }
     }
 }

@@ -92,16 +92,29 @@ namespace MarkDownEditor.ViewModel
                     LatestVersionNumber = latestVersionString;
                     if (CompareVersion(latestVersionString, VersionNumber) >0)
                     {
-                        
-                        var ret = await DialogCoordinator.Instance.ShowMessageAsync(ViewModelLocator.Main,"Update", $"New version {latestVersionString} is released!\nUpdate Info:\n {descriptionString}",
-                            MessageDialogStyle.AffirmativeAndNegative,new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented, AffirmativeButtonText = "Download Now",
-                                NegativeButtonText = Properties.Resources.Cancel});
-                        if (ret == MessageDialogResult.Affirmative)
-                            Process.Start("https://github.com/chenguanzhou/MarkDownEditor/releases");
+                        if (Properties.Settings.Default.DoNotRemindUpdate)
+                        {
+                            if (CompareVersion(latestVersionString, Properties.Settings.Default.LastLatestVersion) > 0)
+                            {
+                                Properties.Settings.Default.DoNotRemindUpdate = false;
+                                Properties.Settings.Default.LastLatestVersion = latestVersionString;
+                                Properties.Settings.Default.Save();
+
+                                NotifyUpdate(latestVersionString, descriptionString);
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            NotifyUpdate(latestVersionString, descriptionString);
+                        }
                     }
                 }
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 ViewModelLocator.Main.StatusBarText = "Fetch App update information failed!";
             }
@@ -127,6 +140,26 @@ namespace MarkDownEditor.ViewModel
             }
 
             return 0;
+        }
+
+        private async void NotifyUpdate(string latestVersionString, string descriptionString)
+        {
+            var ret = await DialogCoordinator.Instance.ShowMessageAsync(ViewModelLocator.Main, "Update", $"New version {latestVersionString} is released!\n\nUpdate Info:\n{descriptionString}",
+                            MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings()
+                            {
+                                ColorScheme = MetroDialogColorScheme.Accented,
+                                AffirmativeButtonText = "Download Now",
+                                NegativeButtonText = Properties.Resources.Cancel,
+                                FirstAuxiliaryButtonText = "Don't remind for this update!"
+                            });
+            if (ret == MessageDialogResult.Affirmative)
+                Process.Start("https://github.com/chenguanzhou/MarkDownEditor/releases");
+            else if (ret == MessageDialogResult.FirstAuxiliary)
+            {
+                Properties.Settings.Default.DoNotRemindUpdate = true;
+                Properties.Settings.Default.LastLatestVersion = latestVersionString;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }
