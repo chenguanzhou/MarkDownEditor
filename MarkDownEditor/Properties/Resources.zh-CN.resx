@@ -510,4 +510,34 @@
   <data name="OpenThisFolder" xml:space="preserve">
     <value>打开该文件夹</value>
   </data>
+  <data name="CheckForUpdate" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>当前版本</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>捐助</value>
+  </data>
+  <data name="DoNotRemindForThisUpdate" xml:space="preserve">
+    <value>此版本不再提醒</value>
+  </data>
+  <data name="DownloadNow" xml:space="preserve">
+    <value>现在下载</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>最新版本</value>
+  </data>
+  <data name="NewVersionIsReleased" xml:space="preserve">
+    <value>新版本已发布！</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>获取升级信息失败</value>
+  </data>
+  <data name="UpdateInfo" xml:space="preserve">
+    <value>升级信息</value>
+  </data>
 </root>

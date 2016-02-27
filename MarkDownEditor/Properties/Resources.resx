@@ -510,4 +510,34 @@
   <data name="OpenThisFolder" xml:space="preserve">
     <value>Open This Folder</value>
   </data>
+  <data name="CheckForUpdate" xml:space="preserve">
+    <value>Check for update</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current Version</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="DoNotRemindForThisUpdate" xml:space="preserve">
+    <value>Don't remind for this update!</value>
+  </data>
+  <data name="DownloadNow" xml:space="preserve">
+    <value>Download Now</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>Latest Version</value>
+  </data>
+  <data name="NewVersionIsReleased" xml:space="preserve">
+    <value>New version is released!</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>Fetch App update information failed!</value>
+  </data>
+  <data name="UpdateInfo" xml:space="preserve">
+    <value>Update Info</value>
+  </data>
 </root>

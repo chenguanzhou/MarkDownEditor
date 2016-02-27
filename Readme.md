@@ -80,3 +80,7 @@ For a WPF project, I recommand VS2015 Community Edition to build.
 - [Markdown CSS](https://github.com/simonlc/Markdown-CSS)
 - [github.css](https://gist.github.com/andyferra/2554919)
 - [分享一个Markdown css](http://www.oschina.net/question/124879_76399?fromerr=LWBSwh1E)
+
+# Donate
+
+![支付宝](MarkDownEditor/alipay.jpg)

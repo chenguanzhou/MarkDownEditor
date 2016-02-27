@@ -115,6 +115,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for update.
+        /// </summary>
+        public static string CheckForUpdate {
+            get {
+                return ResourceManager.GetString("CheckForUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -169,6 +178,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Version.
+        /// </summary>
+        public static string CurrentVersion {
+            get {
+                return ResourceManager.GetString("CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
         public static string Cut {
@@ -214,11 +232,38 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Donate.
+        /// </summary>
+        public static string Donate {
+            get {
+                return ResourceManager.GetString("Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t remind for this update!.
+        /// </summary>
+        public static string DoNotRemindForThisUpdate {
+            get {
+                return ResourceManager.GetString("DoNotRemindForThisUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t save.
         /// </summary>
         public static string DoNotSave {
             get {
                 return ResourceManager.GetString("DoNotSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Now.
+        /// </summary>
+        public static string DownloadNow {
+            get {
+                return ResourceManager.GetString("DownloadNow", resourceCulture);
             }
         }
         
@@ -538,6 +583,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latest Version.
+        /// </summary>
+        public static string LatestVersion {
+            get {
+                return ResourceManager.GetString("LatestVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lines.
         /// </summary>
         public static string Lines {
@@ -615,6 +669,15 @@ namespace MarkDownEditor.Properties {
         public static string NewDocumentCreated {
             get {
                 return ResourceManager.GetString("NewDocumentCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version is released!.
+        /// </summary>
+        public static string NewVersionIsReleased {
+            get {
+                return ResourceManager.GetString("NewVersionIsReleased", resourceCulture);
             }
         }
         
@@ -1173,6 +1236,33 @@ namespace MarkDownEditor.Properties {
         public static string UntitledTitle {
             get {
                 return ResourceManager.GetString("UntitledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fetch App update information failed!.
+        /// </summary>
+        public static string UpdateFailed {
+            get {
+                return ResourceManager.GetString("UpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Info.
+        /// </summary>
+        public static string UpdateInfo {
+            get {
+                return ResourceManager.GetString("UpdateInfo", resourceCulture);
             }
         }
         
