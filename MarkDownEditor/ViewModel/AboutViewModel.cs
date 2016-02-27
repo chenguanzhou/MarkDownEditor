@@ -6,11 +6,13 @@ using MahApps.Metro.Controls.Dialogs;
 using MarkDownEditor.Model;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -39,6 +41,7 @@ namespace MarkDownEditor.ViewModel
         /// </summary>
         public AboutViewModel()
         {
+            CheckForUpdate();
         }
 
         public override void Cleanup()
@@ -65,5 +68,65 @@ namespace MarkDownEditor.ViewModel
 
         public string ApplicationName => Assembly.GetEntryAssembly().GetCustomAttributesData()[3].ConstructorArguments[0].ToString().Replace("\"", "");
         public string VersionNumber => Assembly.GetEntryAssembly().GetName().Version.ToString();
+        public string LatestVersionNumber { get; private set; }
+
+
+        #region Check for update
+
+        private async void CheckForUpdate()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    string jsonPath = Path.GetTempFileName() + ".json";
+                    await client.DownloadFileTaskAsync(new Uri("https://raw.githubusercontent.com/chenguanzhou/MarkDownEditor/develop/LatestVersion.json"), jsonPath);
+
+                    JObject obj = JObject.Parse(File.ReadAllText(jsonPath));
+                    if (obj["AppName"].ToString() != ApplicationName)
+                        throw new Exception();
+                    var versionObj = obj["LatestVersion"];
+                    string latestVersionString = versionObj["Version"].ToString();
+                    string descriptionString = versionObj["Description"].ToString();
+
+                    LatestVersionNumber = latestVersionString;
+                    if (CompareVersion(latestVersionString, VersionNumber) >0)
+                    {
+                        
+                        var ret = await DialogCoordinator.Instance.ShowMessageAsync(ViewModelLocator.Main,"Update", $"New version {latestVersionString} is released!\nUpdate Info:\n {descriptionString}",
+                            MessageDialogStyle.AffirmativeAndNegative,new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented, AffirmativeButtonText = "Download Now",
+                                NegativeButtonText = Properties.Resources.Cancel});
+                        if (ret == MessageDialogResult.Affirmative)
+                            Process.Start("https://github.com/chenguanzhou/MarkDownEditor/releases");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewModelLocator.Main.StatusBarText = "Fetch App update information failed!";
+            }
+        }
+
+        #endregion
+        int CompareVersion(string left, string right)
+        {
+            var leftV = left.Split('.').Select(s => int.Parse(s)).ToList();
+            var rightV = right.Split('.').Select(s => int.Parse(s)).ToList();
+
+            if (leftV.Count != 4 || rightV.Count != 4)
+                throw new Exception();
+
+            for (int i = 0; i < 4; ++i)
+            {
+                if (leftV[i] > rightV[i])
+                    return 1;
+                else if (leftV[i] < rightV[i])
+                    return -1;
+                else
+                    continue;
+            }
+
+            return 0;
+        }
     }
 }
