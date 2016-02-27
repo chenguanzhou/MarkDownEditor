@@ -74,6 +74,7 @@ For a WPF project, I recommand VS2015 Community Edition to build.
 # Thanks
 
 - [Making AvalonEdit MVVM compatible](http://stackoverflow.com/questions/12344367/making-avalonedit-mvvm-compatible)
+- [AvalonEdit :: Ctrl + I KeyBinding Doesn't Work](http://stackoverflow.com/questions/29610545/avalonedit-ctrl-i-keybinding-doesnt-work)
 - [Wix 安装部署教程](http://www.cnblogs.com/stoneniqiu/category/522235.html)
 - [Markdown CSS](https://github.com/markdowncss/markdowncss.github.io)
 - [Markdown CSS](https://github.com/simonlc/Markdown-CSS)
