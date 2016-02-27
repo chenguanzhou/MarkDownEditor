@@ -3,6 +3,6 @@
   "LatestVersion": {
     "Version": "0.3.2.0",
     "UpdateTime": "2016/2/21",
-    "Description": "1.Switch CSS Files\n2.Add Custom CSS Files"
+    "Description": "1.Fix bug for Ctrl+I\n2.Drag file to open\n3.Update Notify"
   }
 }
