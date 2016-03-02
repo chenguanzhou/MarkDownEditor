@@ -1,7 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/f82df8y5yojgmai4?svg=true)](https://ci.appveyor.com/project/chenguanzhou/markdowneditor)
 [![Join the chat at https://gitter.im/chenguanzhou/MarkDownEditor](https://badges.gitter.im/chenguanzhou/MarkDownEditor.svg)](https://gitter.im/chenguanzhou/MarkDownEditor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
-[![Github All Releases](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)](https://github.com/qiniu/csharp-sdk/releases)
 
 # MarkDown Editor
 
@@ -62,6 +62,7 @@ For a WPF project, I recommand VS2015 Community Edition to build.
 
 - [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef)
 - [CefSharp](https://github.com/cefsharp/CefSharp)
+- [qiniu csharp-sdk](https://github.com/qiniu/csharp-sdk)
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 - [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 - [AvalonEdit](https://github.com/icsharpcode/AvalonEdit)
