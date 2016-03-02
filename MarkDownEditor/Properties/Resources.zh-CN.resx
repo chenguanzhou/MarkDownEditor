@@ -456,8 +456,8 @@
   <data name="Uploading" xml:space="preserve">
     <value>正在上传</value>
   </data>
-  <data name="UploadLocalImage" xml:space="preserve">
-    <value>上传本地图片（中国大陆地区可能无法正常使用）</value>
+  <data name="UploadLocalImage2IMGUR" xml:space="preserve">
+    <value>上传本地图片至Imgur（非中国大陆地区）</value>
   </data>
   <data name="Find" xml:space="preserve">
     <value>查找</value>
@@ -539,5 +539,14 @@
   </data>
   <data name="UpdateInfo" xml:space="preserve">
     <value>升级信息</value>
+  </data>
+  <data name="TypeImageFilter" xml:space="preserve">
+    <value>JPEG|*.jpg|PNG|*.png</value>
+  </data>
+  <data name="TypeImageToolTip" xml:space="preserve">
+    <value>图片影像</value>
+  </data>
+  <data name="UploadLocalImage2Qiniu" xml:space="preserve">
+    <value>上传本地图片至七牛（中国大陆地区）</value>
   </data>
 </root>

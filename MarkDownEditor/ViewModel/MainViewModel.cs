@@ -12,6 +12,8 @@ using MarkDownEditor.Model;
 using MarkDownEditor.View;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
+using Qiniu.IO;
+using Qiniu.RS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -60,7 +62,8 @@ namespace MarkDownEditor.ViewModel
             CurrentCssFileIndex = 2;
             CurrentMarkdownTypeText = Properties.Settings.Default.MarkdownProcessor;
 
-
+            Qiniu.Conf.Config.ACCESS_KEY = SecretKey.QiniuConfig.AccessKey;
+            Qiniu.Conf.Config.SECRET_KEY = SecretKey.QiniuConfig.SecretKey;
 
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
@@ -452,7 +455,8 @@ namespace MarkDownEditor.ViewModel
             new ExportFileType(markdownSourceTempPath) {Name="Docx" , ToolTip=Properties.Resources.TypeDocxToolTip, Filter=Properties.Resources.TypeDocxFilter },
             new ExportFileType(markdownSourceTempPath) {Name="Epub" , ToolTip=Properties.Resources.TypeEpubToolTip, Filter=Properties.Resources.TypeEpubFilter },
             new ExportFileType(markdownSourceTempPath) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter }
+            new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="Image", ToolTip=Properties.Resources.TypeImageToolTip, Filter=Properties.Resources.TypeImageFilter }
         };
 
         public static Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
@@ -1092,7 +1096,7 @@ namespace MarkDownEditor.ViewModel
                 }
             };
 
-            Func<string, Task<string>> uploadImage = async (string filePath) =>
+            Func<string, Task<string>> uploadImage2Imgur = async (string filePath) =>
             {
                 var client = new ImgurClient(Properties.Settings.Default.ClientID, Properties.Settings.Default.ClientSecret);
                 var endpoint = new ImageEndpoint(client);
@@ -1104,16 +1108,35 @@ namespace MarkDownEditor.ViewModel
                 return image.Link;
             };
 
+            Func<string, Task<string>> uploadImage2Qiniu = async (string filePath) =>
+            {
+                return await Task<string>.Run(()=> 
+                {
+                    var key = Guid.NewGuid().ToString();
+                    var policy = new PutPolicy(SecretKey.QiniuConfig.BucketName, 3600);
+                    string upToken = policy.Token();
+                    PutExtra extra = new PutExtra();
+                    IOClient client = new IOClient();
+                    client.PutFile(upToken, key, filePath, extra);
+
+                    if (SecretKey.QiniuConfig.DomainName.StartsWith("http"))
+                        return SecretKey.QiniuConfig.DomainName + "/" + key;
+                    else
+                        return "http://" + SecretKey.QiniuConfig.DomainName + "/" + key;
+                });
+            };
+
             var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Image, Properties.Resources.SelectImageType,
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings()
+                MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary, new MetroDialogSettings()
                 {
                     AffirmativeButtonText = Properties.Resources.OnlineImage,
-                    NegativeButtonText = Properties.Resources.UploadLocalImage,
-                    FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                    NegativeButtonText = Properties.Resources.Cancel,
+                    FirstAuxiliaryButtonText = Properties.Resources.UploadLocalImage2IMGUR,
+                    SecondAuxiliaryButtonText = Properties.Resources.UploadLocalImage2Qiniu,
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
-            if (ret == MessageDialogResult.FirstAuxiliary)
+            if (ret == MessageDialogResult.Negative)
                 return;
             else if (ret == MessageDialogResult.Affirmative)
             {
@@ -1135,11 +1158,11 @@ namespace MarkDownEditor.ViewModel
                     try
                     {
                         FileInfo info = new FileInfo(dlg.FileName);
-                        if (info.Length > 10240000)
+                        if (info.Length > 5120000)
                             throw new Exception(Properties.Resources.ImageSizeError);
-
                         progress.SetIndeterminate();
-                        string link = await uploadImage(dlg.FileName);
+
+                        string link = ret == MessageDialogResult.FirstAuxiliary ? await uploadImage2Imgur(dlg.FileName) : await uploadImage2Qiniu(dlg.FileName);
                         await progress.CloseAsync();
                         insertUrl(link);
                     }

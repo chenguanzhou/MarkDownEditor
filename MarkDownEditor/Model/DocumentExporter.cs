@@ -19,7 +19,8 @@ namespace MarkDownEditor.Model
                 { "Docx", new DocxExporter()},
                 { "Epub", new EpubExporter()},
                 { "Latex", new LatexExporter()},
-                { "PDF", new PdfExporter()}
+                { "PDF", new PdfExporter()},
+                { "Image", new ImageExporter()}
             };
 
         static public bool CanExport(string typeName) 
@@ -153,4 +154,27 @@ namespace MarkDownEditor.Model
             File.Delete(tmpFilePath);
         }
     }
+
+    public class ImageExporter : IDocumentExporter
+    {
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
+        {
+            var tmpFilePath = Path.GetTempFileName() + ".html";
+
+            DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
+
+            Process process = new Process();
+            process.StartInfo.FileName = "wkhtmltoimage";
+            process.StartInfo.Arguments = $"--width 600 \"{tmpFilePath}\" \"{outputPath}\"";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltoimage error" + process.ExitCode);
+
+            File.Delete(tmpFilePath);
+        }
+    }
 }
+
+

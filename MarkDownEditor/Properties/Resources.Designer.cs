@@ -1132,6 +1132,24 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JPEG|*.jpg|PNG|*.png.
+        /// </summary>
+        public static string TypeImageFilter {
+            get {
+                return ResourceManager.GetString("TypeImageFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string TypeImageToolTip {
+            get {
+                return ResourceManager.GetString("TypeImageToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LATEX Document|*.tex.
         /// </summary>
         public static string TypeLatexFilter {
@@ -1285,11 +1303,20 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload Local Image（It&apos;s may not available in Mainland China）.
+        ///   Looks up a localized string similar to Upload Local Image To Imgur（Outside Mainland China）.
         /// </summary>
-        public static string UploadLocalImage {
+        public static string UploadLocalImage2IMGUR {
             get {
-                return ResourceManager.GetString("UploadLocalImage", resourceCulture);
+                return ResourceManager.GetString("UploadLocalImage2IMGUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Local Image To Qiniu（Mainland China）.
+        /// </summary>
+        public static string UploadLocalImage2Qiniu {
+            get {
+                return ResourceManager.GetString("UploadLocalImage2Qiniu", resourceCulture);
             }
         }
         

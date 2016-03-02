@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{5759D6A1-F473-4040-B9A4-597E3D3BA973}" Name="MarkDownEditor" Language="1033" Version="0.3.2" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{B43EDB7A-D843-4514-A3DD-403A18BBF74E}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{86BC8211-5ECF-4D2A-B4CA-0C31FA20A883}" Name="MarkDownEditor" Language="1033" Version="0.3.3" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{34EA49A5-1CB4-48C6-BBDB-5BC4BA6F389F}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
@@ -128,6 +128,8 @@
         <File Id="Ude.dll" Name="Ude.dll" Source="$(var.MarkDownEditor_TargetDir)Ude.dll" />
         <File Id="Imgur.API.dll" Name="Imgur.API.dll" Source="$(var.MarkDownEditor_TargetDir)Imgur.API.dll" />
         <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.MarkDownEditor_TargetDir)Newtonsoft.Json.dll" />
+        <File Id="SecretKey.dll" Name="SecretKey.dll" Source="$(var.MarkDownEditor_TargetDir)SecretKey.dll" />
+        <File Id="Qiniu.4.0.dll" Name="Qiniu.4.0.dll" Source="$(var.MarkDownEditor_TargetDir)Qiniu.4.0.dll" />
 
         <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.MarkDownEditor_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
         <File Id="libcef.dll" Name="libcef.dll" Source="$(var.MarkDownEditor_TargetDir)libcef.dll" />
@@ -140,6 +142,7 @@
         <File Id="CefSharp.BrowserSubprocess.exe" Name="CefSharp.BrowserSubprocess.exe" Source="$(var.MarkDownEditor_TargetDir)CefSharp.BrowserSubprocess.exe" />
         <File Id="pandoc.exe" Name="pandoc.exe" Source="$(var.MarkDownEditor_TargetDir)pandoc.exe" />
         <File Id="wkhtmltopdf.exe" Name="wkhtmltopdf.exe" Source="$(var.MarkDownEditor_TargetDir)wkhtmltopdf.exe" />
+        <File Id="wkhtmltoimage.exe" Name="wkhtmltoimage.exe" Source="$(var.MarkDownEditor_TargetDir)wkhtmltoimage.exe" />
 
         <File Id="cef.pak" Name="cef.pak" Source="$(var.MarkDownEditor_TargetDir)cef.pak" />
         <File Id="cef_100_percent.pak" Name="cef_100_percent.pak" Source="$(var.MarkDownEditor_TargetDir)cef_100_percent.pak" />

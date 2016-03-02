@@ -456,8 +456,8 @@
   <data name="Uploading" xml:space="preserve">
     <value>Uploading</value>
   </data>
-  <data name="UploadLocalImage" xml:space="preserve">
-    <value>Upload Local Image（It's may not available in Mainland China）</value>
+  <data name="UploadLocalImage2IMGUR" xml:space="preserve">
+    <value>Upload Local Image To Imgur（Outside Mainland China）</value>
   </data>
   <data name="Find" xml:space="preserve">
     <value>Find</value>
@@ -539,5 +539,14 @@
   </data>
   <data name="UpdateInfo" xml:space="preserve">
     <value>Update Info</value>
+  </data>
+  <data name="TypeImageFilter" xml:space="preserve">
+    <value>JPEG|*.jpg|PNG|*.png</value>
+  </data>
+  <data name="TypeImageToolTip" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="UploadLocalImage2Qiniu" xml:space="preserve">
+    <value>Upload Local Image To Qiniu（Mainland China）</value>
   </data>
 </root>
