@@ -121,6 +121,10 @@ namespace MarkDownEditor.ViewModel
         #endregion
         int CompareVersion(string left, string right)
         {
+            if (string.IsNullOrEmpty(left))
+                return 1;
+            else if (string.IsNullOrEmpty(right))
+                return -1;
             var leftV = left.Split('.').Select(s => int.Parse(s)).ToList();
             var rightV = right.Split('.').Select(s => int.Parse(s)).ToList();
 
