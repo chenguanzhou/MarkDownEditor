@@ -92,24 +92,6 @@ namespace MarkDownEditor.ViewModel
 
         public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDownEditor";
 
-        private CultureInfo cultureInfo = new CultureInfo(Properties.Settings.Default.Language);
-        public CultureInfo CultureInfo
-        {
-            get { return cultureInfo; }
-            set
-            {
-                if (cultureInfo == value)
-                    return;
-                cultureInfo = value;
-                Properties.Settings.Default.Language = value?.Name;
-                Properties.Settings.Default.Save();
-                StatusBarText = Properties.Resources.LanguageSwitch;
-                RaisePropertyChanged("CultureInfo");
-            }
-        }
-
-        public List<CultureInfo> AllLanguages => App.AllLanguages;
-
         public string PreviewSource => previewSourceTempPath;
 
         public bool showPreview = true;
@@ -506,19 +488,6 @@ namespace MarkDownEditor.ViewModel
                 }
             }
         }
-
-        public class AccentItem
-        {
-            public string Name { get; set; }
-            public Brush ColorBrush { get; set; }
-            public ICommand ChangeAccentCommand => new RelayCommand(()=> 
-            {
-                ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(this.Name), ThemeManager.DetectAppStyle(Application.Current).Item1);
-                Properties.Settings.Default.DefaultAccent = this.Name;
-                Properties.Settings.Default.Save();
-            });
-        }
-        public List<AccentItem> AccentColors { get; set; } = ThemeManager.Accents.Select(s=>new AccentItem() { Name=s.Name,ColorBrush= s.Resources["AccentColorBrush"] as Brush }).ToList();
 
         #region Document Commands
         public ICommand NewDocumentCommand => new RelayCommand(async () =>

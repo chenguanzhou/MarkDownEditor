@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -45,6 +46,56 @@ namespace MarkDownEditor.ViewModel
         {
             base.Cleanup();
         }
+
+        
+        private bool showSettingsControl = false;
+        public bool ShowSettingsControl
+        {
+            get { return showSettingsControl; }
+            set
+            {
+                if (showSettingsControl == value)
+                    return;
+                showSettingsControl = value;
+                RaisePropertyChanged("ShowSettingsControl");
+            }
+        }
+
+        public ICommand ShowSettingCommand => new RelayCommand(()=> ShowSettingsControl = !ShowSettingsControl);
+
+        #region Environment
+        private CultureInfo cultureInfo = new CultureInfo(Properties.Settings.Default.Language);
+        public CultureInfo CultureInfo
+        {
+            get { return cultureInfo; }
+            set
+            {
+                if (cultureInfo == value)
+                    return;
+                cultureInfo = value;
+                Properties.Settings.Default.Language = value?.Name;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged("CultureInfo");
+                DialogCoordinator.Instance.ShowMessageAsync(ViewModelLocator.Main, Properties.Resources.Warning, Properties.Resources.LanguageSwitch);
+            }
+        }
+
+        public List<CultureInfo> AllLanguages => App.AllLanguages;
+
+        public class AccentItem
+        {
+            public string Name { get; set; }
+            public Brush ColorBrush { get; set; }
+            public ICommand ChangeAccentCommand => new RelayCommand(() =>
+            {
+                ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(this.Name), ThemeManager.DetectAppStyle(Application.Current).Item1);
+                Properties.Settings.Default.DefaultAccent = this.Name;
+                Properties.Settings.Default.Save();
+            });
+        }
+        public List<AccentItem> AccentColors { get; set; } = ThemeManager.Accents.Select(s => new AccentItem() { Name = s.Name, ColorBrush = s.Resources["AccentColorBrush"] as Brush }).ToList();
+
+        #endregion
 
         private FontFamily editorFont = new FontFamily(Properties.Settings.Default.EditorFont);
         public FontFamily EditorFont

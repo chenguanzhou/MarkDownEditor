@@ -36,7 +36,7 @@
                         </TextBlock>
                     </Hyperlink>
                 </TextBlock>
-                <Expander Margin="0,20,0,0" Header="{x:Static p:Resources.Donate}" FontSize="16">
+                <Expander Margin="0,20,0,0" IsExpanded="True" Header="{x:Static p:Resources.Donate}" FontSize="16">
                     <Image Source="/MarkDownEditor;component/alipay.jpg"></Image>
                 </Expander>
             </StackPanel>

@@ -62,7 +62,7 @@ namespace MarkDownEditor.ViewModel
             }
         }
         
-        public ICommand ShowAboutCommand => new RelayCommand(() => ShowAboutControl = true);
+        public ICommand ShowAboutCommand => new RelayCommand(() => ShowAboutControl = !ShowAboutControl);
         public ICommand ClickSourceCodeWebCommand => new RelayCommand(() => Process.Start("https://github.com/chenguanzhou/MarkDownEditor"));
         public ICommand CheckForUpdateCommand => new RelayCommand(()=> 
         {

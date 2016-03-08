@@ -187,7 +187,7 @@
     <value>Select All</value>
   </data>
   <data name="SETTINGS" xml:space="preserve">
-    <value>SETTINGS</value>
+    <value>Settings</value>
   </data>
   <data name="ShowPreview" xml:space="preserve">
     <value>Show Preview</value>
@@ -361,7 +361,7 @@
     <value>Italic (Ctrl+I)</value>
   </data>
   <data name="LanguageSwitch" xml:space="preserve">
-    <value>Language will switched after restart</value>
+    <value>Language will be switched after restart</value>
   </data>
   <data name="Lines" xml:space="preserve">
     <value>Lines</value>
@@ -548,5 +548,23 @@
   </data>
   <data name="UploadLocalImage2Qiniu" xml:space="preserve">
     <value>Upload Local Image To Qiniu（Mainland China）</value>
+  </data>
+  <data name="Editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Environment</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="InternationalSettings" xml:space="preserve">
+    <value>International Settings</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>

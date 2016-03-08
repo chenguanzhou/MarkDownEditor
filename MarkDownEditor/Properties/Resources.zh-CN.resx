@@ -361,7 +361,7 @@
     <value>斜体 (Ctrl+I)</value>
   </data>
   <data name="LanguageSwitch" xml:space="preserve">
-    <value>重启后将切换语言</value>
+    <value>语言设置重启后生效</value>
   </data>
   <data name="Lines" xml:space="preserve">
     <value>行数</value>
@@ -548,5 +548,23 @@
   </data>
   <data name="UploadLocalImage2Qiniu" xml:space="preserve">
     <value>上传本地图片至七牛（中国大陆地区）</value>
+  </data>
+  <data name="Editor" xml:space="preserve">
+    <value>编辑器</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>环境</value>
+  </data>
+  <data name="InternationalSettings" xml:space="preserve">
+    <value>国际化</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
   </data>
 </root>

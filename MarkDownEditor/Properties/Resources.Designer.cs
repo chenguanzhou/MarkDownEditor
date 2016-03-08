@@ -277,6 +277,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Editor.
+        /// </summary>
+        public static string Editor {
+            get {
+                return ResourceManager.GetString("Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bold Text Area.
         /// </summary>
         public static string EmptyBoldAreaText {
@@ -327,6 +336,15 @@ namespace MarkDownEditor.Properties {
         public static string EmptyTitle {
             get {
                 return ResourceManager.GetString("EmptyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Environment.
+        /// </summary>
+        public static string Environment {
+            get {
+                return ResourceManager.GetString("Environment", resourceCulture);
             }
         }
         
@@ -565,6 +583,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to International Settings.
+        /// </summary>
+        public static string InternationalSettings {
+            get {
+                return ResourceManager.GetString("InternationalSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Italic (Ctrl+I).
         /// </summary>
         public static string ItalicCommand {
@@ -574,7 +601,16 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language will switched after restart.
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language will be switched after restart.
         /// </summary>
         public static string LanguageSwitch {
             get {
@@ -970,7 +1006,7 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SETTINGS.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SETTINGS {
             get {
@@ -1056,6 +1092,15 @@ namespace MarkDownEditor.Properties {
         public static string Symbols {
             get {
                 return ResourceManager.GetString("Symbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
         
@@ -1317,6 +1362,15 @@ namespace MarkDownEditor.Properties {
         public static string UploadLocalImage2Qiniu {
             get {
                 return ResourceManager.GetString("UploadLocalImage2Qiniu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

@@ -35,10 +35,10 @@
     <Style x:Key="SettingKeyStyle" TargetType="TextBlock">
         <Setter Property="TextWrapping" Value="Wrap"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
-        <Setter Property="Margin" Value="15,0,0,2"></Setter>
-        <Setter Property="Padding" Value="5"></Setter>
-        <!--<Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}"></Setter>-->
-        <Setter Property="FontSize" Value="18"></Setter>
+        <Setter Property="Opacity" Value="0.65"></Setter>
+        <Setter Property="Margin" Value="0,5,0,5"></Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}"></Setter>
+        <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}"></Setter>
     </Style>
     <Style x:Key="SettingTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource SettingKeyStyle}">
         <Setter Property="FontSize" Value="24"></Setter>

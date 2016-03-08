@@ -8,7 +8,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
-            d:DesignHeight="250"  d:DesignWidth="500" Padding="4">
+            d:DesignHeight="800"  d:DesignWidth="500" Padding="4">
     <UserControl.Resources>
         <CollectionViewSource x:Key="sysFonts" Source="{x:Static Member=Fonts.SystemFontFamilies}">
             <CollectionViewSource.SortDescriptions>
@@ -16,104 +16,115 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
-    <TabControl Padding="10,10,10,0">
+    <Controls:MetroAnimatedSingleRowTabControl Padding="20">
         <TabControl.Resources>
-            <Style TargetType="StackPanel">
+            <Style TargetType="Expander" BasedOn="{StaticResource MetroExpander}">
                 <Setter Property="Margin" Value="10"></Setter>
             </Style>
-            <Style TargetType="DockPanel">
-                <Setter Property="Margin" Value="5"></Setter>
-            </Style>            
-            <Style TargetType="Controls:MetroTabItem">
-                <Setter Property="Padding" Value="3"></Setter>
-                <Setter Property="Controls:ControlsHelper.HeaderFontWeight" Value="Bold"></Setter>
-                <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="18"></Setter>
-            </Style>
         </TabControl.Resources>
-
-        <Controls:MetroTabItem Header="{x:Static p:Resources.Font}">
-            <ScrollViewer>
+        <Controls:MetroTabItem Header="{x:Static p:Resources.Environment}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.FontFamily}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:SplitButton DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Width="150" FontSize="14" 
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.InternationalSettings}">
+                        <StackPanel>
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock DockPanel.Dock="Left" Text="{x:Static p:Resources.Language}" Style="{StaticResource SettingKeyStyle}"/>
+                                <TextBlock Text="(Language)" Style="{StaticResource SettingKeyStyle}"/>
+                                <Controls:SplitButton DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" FontSize="14" 
+                                      ItemsSource="{Binding AllLanguages}" SelectedItem="{Binding CultureInfo}" DisplayMemberPath="NativeName">
+                                </Controls:SplitButton>
+                            </DockPanel>
+                        </StackPanel>                        
+                    </Expander>
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.Theme}">
+                        <StackPanel>
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="{x:Static p:Resources.Accent}" Style="{StaticResource SettingKeyStyle}"/>
+                                <Menu DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" 
+                                      Background="{DynamicResource AccentColorBrush}">
+                                    <MenuItem Header="Accent" BorderThickness="0" Opacity="0"
+                                              ItemsSource="{Binding AccentColors, Mode=OneWay}">
+                                        <MenuItem.Resources>
+                                            <Ellipse x:Key="AccentMenuIcon"
+                                                     x:Shared="False"
+                                                     Width="16"
+                                                     Height="16"
+                                                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+                                        </MenuItem.Resources>
+                                        <MenuItem.ItemContainerStyle>
+                                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
+                                                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                                                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+                                                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                                            </Style>
+                                        </MenuItem.ItemContainerStyle>
+                                    </MenuItem>
+                                </Menu>
+                            </DockPanel>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Controls:MetroTabItem>
+        <Controls:MetroTabItem Header="{x:Static p:Resources.Editor}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.Font}">
+                        <StackPanel>
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="{x:Static p:Resources.FontFamily}" Style="{StaticResource SettingKeyStyle}"/>
+                                <Controls:SplitButton DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Width="150" FontSize="14" 
                                       ItemsSource="{Binding Source={StaticResource sysFonts}}" SelectedItem="{Binding EditorFont,Mode=TwoWay}">
-                            <Controls:SplitButton.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel></VirtualizingStackPanel>
-                                </ItemsPanelTemplate>
-                            </Controls:SplitButton.ItemsPanel>
-                            <Controls:SplitButton.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Style.Setters>
-                                        <Setter Property="FontFamily" Value="{Binding}"></Setter>
-                                    </Style.Setters>
-                                </Style>
-                            </Controls:SplitButton.ItemContainerStyle>
-                        </Controls:SplitButton>
-                    </DockPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.FontSize}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:NumericUpDown DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Width="100" FontSize="14" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
-                        </Controls:NumericUpDown>
-                    </DockPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </Controls:MetroTabItem>
-        <Controls:MetroTabItem Header="{x:Static p:Resources.Editing}">
-            <ScrollViewer>
-                <StackPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.WordWrap}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding WordWrap}"></Controls:ToggleSwitch>
-                    </DockPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.HighlightCurrentLine}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding HighlightCurrentLine}"></Controls:ToggleSwitch>
-                    </DockPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </Controls:MetroTabItem>
-        <Controls:MetroTabItem Header="{x:Static p:Resources.Symbols}">
-            <ScrollViewer>
-                <StackPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.ShowLineNumbers}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding ShowLineNumbers}"></Controls:ToggleSwitch>
-                    </DockPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.ShowTabs}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding ShowTabs}"></Controls:ToggleSwitch>
-                    </DockPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.ShowSpaces}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding ShowSpaces}"></Controls:ToggleSwitch>
-                    </DockPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.ShowEndOfLine}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="{Binding ShowEndOfLine}"></Controls:ToggleSwitch>
-                    </DockPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </Controls:MetroTabItem>
-        <Controls:MetroTabItem Header="{x:Static p:Resources.Ruler}">
-            <ScrollViewer>
-                <StackPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.ShowColumnRuler}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:ToggleSwitch DockPanel.Dock="Right" HorizontalAlignment="Right" 
-                                           IsChecked="{Binding ShowColumnRuler}">
-                        </Controls:ToggleSwitch>
-                    </DockPanel>
-                    <DockPanel>
-                        <TextBlock Text="{x:Static p:Resources.RulerPosition}" Style="{StaticResource SettingKeyStyle}"/>
-                        <Controls:NumericUpDown DockPanel.Dock="Right" HorizontalContentAlignment="Left" 
+                                    <Controls:SplitButton.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel></VirtualizingStackPanel>
+                                        </ItemsPanelTemplate>
+                                    </Controls:SplitButton.ItemsPanel>
+                                    <Controls:SplitButton.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Style.Setters>
+                                                <Setter Property="FontFamily" Value="{Binding}"></Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </Controls:SplitButton.ItemContainerStyle>
+                                </Controls:SplitButton>
+                            </DockPanel>
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="{x:Static p:Resources.FontSize}" Style="{StaticResource SettingKeyStyle}"/>
+                                <Controls:NumericUpDown DockPanel.Dock="Right" HorizontalContentAlignment="Left" HorizontalAlignment="Right" Width="100" FontSize="14" Minimum="1" Maximum="96" Value="{Binding EditorFontSize}">
+                                </Controls:NumericUpDown>
+                            </DockPanel>
+                        </StackPanel>
+                    </Expander>                    
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.Editing}">
+                        <StackPanel>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.WordWrap}" IsChecked="{Binding WordWrap}"></Controls:ToggleSwitch>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.HighlightCurrentLine}" IsChecked="{Binding HighlightCurrentLine}"></Controls:ToggleSwitch>
+                        </StackPanel>
+                    </Expander>
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.Symbols}">
+                        <StackPanel>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowLineNumbers}" IsChecked="{Binding ShowLineNumbers}"></Controls:ToggleSwitch>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowTabs}" IsChecked="{Binding ShowTabs}"></Controls:ToggleSwitch>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowSpaces}" IsChecked="{Binding ShowSpaces}"></Controls:ToggleSwitch>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowEndOfLine}" IsChecked="{Binding ShowEndOfLine}"></Controls:ToggleSwitch>
+                        </StackPanel>
+                    </Expander>
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.Ruler}">
+                        <StackPanel>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowColumnRuler}" IsChecked="{Binding ShowColumnRuler}"></Controls:ToggleSwitch>
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="{x:Static p:Resources.RulerPosition}" Style="{StaticResource SettingKeyStyle}"/>
+                                <Controls:NumericUpDown DockPanel.Dock="Right" HorizontalContentAlignment="Left" 
                                             HorizontalAlignment="Right" Width="100" FontSize="14" 
                                             Minimum="1" Value="{Binding RulerPosition}" IsEnabled="{Binding ShowColumnRuler}">
-                        </Controls:NumericUpDown>
-                    </DockPanel>
+                                </Controls:NumericUpDown>
+                            </DockPanel>
+                        </StackPanel>
+                    </Expander>                    
                 </StackPanel>
             </ScrollViewer>
         </Controls:MetroTabItem>
-    </TabControl>
+    </Controls:MetroAnimatedSingleRowTabControl>
 </UserControl>
