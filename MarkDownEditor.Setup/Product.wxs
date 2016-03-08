@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{86BC8211-5ECF-4D2A-B4CA-0C31FA20A883}" Name="MarkDownEditor" Language="1033" Version="0.3.3" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{34EA49A5-1CB4-48C6-BBDB-5BC4BA6F389F}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{A4B884BE-8586-482E-B6EC-3D5D0C044F69}" Name="MarkDownEditor" Language="1033" Version="0.3.4" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{DB810BE5-1D7F-4B23-9E5A-C712058C6CAD}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
@@ -130,6 +130,8 @@
         <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.MarkDownEditor_TargetDir)Newtonsoft.Json.dll" />
         <File Id="SecretKey.dll" Name="SecretKey.dll" Source="$(var.MarkDownEditor_TargetDir)SecretKey.dll" />
         <File Id="Qiniu.4.0.dll" Name="Qiniu.4.0.dll" Source="$(var.MarkDownEditor_TargetDir)Qiniu.4.0.dll" />
+        <File Id="WkHtmlToXDotNet.dll" Name="WkHtmlToXDotNet.dll" Source="$(var.MarkDownEditor_TargetDir)WkHtmlToXDotNet.dll" />
+        <File Id="wkhtmltox.dll" Name="wkhtmltox.dll" Source="$(var.MarkDownEditor_TargetDir)wkhtmltox.dll" />
 
         <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.MarkDownEditor_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
         <File Id="libcef.dll" Name="libcef.dll" Source="$(var.MarkDownEditor_TargetDir)libcef.dll" />
@@ -141,8 +143,6 @@
         <File Id="MarkDownEditor.exe.config" Name="MarkDownEditor.exe.config" Source="$(var.MarkDownEditor_TargetDir)MarkDownEditor.exe.config" />
         <File Id="CefSharp.BrowserSubprocess.exe" Name="CefSharp.BrowserSubprocess.exe" Source="$(var.MarkDownEditor_TargetDir)CefSharp.BrowserSubprocess.exe" />
         <File Id="pandoc.exe" Name="pandoc.exe" Source="$(var.MarkDownEditor_TargetDir)pandoc.exe" />
-        <File Id="wkhtmltopdf.exe" Name="wkhtmltopdf.exe" Source="$(var.MarkDownEditor_TargetDir)wkhtmltopdf.exe" />
-        <File Id="wkhtmltoimage.exe" Name="wkhtmltoimage.exe" Source="$(var.MarkDownEditor_TargetDir)wkhtmltoimage.exe" />
 
         <File Id="cef.pak" Name="cef.pak" Source="$(var.MarkDownEditor_TargetDir)cef.pak" />
         <File Id="cef_100_percent.pak" Name="cef_100_percent.pak" Source="$(var.MarkDownEditor_TargetDir)cef_100_percent.pak" />
