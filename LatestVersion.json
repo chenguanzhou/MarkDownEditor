@@ -1,8 +1,8 @@
 {
   "AppName": "MarkDownEditor",
   "LatestVersion": {
-    "Version": "0.3.3.0",
-    "UpdateTime": "2016/3/2",
-    "Description": "1.Export to Image\n2.Upload Image To Qiniu for Chinese Users\n3.Update some packages"
+    "Version": "0.3.4.0",
+    "UpdateTime": "2016/3/9",
+    "Description": "1. Reduce the installation file size\n2. Update UI"
   }
 }
