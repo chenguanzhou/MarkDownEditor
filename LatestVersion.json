@@ -1,8 +1,8 @@
 {
   "AppName": "MarkDownEditor",
   "LatestVersion": {
-    "Version": "0.3.4.0",
-    "UpdateTime": "2016/3/9",
-    "Description": "1. Reduce the installation file size\n2. Update UI"
+    "Version": "0.3.5.0",
+    "UpdateTime": "2016/3/11",
+    "Description": "Add Night Mode"
   }
 }
