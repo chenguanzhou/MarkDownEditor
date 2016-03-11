@@ -51,15 +51,8 @@ namespace MarkDownEditor.ViewModel
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
 
-            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(Properties.Settings.Default.DefaultAccent), ThemeManager.DetectAppStyle(Application.Current).Item1);
+            UpdateCSSFiles();
 
-            var css = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css"), "*.css")
-                .Select(s=>Path.GetFileName(s)).ToList();
-            css.Insert(0, Properties.Resources.NoCSS);
-            css.Add(Properties.Resources.AddCustomCSS);
-            CssFiles = css;
-
-            CurrentCssFileIndex = 2;
             CurrentMarkdownTypeText = Properties.Settings.Default.MarkdownProcessor;
 
             Qiniu.Conf.Config.ACCESS_KEY = SecretKey.QiniuConfig.AccessKey;
@@ -402,9 +395,10 @@ namespace MarkDownEditor.ViewModel
                     {
                         await Task.Run(()=> 
                         {
-                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText],
-                                context.CurrentCssFileIndex == 0 || context.CurrentCssFileIndex == CssFiles.Count-1 ?
-                                null : CssFiles[context.CurrentCssFileIndex], SourceCodePath, dlg.FileName);
+                            bool isNightMode = ViewModelLocator.Main.SettingsViewModel.IsNightMode;
+                            var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode ? "Dark" : "Light", ViewModelLocator.Main.CurrentCssFiles[ViewModelLocator.Main.CurrentCssFileIndex]);
+                            
+                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText], cssFilePath, SourceCodePath, dlg.FileName);
                         });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
@@ -467,10 +461,12 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        public static List<string> CssFiles { get; private set; }
+        public static List<string> LightCssFiles { get; private set; }
+        public static List<string> DarkCssFiles { get; private set; }
+        public List<string> CurrentCssFiles => SettingsViewModel.IsNightMode ? DarkCssFiles : LightCssFiles;
 
         private int currentCssFileIndex;
-        public int CurrentCssFileIndex
+        public int CurrentCssFileIndex      
         {
             get { return currentCssFileIndex; }
             set
@@ -482,7 +478,7 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("CurrentCssFileIndex");
                 UpdatePreview();
 
-                if (value == CssFiles.Count - 1)
+                if (value == (SettingsViewModel.IsNightMode?DarkCssFiles:LightCssFiles).Count - 1)
                 {
                     ShowCustomCSSMessage();
                 }
@@ -1175,6 +1171,25 @@ namespace MarkDownEditor.ViewModel
         });
         #endregion
 
+        public void UpdateCSSFiles()
+        {
+            var lightCSS = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", "Light"), "*.css")
+                .Select(s => Path.GetFileName(s)).ToList();
+            lightCSS.Insert(0, Properties.Resources.NoCSS);
+            lightCSS.Add(Properties.Resources.AddCustomCSS);
+            LightCssFiles = lightCSS;
+
+            var darkCSS = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", "Dark"), "*.css")
+                .Select(s => Path.GetFileName(s)).ToList();
+            darkCSS.Insert(0, Properties.Resources.NoCSS);
+            darkCSS.Add(Properties.Resources.AddCustomCSS);
+            DarkCssFiles = darkCSS;
+
+            RaisePropertyChanged("CurrentCssFiles");
+            CurrentCssFileIndex = SettingsViewModel.IsNightMode? 1: 2;
+
+        }
+
         private async void LoadDefaultDocument()
         {
             var args = Environment.GetCommandLineArgs();
@@ -1237,7 +1252,12 @@ namespace MarkDownEditor.ViewModel
                 sw.Write(SourceCode.Text);
                 sw.Close();
 
-                DocumentExporter.Export("Html", MarkDownType[CurrentMarkdownTypeText], CurrentCssFileIndex==0|| CurrentCssFileIndex== CssFiles.Count-1? null:CssFiles[CurrentCssFileIndex], markdownSourceTempPath, previewSourceTempPath);
+                bool isNightMode = SettingsViewModel.IsNightMode;
+                var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode?"Dark":"Light", CurrentCssFiles[CurrentCssFileIndex]);
+                DocumentExporter.Export("Html", 
+                    MarkDownType[CurrentMarkdownTypeText], 
+                    CurrentCssFileIndex==0|| CurrentCssFileIndex== CurrentCssFiles.Count-1? null: cssFilePath, 
+                    markdownSourceTempPath, previewSourceTempPath);
 
                 ShouldReload = !ShouldReload;
             }            

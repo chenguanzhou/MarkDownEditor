@@ -59,7 +59,7 @@ namespace MarkDownEditor.Model
             var tmpFile = Path.GetTempFileName();
             if (cssFile!=null)
             {
-                StreamReader sr = new StreamReader($"css/{cssFile}");
+                StreamReader sr = new StreamReader(cssFile);
                 var cssContent = sr.ReadToEnd();
                 sr.Close();
                 StreamWriter sw = new StreamWriter(tmpFile);

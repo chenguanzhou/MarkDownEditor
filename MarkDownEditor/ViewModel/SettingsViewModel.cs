@@ -40,6 +40,9 @@ namespace MarkDownEditor.ViewModel
         /// </summary>
         public SettingsViewModel()
         {
+            ThemeManager.ChangeAppStyle(Application.Current, 
+                ThemeManager.GetAccent(Properties.Settings.Default.DefaultAccent),
+                ThemeManager.GetAppTheme(isNightMode ? "BaseDark" : "BaseLight"));
         }
 
         public override void Cleanup()
@@ -81,6 +84,28 @@ namespace MarkDownEditor.ViewModel
         }
 
         public List<CultureInfo> AllLanguages => App.AllLanguages;
+
+        private bool isNightMode = Properties.Settings.Default.NightMode;
+        public bool IsNightMode
+        {
+            get { return isNightMode; }
+            set
+            {
+                if (isNightMode == value)
+                    return;
+                isNightMode = value;
+                Properties.Settings.Default.NightMode = value;
+                Properties.Settings.Default.Save();
+
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
+                var appTheme = ThemeManager.GetAppTheme(isNightMode?"BaseDark":"BaseLight");
+                ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
+
+                ViewModelLocator.Main.UpdateCSSFiles();
+
+                RaisePropertyChanged("IsNightMode");
+            }
+        }
 
         public class AccentItem
         {

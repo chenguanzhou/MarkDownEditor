@@ -59,7 +59,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Position="Right" IsModal="True" Theme="Accent" Width="300" IsOpen="{Binding AboutViewModel.ShowAboutControl}">
+            <Controls:Flyout Position="Right" IsModal="True" Theme="Adapt" Width="300" IsOpen="{Binding AboutViewModel.ShowAboutControl}">
                 <view:AboutControl DataContext="{Binding AboutViewModel}"></view:AboutControl>
             </Controls:Flyout>
             <Controls:Flyout Position="Right" IsModal="True" Theme="Adapt" Width="500" IsOpen="{Binding SettingsViewModel.ShowSettingsControl}">
@@ -99,7 +99,9 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <view:MvvmTextEditor
-                                SyntaxHighlighting="MarkDown"                                    
+                                SyntaxHighlighting="MarkDown"           
+                                Background="{DynamicResource WhiteBrush}"
+                                Foreground="{DynamicResource BlackBrush}"
                                 Document="{Binding SourceCode}"
                                 SelectionStart="{Binding SelectionStart,Mode=TwoWay}"
                                 SelectionLength="{Binding SelectionLength,Mode=TwoWay}"
@@ -146,7 +148,7 @@
                         </Grid>
                     </Grid>
                 </Border>
-                <GridSplitter IsEnabled="False" Width="10"></GridSplitter>
+                <GridSplitter IsEnabled="False" Width="10" Background="{DynamicResource GrayBrush8}"></GridSplitter>
                 <Border Grid.Column="2" Margin="5,5,0,5" >
                     <Grid>
                         <Grid.RowDefinitions>

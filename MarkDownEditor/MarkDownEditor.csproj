@@ -289,25 +289,25 @@
     </Content>
     <Content Include="WkHtmlToXDotNet.dll" />
     <Resource Include="alipay.jpg" />
-    <Content Include="css\Modest.css">
+    <Content Include="css\Light\Modest.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\Default.css">
+    <Content Include="css\Light\Default.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\Github_andyferra.css">
+    <Content Include="css\Light\Github_andyferra.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\Air.css">
+    <Content Include="css\Light\Air.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\Retro.css">
+    <Content Include="css\Dark\Retro.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\Splendor.css">
+    <Content Include="css\Light\Splendor.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="css\Simonlc.css">
+    <Content Include="css\Light\Simonlc.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="MarkdownEditorLogo.ico" />

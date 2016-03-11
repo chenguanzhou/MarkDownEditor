@@ -457,7 +457,7 @@
     <value>Uploading</value>
   </data>
   <data name="UploadLocalImage2IMGUR" xml:space="preserve">
-    <value>Upload Local Image To Imgur（Outside Mainland China）</value>
+    <value>Upload Local Image To Imgur（Outside PRC）</value>
   </data>
   <data name="Find" xml:space="preserve">
     <value>Find</value>
@@ -547,7 +547,7 @@
     <value>Images</value>
   </data>
   <data name="UploadLocalImage2Qiniu" xml:space="preserve">
-    <value>Upload Local Image To Qiniu（Mainland China）</value>
+    <value>Upload Local Image To Qiniu（PRC）</value>
   </data>
   <data name="Editor" xml:space="preserve">
     <value>Editor</value>
@@ -566,5 +566,8 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="NightMode" xml:space="preserve">
+    <value>Night Mode</value>
   </data>
 </root>

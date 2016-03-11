@@ -718,6 +718,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Night Mode.
+        /// </summary>
+        public static string NightMode {
+            get {
+                return ResourceManager.GetString("NightMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No CSS.
         /// </summary>
         public static string NoCSS {
@@ -1348,7 +1357,7 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload Local Image To Imgur（Outside Mainland China）.
+        ///   Looks up a localized string similar to Upload Local Image To Imgur（Outside PRC）.
         /// </summary>
         public static string UploadLocalImage2IMGUR {
             get {
@@ -1357,7 +1366,7 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload Local Image To Qiniu（Mainland China）.
+        ///   Looks up a localized string similar to Upload Local Image To Qiniu（PRC）.
         /// </summary>
         public static string UploadLocalImage2Qiniu {
             get {

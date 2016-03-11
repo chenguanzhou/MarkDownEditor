@@ -42,7 +42,8 @@ The editor has the following `features`:
 - Modern(Metro) Style App
 - Code highlighting
 - Support of English & 简体中文
-- Switching the accent color of theme
+- Switching the color theme
+- Night Mode
 - Editing Mode & Reading Mode
 - Full Screen support
 - ......

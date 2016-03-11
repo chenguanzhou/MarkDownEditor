@@ -457,7 +457,7 @@
     <value>正在上传</value>
   </data>
   <data name="UploadLocalImage2IMGUR" xml:space="preserve">
-    <value>上传本地图片至Imgur（非中国大陆地区）</value>
+    <value>上传本地图片至Imgur（国内无法上传）</value>
   </data>
   <data name="Find" xml:space="preserve">
     <value>查找</value>
@@ -547,7 +547,7 @@
     <value>图片影像</value>
   </data>
   <data name="UploadLocalImage2Qiniu" xml:space="preserve">
-    <value>上传本地图片至七牛（中国大陆地区）</value>
+    <value>上传本地图片至七牛</value>
   </data>
   <data name="Editor" xml:space="preserve">
     <value>编辑器</value>
@@ -566,5 +566,8 @@
   </data>
   <data name="Warning" xml:space="preserve">
     <value>警告</value>
+  </data>
+  <data name="NightMode" xml:space="preserve">
+    <value>夜间模式</value>
   </data>
 </root>
