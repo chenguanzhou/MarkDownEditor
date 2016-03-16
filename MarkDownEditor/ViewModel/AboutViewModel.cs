@@ -41,7 +41,7 @@ namespace MarkDownEditor.ViewModel
         /// </summary>
         public AboutViewModel()
         {
-            //CheckForUpdate();
+            CheckForUpdate();
         }
 
         public override void Cleanup()
