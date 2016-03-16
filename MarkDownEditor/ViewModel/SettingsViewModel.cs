@@ -50,7 +50,8 @@ namespace MarkDownEditor.ViewModel
             base.Cleanup();
         }
 
-        
+        public AboutViewModel AboutViewModel { get; } = new AboutViewModel();
+
         private bool showSettingsControl = false;
         public bool ShowSettingsControl
         {

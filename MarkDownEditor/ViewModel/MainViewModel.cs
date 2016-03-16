@@ -75,7 +75,6 @@ namespace MarkDownEditor.ViewModel
         #region SubViewModels
 
         public SettingsViewModel SettingsViewModel { get; } = new SettingsViewModel();
-        public AboutViewModel AboutViewModel { get; } = new AboutViewModel();
         public FindReplaceViewModel FindReplaceViewModel { get; } = new FindReplaceViewModel();
 
         #endregion //SubViewModels
@@ -656,8 +655,8 @@ namespace MarkDownEditor.ViewModel
         {
             try
             {
-                Save();
-                IsModified = false;
+                if (Save())
+                    IsModified = false;
             }
             catch (Exception ex)
             {

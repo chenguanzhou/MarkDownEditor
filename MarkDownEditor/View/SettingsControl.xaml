@@ -127,5 +127,8 @@
                 </StackPanel>
             </ScrollViewer>
         </Controls:MetroTabItem>
+        <Controls:MetroTabItem Header="{x:Static p:Resources.About}">
+            <local:AboutControl DataContext="{Binding AboutViewModel}"></local:AboutControl>
+        </Controls:MetroTabItem>
     </Controls:MetroAnimatedSingleRowTabControl>
 </UserControl>

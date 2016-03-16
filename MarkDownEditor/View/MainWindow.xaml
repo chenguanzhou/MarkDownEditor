@@ -31,7 +31,6 @@
             <ToggleButton Content="{x:Static p:Resources.ShowPreview}" IsChecked="{Binding IsShowPreview}" IsEnabled="{Binding IsReadingMode,Converter={StaticResource OppositeConverter}}"></ToggleButton>
             <ToggleButton Content="{x:Static p:Resources.FullScreen}" IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}"></ToggleButton>
             <Button Content="{x:Static p:Resources.SETTINGS}" Command="{Binding SettingsViewModel.ShowSettingCommand}"></Button>
-            <Button Content="{x:Static p:Resources.About}" Command="{Binding AboutViewModel.ShowAboutCommand}"></Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
@@ -59,10 +58,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Position="Right" IsModal="True" Theme="Adapt" Width="300" IsOpen="{Binding AboutViewModel.ShowAboutControl}">
-                <view:AboutControl DataContext="{Binding AboutViewModel}"></view:AboutControl>
-            </Controls:Flyout>
-            <Controls:Flyout Position="Right" IsModal="True" Theme="Adapt" Width="500" IsOpen="{Binding SettingsViewModel.ShowSettingsControl}">
+            <Controls:Flyout Position="Right" IsModal="True" Theme="Adapt" Width="400" IsOpen="{Binding SettingsViewModel.ShowSettingsControl}">
                 <view:SettingsControl DataContext="{Binding SettingsViewModel}"></view:SettingsControl>
             </Controls:Flyout>
         </Controls:FlyoutsControl>

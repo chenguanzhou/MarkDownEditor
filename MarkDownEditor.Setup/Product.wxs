@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{EC0950BB-ADC2-4C2C-8202-301132B9D7DF}" Name="MarkDownEditor" Language="1033" Version="0.3.5" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{DC6CD43F-21AC-4ABB-B424-3D56E7D59A84}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{2AF37E4D-580B-4CF0-AF5C-6CB26A553499}" Name="MarkDownEditor" Language="1033" Version="0.3.6" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{858655DC-1061-4319-BD09-C791DFD23B81}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
