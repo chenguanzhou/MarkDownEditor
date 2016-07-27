@@ -481,6 +481,14 @@ namespace MarkDownEditor.ViewModel
                 {
                     ShowCustomCSSMessage();
                 }
+                else
+                {
+                    if (SettingsViewModel.IsNightMode)
+                        Properties.Settings.Default.CSSDark = currentCssFileIndex;
+                    else
+                        Properties.Settings.Default.CSSLight = currentCssFileIndex;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
@@ -1185,7 +1193,8 @@ namespace MarkDownEditor.ViewModel
             DarkCssFiles = darkCSS;
 
             RaisePropertyChanged("CurrentCssFiles");
-            CurrentCssFileIndex = SettingsViewModel.IsNightMode? 1: 2;
+            CurrentCssFileIndex = SettingsViewModel.IsNightMode? 
+                Properties.Settings.Default.CSSDark: Properties.Settings.Default.CSSLight;
 
         }
 
