@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharp;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -19,6 +20,15 @@ namespace MarkDownEditor
             new CultureInfo("en-US"),
             new CultureInfo("zh-CN")
         };
+
+        public App()
+        {
+            var settings = new CefSettings();
+            settings.EnableInternalPdfViewerOffScreen();
+            settings.CefCommandLineArgs.Add("disable-gpu", "1");
+            Cef.Initialize(settings, shutdownOnProcessExit: false, performDependencyCheck: true);
+
+        }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
