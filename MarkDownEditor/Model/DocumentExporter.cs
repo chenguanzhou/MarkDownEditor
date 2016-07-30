@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WkHtmlToXDotNet;
 
 namespace MarkDownEditor.Model
 {
@@ -19,7 +20,8 @@ namespace MarkDownEditor.Model
                 { "Docx", new DocxExporter()},
                 { "Epub", new EpubExporter()},
                 { "Latex", new LatexExporter()},
-                { "PDF", new PdfExporter()}
+                { "PDF", new PdfExporter()},
+                { "Image", new ImageExporter()}
             };
 
         static public bool CanExport(string typeName) 
@@ -57,7 +59,7 @@ namespace MarkDownEditor.Model
             var tmpFile = Path.GetTempFileName();
             if (cssFile!=null)
             {
-                StreamReader sr = new StreamReader($"css/{cssFile}");
+                StreamReader sr = new StreamReader(cssFile);
                 var cssContent = sr.ReadToEnd();
                 sr.Close();
                 StreamWriter sw = new StreamWriter(tmpFile);
@@ -141,16 +143,45 @@ namespace MarkDownEditor.Model
 
             DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
 
-            Process process = new Process();
-            process.StartInfo.FileName = "wkhtmltopdf";
-            process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.Start();
-            process.WaitForExit();
-            if (process.ExitCode != 0)
-                throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltopdf error" + process.ExitCode);
+            File.WriteAllBytes(outputPath, HtmlToXConverter.ConvertToPdf(File.ReadAllText(tmpFilePath)));
+            //Process process = new Process();
+            //process.StartInfo.FileName = "wkhtmltopdf";
+            //process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
+            //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //process.Start();
+            //process.WaitForExit();
+            //if (process.ExitCode != 0)
+            //    throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltopdf error" + process.ExitCode);
+
+            File.Delete(tmpFilePath);
+        }
+    }
+
+    public class ImageExporter : IDocumentExporter
+    {
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
+        {
+            var tmpFilePath = Path.GetTempFileName() + ".html";
+
+            DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
+
+            //Process process = new Process();
+            //process.StartInfo.FileName = "wkhtmltoimage";
+            //process.StartInfo.Arguments = $"--width 600 \"{tmpFilePath}\" \"{outputPath}\"";
+            //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //process.Start();
+            //process.WaitForExit();
+            //if (process.ExitCode != 0)
+            //    throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltoimage error" + process.ExitCode);
+
+            var html = File.ReadAllText(tmpFilePath);
+            var extension = Path.GetExtension(outputPath).Remove(0, 1).ToLower();
+            var image = HtmlToXConverter.ConvertToImage(html, extension, 600, 0);
+            File.WriteAllBytes(outputPath, image);
 
             File.Delete(tmpFilePath);
         }
     }
 }
+
+

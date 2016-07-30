@@ -7,25 +7,45 @@
              xmlns:local="clr-namespace:MarkDownEditor.View"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
-    <StackPanel>        
-        <Image Margin="50" Source="../MarkdownEditorLogo.png"></Image>
-        <StackPanel Margin="20">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="3"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <TextBlock Text="{Binding ApplicationName}" FontSize="25"></TextBlock>
-            <TextBlock Text="{Binding VersionNumber}" FontSize="16"></TextBlock>
-            <TextBlock FontSize="16">
-                <Hyperlink Foreground="{DynamicResource WhiteBrush}" Command="{Binding ClickSourceCodeWebCommand}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Button Margin="20" Background="{DynamicResource AccentColorBrush}" Command="{Binding ClickSourceCodeWebCommand}">
+                <Button.Style>
+                    <Style></Style>
+                </Button.Style>
+                <Image Margin="50" Source="../MarkdownEditorLogo.png"></Image>
+            </Button>
+            
+            <StackPanel Margin="20">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="3"></Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding ApplicationName}" FontSize="25"></TextBlock>
+                <TextBlock Text="{Binding VersionNumber}" FontSize="16"></TextBlock>
+                <TextBlock FontSize="16">
+                <Hyperlink Command="{Binding ClickSourceCodeWebCommand}">
                     <TextBlock Text="{x:Static p:Resources.SourceCode}">
-                        <TextBlock.Style>
-                            <Style></Style>
-                        </TextBlock.Style>
+                            <TextBlock.Style>
+                                <Style></Style>
+                            </TextBlock.Style>
                     </TextBlock>
                 </Hyperlink>
             </TextBlock>
-        </StackPanel>        
-    </StackPanel>
+                <TextBlock FontSize="16">
+                    <Hyperlink Command="{Binding CheckForUpdateCommand}">
+                        <TextBlock Text="{x:Static p:Resources.CheckForUpdate}">
+                                <TextBlock.Style>
+                                    <Style></Style>
+                                </TextBlock.Style>
+                        </TextBlock>
+                    </Hyperlink>
+                </TextBlock>
+                <Expander Margin="0,20,0,0" IsExpanded="True" Header="{x:Static p:Resources.Donate}" FontSize="16">
+                    <Image Source="/MarkDownEditor;component/alipay.jpg"></Image>
+                </Expander>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

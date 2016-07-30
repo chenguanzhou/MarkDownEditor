@@ -115,6 +115,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for update.
+        /// </summary>
+        public static string CheckForUpdate {
+            get {
+                return ResourceManager.GetString("CheckForUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -169,6 +178,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Version.
+        /// </summary>
+        public static string CurrentVersion {
+            get {
+                return ResourceManager.GetString("CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
         public static string Cut {
@@ -214,6 +232,24 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Donate.
+        /// </summary>
+        public static string Donate {
+            get {
+                return ResourceManager.GetString("Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t remind for this update!.
+        /// </summary>
+        public static string DoNotRemindForThisUpdate {
+            get {
+                return ResourceManager.GetString("DoNotRemindForThisUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t save.
         /// </summary>
         public static string DoNotSave {
@@ -223,11 +259,29 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Now.
+        /// </summary>
+        public static string DownloadNow {
+            get {
+                return ResourceManager.GetString("DownloadNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editing.
         /// </summary>
         public static string Editing {
             get {
                 return ResourceManager.GetString("Editing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editor.
+        /// </summary>
+        public static string Editor {
+            get {
+                return ResourceManager.GetString("Editor", resourceCulture);
             }
         }
         
@@ -282,6 +336,15 @@ namespace MarkDownEditor.Properties {
         public static string EmptyTitle {
             get {
                 return ResourceManager.GetString("EmptyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Environment.
+        /// </summary>
+        public static string Environment {
+            get {
+                return ResourceManager.GetString("Environment", resourceCulture);
             }
         }
         
@@ -520,6 +583,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to International Settings.
+        /// </summary>
+        public static string InternationalSettings {
+            get {
+                return ResourceManager.GetString("InternationalSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Italic (Ctrl+I).
         /// </summary>
         public static string ItalicCommand {
@@ -529,11 +601,29 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language will switched after restart.
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language will be switched after restart.
         /// </summary>
         public static string LanguageSwitch {
             get {
                 return ResourceManager.GetString("LanguageSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest Version.
+        /// </summary>
+        public static string LatestVersion {
+            get {
+                return ResourceManager.GetString("LatestVersion", resourceCulture);
             }
         }
         
@@ -615,6 +705,24 @@ namespace MarkDownEditor.Properties {
         public static string NewDocumentCreated {
             get {
                 return ResourceManager.GetString("NewDocumentCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New version is released!.
+        /// </summary>
+        public static string NewVersionIsReleased {
+            get {
+                return ResourceManager.GetString("NewVersionIsReleased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Night Mode.
+        /// </summary>
+        public static string NightMode {
+            get {
+                return ResourceManager.GetString("NightMode", resourceCulture);
             }
         }
         
@@ -907,7 +1015,7 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SETTINGS.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SETTINGS {
             get {
@@ -997,6 +1105,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time Stamp (Ctrl+T).
         /// </summary>
         public static string TimeStampCommand {
@@ -1065,6 +1182,24 @@ namespace MarkDownEditor.Properties {
         public static string TypeHtmlToolTip {
             get {
                 return ResourceManager.GetString("TypeHtmlToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JPEG|*.jpg|PNG|*.png.
+        /// </summary>
+        public static string TypeImageFilter {
+            get {
+                return ResourceManager.GetString("TypeImageFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string TypeImageToolTip {
+            get {
+                return ResourceManager.GetString("TypeImageToolTip", resourceCulture);
             }
         }
         
@@ -1177,6 +1312,33 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fetch App update information failed!.
+        /// </summary>
+        public static string UpdateFailed {
+            get {
+                return ResourceManager.GetString("UpdateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Info.
+        /// </summary>
+        public static string UpdateInfo {
+            get {
+                return ResourceManager.GetString("UpdateInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload Images (Don&apos;t upload illegal images).
         /// </summary>
         public static string UploadImagesTitle {
@@ -1195,11 +1357,29 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload Local Image（It&apos;s may not available in Mainland China）.
+        ///   Looks up a localized string similar to Upload Local Image To Imgur（Outside PRC）.
         /// </summary>
-        public static string UploadLocalImage {
+        public static string UploadLocalImage2IMGUR {
             get {
-                return ResourceManager.GetString("UploadLocalImage", resourceCulture);
+                return ResourceManager.GetString("UploadLocalImage2IMGUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Local Image To Qiniu（PRC）.
+        /// </summary>
+        public static string UploadLocalImage2Qiniu {
+            get {
+                return ResourceManager.GetString("UploadLocalImage2Qiniu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

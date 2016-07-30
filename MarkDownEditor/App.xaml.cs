@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharp;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -20,6 +21,15 @@ namespace MarkDownEditor
             new CultureInfo("zh-CN")
         };
 
+        public App()
+        {
+            var settings = new CefSettings();
+            settings.EnableInternalPdfViewerOffScreen();
+            settings.CefCommandLineArgs.Add("disable-gpu", "1");
+            Cef.Initialize(settings, shutdownOnProcessExit: false, performDependencyCheck: true);
+
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             var languageName = MarkDownEditor.Properties.Settings.Default.Language;
@@ -37,6 +47,7 @@ namespace MarkDownEditor
             }
             else
                 MarkDownEditor.Properties.Resources.Culture = new CultureInfo(languageName);
+            ICSharpCode.AvalonEdit.AvalonEditCommands.IndentSelection.InputGestures.Clear();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)

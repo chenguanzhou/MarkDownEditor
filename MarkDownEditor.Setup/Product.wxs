@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{CA7EEC8B-E67F-4C6C-B7E1-29EC71D11CFA}" Name="MarkDownEditor" Language="1033" Version="0.3.1" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{E46D6CA0-5477-439F-BDEE-8B287F919383}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{ABE06167-DE0C-4792-BD07-A14D7C0A8EFE}" Name="MarkDownEditor" Language="1033" Version="0.3.7" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{52E67201-0A5D-4D18-8F62-E9E1C568F39E}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
@@ -13,7 +13,8 @@
     <Feature Id="ProductFeature" Title="MarkDownEditor" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ZH_CN_Components" />
-      <ComponentGroupRef Id="CSS_Components" />
+      <ComponentGroupRef Id="Dark_CSS_Components" />
+      <ComponentGroupRef Id="Light_CSS_Components" />
       <ComponentRef Id="RegistryFileAssociation" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="DesktopFolderShortcut" />
@@ -53,7 +54,10 @@
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="MarkDownEditor">
           <Directory Id="ZH_CN_FOLDER" Name="zh-CN"></Directory>
-          <Directory Id="CSS_FOLDER" Name="CSS"></Directory>
+          <Directory Id="CSS_FOLDER" Name="css">
+            <Directory Id="LIGHT_CSS_FOLDER" Name="Light"/>
+            <Directory Id="DARK_CSS_FOLDER" Name="Dark"/>            
+          </Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -128,6 +132,10 @@
         <File Id="Ude.dll" Name="Ude.dll" Source="$(var.MarkDownEditor_TargetDir)Ude.dll" />
         <File Id="Imgur.API.dll" Name="Imgur.API.dll" Source="$(var.MarkDownEditor_TargetDir)Imgur.API.dll" />
         <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.MarkDownEditor_TargetDir)Newtonsoft.Json.dll" />
+        <File Id="SecretKey.dll" Name="SecretKey.dll" Source="$(var.MarkDownEditor_TargetDir)SecretKey.dll" />
+        <File Id="Qiniu.4.0.dll" Name="Qiniu.4.0.dll" Source="$(var.MarkDownEditor_TargetDir)Qiniu.4.0.dll" />
+        <File Id="WkHtmlToXDotNet.dll" Name="WkHtmlToXDotNet.dll" Source="$(var.MarkDownEditor_TargetDir)WkHtmlToXDotNet.dll" />
+        <File Id="wkhtmltox.dll" Name="wkhtmltox.dll" Source="$(var.MarkDownEditor_TargetDir)wkhtmltox.dll" />
 
         <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.MarkDownEditor_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
         <File Id="libcef.dll" Name="libcef.dll" Source="$(var.MarkDownEditor_TargetDir)libcef.dll" />
@@ -139,7 +147,6 @@
         <File Id="MarkDownEditor.exe.config" Name="MarkDownEditor.exe.config" Source="$(var.MarkDownEditor_TargetDir)MarkDownEditor.exe.config" />
         <File Id="CefSharp.BrowserSubprocess.exe" Name="CefSharp.BrowserSubprocess.exe" Source="$(var.MarkDownEditor_TargetDir)CefSharp.BrowserSubprocess.exe" />
         <File Id="pandoc.exe" Name="pandoc.exe" Source="$(var.MarkDownEditor_TargetDir)pandoc.exe" />
-        <File Id="wkhtmltopdf.exe" Name="wkhtmltopdf.exe" Source="$(var.MarkDownEditor_TargetDir)wkhtmltopdf.exe" />
 
         <File Id="cef.pak" Name="cef.pak" Source="$(var.MarkDownEditor_TargetDir)cef.pak" />
         <File Id="cef_100_percent.pak" Name="cef_100_percent.pak" Source="$(var.MarkDownEditor_TargetDir)cef_100_percent.pak" />
@@ -161,15 +168,20 @@
         <File Id="MarkDownEditor.resources.dll" Name="MarkDownEditor.resources.dll" Source="$(var.MarkDownEditor_TargetDir)zh-CN/MarkDownEditor.resources.dll" />
       </Component>
     </ComponentGroup>
-    <ComponentGroup Id="CSS_Components" Directory="CSS_FOLDER">
-      <Component Id="CSS_Component" Guid="{B00E1CEA-71FF-47E1-B305-2932597522BE}">
-        <File Id="Air.css" Name="Air.css" Source="$(var.MarkDownEditor_TargetDir)css/Air.css" />
-        <File Id="Default.css" Name="Default.css" Source="$(var.MarkDownEditor_TargetDir)css/Default.css" />
-        <File Id="Github_andyferra.css" Name="Github_andyferra.css" Source="$(var.MarkDownEditor_TargetDir)css/Github_andyferra.css" />
-        <File Id="Modest.css" Name="Modest.css" Source="$(var.MarkDownEditor_TargetDir)css/Modest.css" />
-        <File Id="Retro.css" Name="Retro.css" Source="$(var.MarkDownEditor_TargetDir)css/Retro.css" />
-        <File Id="Simonlc.css" Name="Simonlc.css" Source="$(var.MarkDownEditor_TargetDir)css/Simonlc.css" />
-        <File Id="Splendor.css" Name="Splendor.css" Source="$(var.MarkDownEditor_TargetDir)css/Splendor.css" />
+    <ComponentGroup Id="Light_CSS_Components" Directory="LIGHT_CSS_FOLDER">
+      <Component Id="Light_CSS_Component" Guid="{CC66453B-BE1B-4599-B71D-7A1DF422B116}">
+        <File Id="Air.css" Name="Air.css" Source="$(var.MarkDownEditor_TargetDir)css/Light/Air.css" />
+        <File Id="Default.css" Name="Default.css" Source="$(var.MarkDownEditor_TargetDir)css/Light/Default.css" />
+        <File Id="Github_andyferra.css" Name="Github_andyferra.css" Source="$(var.MarkDownEditor_TargetDir)css/Light/Github_andyferra.css" />
+        <File Id="Modest.css" Name="Modest.css" Source="$(var.MarkDownEditor_TargetDir)css/Light/Modest.css" />
+        <File Id="Simonlc.css" Name="Simonlc.css" Source="$(var.MarkDownEditor_TargetDir)css/Light/Simonlc.css" />
+        <File Id="Splendor.css" Name="Splendor.css" Source="$(var.MarkDownEditor_TargetDir)css/Light/Splendor.css" />
+      </Component>    
+    </ComponentGroup>
+
+    <ComponentGroup Id="Dark_CSS_Components" Directory="DARK_CSS_FOLDER">
+      <Component Id="Dark_CSS_Component" Guid="{FA202CC1-E35A-4B1E-82F5-B260223B4B6F}">
+        <File Id="Retro.css" Name="Retro.css" Source="$(var.MarkDownEditor_TargetDir)css/Dark/Retro.css" />
       </Component>
     </ComponentGroup>
   </Fragment>

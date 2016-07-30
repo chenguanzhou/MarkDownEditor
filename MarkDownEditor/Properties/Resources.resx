@@ -187,7 +187,7 @@
     <value>Select All</value>
   </data>
   <data name="SETTINGS" xml:space="preserve">
-    <value>SETTINGS</value>
+    <value>Settings</value>
   </data>
   <data name="ShowPreview" xml:space="preserve">
     <value>Show Preview</value>
@@ -361,7 +361,7 @@
     <value>Italic (Ctrl+I)</value>
   </data>
   <data name="LanguageSwitch" xml:space="preserve">
-    <value>Language will switched after restart</value>
+    <value>Language will be switched after restart</value>
   </data>
   <data name="Lines" xml:space="preserve">
     <value>Lines</value>
@@ -456,8 +456,8 @@
   <data name="Uploading" xml:space="preserve">
     <value>Uploading</value>
   </data>
-  <data name="UploadLocalImage" xml:space="preserve">
-    <value>Upload Local Image（It's may not available in Mainland China）</value>
+  <data name="UploadLocalImage2IMGUR" xml:space="preserve">
+    <value>Upload Local Image To Imgur（Outside PRC）</value>
   </data>
   <data name="Find" xml:space="preserve">
     <value>Find</value>
@@ -509,5 +509,65 @@
   </data>
   <data name="OpenThisFolder" xml:space="preserve">
     <value>Open This Folder</value>
+  </data>
+  <data name="CheckForUpdate" xml:space="preserve">
+    <value>Check for update</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current Version</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="DoNotRemindForThisUpdate" xml:space="preserve">
+    <value>Don't remind for this update!</value>
+  </data>
+  <data name="DownloadNow" xml:space="preserve">
+    <value>Download Now</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>Latest Version</value>
+  </data>
+  <data name="NewVersionIsReleased" xml:space="preserve">
+    <value>New version is released!</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>Fetch App update information failed!</value>
+  </data>
+  <data name="UpdateInfo" xml:space="preserve">
+    <value>Update Info</value>
+  </data>
+  <data name="TypeImageFilter" xml:space="preserve">
+    <value>JPEG|*.jpg|PNG|*.png</value>
+  </data>
+  <data name="TypeImageToolTip" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="UploadLocalImage2Qiniu" xml:space="preserve">
+    <value>Upload Local Image To Qiniu（PRC）</value>
+  </data>
+  <data name="Editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Environment</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="InternationalSettings" xml:space="preserve">
+    <value>International Settings</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="NightMode" xml:space="preserve">
+    <value>Night Mode</value>
   </data>
 </root>
