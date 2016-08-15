@@ -1,8 +1,8 @@
 {
   "AppName": "MarkDownEditor",
   "LatestVersion": {
-    "Version": "0.3.7.0",
-    "UpdateTime": "2016/3/16",
-    "Description": "1. Fix a bug. ( Can't save css file state when restart );  2. Update some dependent library"
+    "Version": "0.3.8.0",
+    "UpdateTime": "2016/8/15",
+    "Description": "1. Fix a bug. ( export markdown to pdf/image failed );  2. Add mathjax support; 3. Fix a crash bug"
   }
 }

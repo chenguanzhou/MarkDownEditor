@@ -180,6 +180,8 @@
         <File Id="MarkDownEditor.exe.config" Name="MarkDownEditor.exe.config" Source="$(var.MarkDownEditor_TargetDir)MarkDownEditor.exe.config" />
         <File Id="CefSharp.BrowserSubprocess.exe" Name="CefSharp.BrowserSubprocess.exe" Source="$(var.MarkDownEditor_TargetDir)CefSharp.BrowserSubprocess.exe" />
         <File Id="pandoc.exe" Name="pandoc.exe" Source="$(var.MarkDownEditor_TargetDir)pandoc.exe" />
+        <File Id="WkHtmlToImageWrapper.exe" Name="WkHtmlToImageWrapper.exe" Source="$(var.MarkDownEditor_TargetDir)WkHtmlToImageWrapper.exe" />
+        <File Id="WkHtmlToPdfWrapper.exe" Name="WkHtmlToPdfWrapper.exe" Source="$(var.MarkDownEditor_TargetDir)WkHtmlToPdfWrapper.exe" />
 
         <File Id="devtools_resources.pak" Name="devtools_resources.pak" Source="$(var.MarkDownEditor_TargetDir)devtools_resources.pak" />
         <File Id="cef.pak" Name="cef.pak" Source="$(var.MarkDownEditor_TargetDir)cef.pak" />
