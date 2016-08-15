@@ -1262,7 +1262,7 @@ namespace MarkDownEditor.ViewModel
 
                 bool isNightMode = SettingsViewModel.IsNightMode;
                 var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode?"Dark":"Light", CurrentCssFiles[CurrentCssFileIndex]);
-                DocumentExporter.Export("Html", 
+                DocumentExporter.Export("Html Local Mathjax", 
                     MarkDownType[CurrentMarkdownTypeText], 
                     CurrentCssFileIndex==0|| CurrentCssFileIndex== CurrentCssFiles.Count-1? null: cssFilePath, 
                     markdownSourceTempPath, previewSourceTempPath);

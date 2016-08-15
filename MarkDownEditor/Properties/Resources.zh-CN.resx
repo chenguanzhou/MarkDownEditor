@@ -570,4 +570,7 @@
   <data name="NightMode" xml:space="preserve">
     <value>夜间模式</value>
   </data>
+  <data name="ShowMathJax" xml:space="preserve">
+    <value>显示MathJax公式</value>
+  </data>
 </root>

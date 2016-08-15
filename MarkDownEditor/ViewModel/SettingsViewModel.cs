@@ -227,7 +227,6 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("ShowEndOfLine");
             }
         }
-
         private bool highlightCurrentLine = Properties.Settings.Default.HighlightCurrentLine;
         public bool HighlightCurrentLine
         {
@@ -240,6 +239,21 @@ namespace MarkDownEditor.ViewModel
                 Properties.Settings.Default.HighlightCurrentLine = value;
                 Properties.Settings.Default.Save();
                 RaisePropertyChanged("HighlightCurrentLine");
+            }
+        }
+
+        private bool showMathJax = Properties.Settings.Default.ShowMathJax;
+        public bool ShowMathJax
+        {
+            get { return showMathJax; }
+            set
+            {
+                if (showMathJax == value)
+                    return;
+                showMathJax = value;
+                Properties.Settings.Default.ShowMathJax = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged("ShowMathJax");
             }
         }
 

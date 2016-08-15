@@ -112,6 +112,11 @@
                             <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowEndOfLine}" IsChecked="{Binding ShowEndOfLine}"></Controls:ToggleSwitch>
                         </StackPanel>
                     </Expander>
+                    <Expander IsExpanded="True" Header="MathJax">
+                        <StackPanel>
+                            <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowMathJax}" IsChecked="{Binding ShowMathJax}"></Controls:ToggleSwitch>
+                        </StackPanel>
+                    </Expander>
                     <Expander IsExpanded="True" Header="{x:Static p:Resources.Ruler}">
                         <StackPanel>
                             <Controls:ToggleSwitch Header="{x:Static p:Resources.ShowColumnRuler}" IsChecked="{Binding ShowColumnRuler}"></Controls:ToggleSwitch>

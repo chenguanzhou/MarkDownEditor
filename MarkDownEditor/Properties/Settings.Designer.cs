@@ -268,5 +268,17 @@ namespace MarkDownEditor.Properties {
                 this["CSSDark"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowMathJax {
+            get {
+                return ((bool)(this["ShowMathJax"]));
+            }
+            set {
+                this["ShowMathJax"] = value;
+            }
+        }
     }
 }

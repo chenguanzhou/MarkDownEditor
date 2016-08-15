@@ -1051,6 +1051,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show MathJax.
+        /// </summary>
+        public static string ShowMathJax {
+            get {
+                return ResourceManager.GetString("ShowMathJax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Preview.
         /// </summary>
         public static string ShowPreview {
