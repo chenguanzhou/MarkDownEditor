@@ -1,7 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/f82df8y5yojgmai4?svg=true)](https://ci.appveyor.com/project/chenguanzhou/markdowneditor)
 [![Join the chat at https://gitter.im/chenguanzhou/MarkDownEditor](https://badges.gitter.im/chenguanzhou/MarkDownEditor.svg)](https://gitter.im/chenguanzhou/MarkDownEditor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
-[![Github All Releases](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)](https://github.com/qiniu/csharp-sdk/releases)
+[![Github All Releases](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)](https://github.com/chenguanzhou/MarkDownEditor/releases)
 
 # MarkDown Editor
 
@@ -46,6 +46,7 @@ The editor has the following `features`:
 - Night Mode
 - Editing Mode & Reading Mode
 - Full Screen support
+- MathJax support (Only for markdown processor)
 - ......
 
 
@@ -73,6 +74,7 @@ For a WPF project, I recommand VS2015 Community Edition to build.
 - [UDE.CSharp](https://github.com/errepi/ude)
 - [WkHtmlToXDotNet](https://github.com/chenguanzhou/WkHtmlToXDotNet)
 - [The WiX Toolset](http://wixtoolset.org/)
+- [MathJax](https://www.mathjax.org/)
 
 # Thanks
 
