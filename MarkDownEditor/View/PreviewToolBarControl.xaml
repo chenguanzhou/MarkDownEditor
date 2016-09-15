@@ -7,6 +7,7 @@
              xmlns:p="clr-namespace:MarkDownEditor.Properties"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
+             Margin="5" HorizontalAlignment="Right"
              d:DesignHeight="300" d:DesignWidth="300">
     <WrapPanel Orientation="Horizontal">
         <WrapPanel.Resources>

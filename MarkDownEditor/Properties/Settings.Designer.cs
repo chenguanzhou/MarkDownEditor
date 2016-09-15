@@ -208,5 +208,77 @@ namespace MarkDownEditor.Properties {
                 return ((string)(this["ClientSecret"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DoNotRemindUpdate {
+            get {
+                return ((bool)(this["DoNotRemindUpdate"]));
+            }
+            set {
+                this["DoNotRemindUpdate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastLatestVersion {
+            get {
+                return ((string)(this["LastLatestVersion"]));
+            }
+            set {
+                this["LastLatestVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool NightMode {
+            get {
+                return ((bool)(this["NightMode"]));
+            }
+            set {
+                this["NightMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int CSSLight {
+            get {
+                return ((int)(this["CSSLight"]));
+            }
+            set {
+                this["CSSLight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int CSSDark {
+            get {
+                return ((int)(this["CSSDark"]));
+            }
+            set {
+                this["CSSDark"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowMathJax {
+            get {
+                return ((bool)(this["ShowMathJax"]));
+            }
+            set {
+                this["ShowMathJax"] = value;
+            }
+        }
     }
 }

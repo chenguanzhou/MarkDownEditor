@@ -1,7 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/f82df8y5yojgmai4?svg=true)](https://ci.appveyor.com/project/chenguanzhou/markdowneditor)
 [![Join the chat at https://gitter.im/chenguanzhou/MarkDownEditor](https://badges.gitter.im/chenguanzhou/MarkDownEditor.svg)](https://gitter.im/chenguanzhou/MarkDownEditor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
-[![Github All Releases](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)]()
+[![Github All Releases](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)](https://github.com/chenguanzhou/MarkDownEditor/releases)
 
 # MarkDown Editor
 
@@ -20,7 +20,7 @@ The editor has the following `features`:
 
 - Full-function markdown editor
 - Real-time synchronization preview
-- Upload local image (Not available in Mainland China)
+- Upload local image
 - Multiple markdown standards support:
 	- Markdown
 	- Strict Markdown
@@ -42,9 +42,11 @@ The editor has the following `features`:
 - Modern(Metro) Style App
 - Code highlighting
 - Support of English & 简体中文
-- Switching the accent color of theme
+- Switching the color theme
+- Night Mode
 - Editing Mode & Reading Mode
 - Full Screen support
+- MathJax support (Only for markdown processor)
 - ......
 
 
@@ -62,6 +64,7 @@ For a WPF project, I recommand VS2015 Community Edition to build.
 
 - [Chromium Embedded Framework](https://bitbucket.org/chromiumembedded/cef)
 - [CefSharp](https://github.com/cefsharp/CefSharp)
+- [qiniu csharp-sdk](https://github.com/qiniu/csharp-sdk)
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 - [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 - [AvalonEdit](https://github.com/icsharpcode/AvalonEdit)
@@ -69,11 +72,14 @@ For a WPF project, I recommand VS2015 Community Edition to build.
 - [Imgur.API](http://imgurapi.readthedocs.org/en/latest/)
 - [SimpleHelpers.Net](https://github.com/khalidsalomao/SimpleHelpers.Net)
 - [UDE.CSharp](https://github.com/errepi/ude)
+- [WkHtmlToXDotNet](https://github.com/chenguanzhou/WkHtmlToXDotNet)
 - [The WiX Toolset](http://wixtoolset.org/)
+- [MathJax](https://www.mathjax.org/)
 
 # Thanks
 
 - [Making AvalonEdit MVVM compatible](http://stackoverflow.com/questions/12344367/making-avalonedit-mvvm-compatible)
+- [AvalonEdit :: Ctrl + I KeyBinding Doesn't Work](http://stackoverflow.com/questions/29610545/avalonedit-ctrl-i-keybinding-doesnt-work)
 - [Wix 安装部署教程](http://www.cnblogs.com/stoneniqiu/category/522235.html)
 - [Markdown CSS](https://github.com/markdowncss/markdowncss.github.io)
 - [Markdown CSS](https://github.com/simonlc/Markdown-CSS)

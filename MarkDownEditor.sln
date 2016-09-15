@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkDownEditor", "MarkDownEditor\MarkDownEditor.csproj", "{48932BB7-3CC3-4897-A466-BE91A9FA1E40}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8} = {B0F82DB9-F3EF-458E-8331-57563ABB84A8}
+	EndProjectSection
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "MarkDownEditor.Setup", "MarkDownEditor.Setup\MarkDownEditor.Setup.wixproj", "{C80C4996-3D52-4236-9AFE-5F48997DC5B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkHtmlToPdfWrapper", "WkHtmlToPdfWrapper\WkHtmlToPdfWrapper.csproj", "{B0F82DB9-F3EF-458E-8331-57563ABB84A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkHtmlToImageWrapper", "WkHtmlToImageWrapper\WkHtmlToImageWrapper.csproj", "{D01A2A12-54DD-4B88-A46A-926B4D0154DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +36,30 @@ Global
 		{C80C4996-3D52-4236-9AFE-5F48997DC5B6}.Release|x64.ActiveCfg = Release|x86
 		{C80C4996-3D52-4236-9AFE-5F48997DC5B6}.Release|x86.ActiveCfg = Release|x86
 		{C80C4996-3D52-4236-9AFE-5F48997DC5B6}.Release|x86.Build.0 = Release|x86
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Debug|x86.Build.0 = Debug|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Release|x64.Build.0 = Release|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Release|x86.ActiveCfg = Release|Any CPU
+		{B0F82DB9-F3EF-458E-8331-57563ABB84A8}.Release|x86.Build.0 = Release|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Debug|x64.Build.0 = Debug|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Release|x64.ActiveCfg = Release|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Release|x64.Build.0 = Release|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{D01A2A12-54DD-4B88-A46A-926B4D0154DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

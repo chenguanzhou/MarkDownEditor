@@ -28,45 +28,11 @@
                     </ComboBox>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <ComboBox ItemsSource="{Binding CssFiles}" FontSize="12" BorderThickness="0"
+                    <ComboBox ItemsSource="{Binding CurrentCssFiles}" FontSize="12" BorderThickness="0"
                           SelectedIndex="{Binding CurrentCssFileIndex}"
                           Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType=StatusBarItem}}"
                           Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=StatusBarItem}}">
                     </ComboBox>
-                </StatusBarItem>
-                <StatusBarItem >
-                    <ComboBox ItemsSource="{Binding AllLanguages}" FontSize="12" BorderThickness="0"
-                          SelectedItem="{Binding CultureInfo}"
-                          DisplayMemberPath="NativeName"
-                          Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType=StatusBarItem}}"
-                          Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=StatusBarItem}}">
-                    </ComboBox>
-                </StatusBarItem>
-                <StatusBarItem >
-                    <Menu FontSize="12"
-                      Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType=StatusBarItem}}"
-                          Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=StatusBarItem}}">
-                        <MenuItem Header="{x:Static p:Resources.Accent}" BorderThickness="0"
-                              ItemsSource="{Binding AccentColors, Mode=OneWay}"                              
-                              Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType=StatusBarItem}}"
-                          Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=StatusBarItem}}">
-                            <MenuItem.Resources>
-                                <Ellipse x:Key="AccentMenuIcon"
-                                 x:Shared="False"
-                                 Width="16"
-                                 Height="16"
-                                 Fill="{Binding ColorBrush, Mode=OneWay}" />
-                            </MenuItem.Resources>
-                            <MenuItem.ItemContainerStyle>
-                                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MetroMenuItem}">
-                                    <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
-                                    <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
-                                    <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                                </Style>
-                            </MenuItem.ItemContainerStyle>
-                        </MenuItem>
-                    </Menu>
                 </StatusBarItem>
             </StackPanel>
         </StatusBarItem>    

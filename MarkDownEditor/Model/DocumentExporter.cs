@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WkHtmlToXDotNet;
 
 namespace MarkDownEditor.Model
 {
@@ -15,11 +16,13 @@ namespace MarkDownEditor.Model
             {
                 { "Plain Html", new PlainHTMLExporter()},
                 { "Html", new HTMLExporter()},
+                { "Html Local Mathjax", new HTMLWithLocalMathJaxExporter()},
                 { "RTF", new RFTExporter()},
                 { "Docx", new DocxExporter()},
                 { "Epub", new EpubExporter()},
                 { "Latex", new LatexExporter()},
-                { "PDF", new PdfExporter()}
+                { "PDF", new PdfExporter()},
+                { "Image", new ImageExporter()}
             };
 
         static public bool CanExport(string typeName) 
@@ -57,7 +60,7 @@ namespace MarkDownEditor.Model
             var tmpFile = Path.GetTempFileName();
             if (cssFile!=null)
             {
-                StreamReader sr = new StreamReader($"css/{cssFile}");
+                StreamReader sr = new StreamReader(cssFile);
                 var cssContent = sr.ReadToEnd();
                 sr.Close();
                 StreamWriter sw = new StreamWriter(tmpFile);
@@ -69,10 +72,44 @@ namespace MarkDownEditor.Model
 
             Process process = new Process();
             process.StartInfo.FileName = "pandoc";
+            string mathjax = Properties.Settings.Default.ShowMathJax ? "--mathjax" : "";
             process.StartInfo.Arguments = 
                 cssFile == null 
-                ? $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -o \"{outputPath}\""
-                : $"\"{sourceCodePath}\" -f {markdownType} -t html --ascii -s -H {tmpFile} -o \"{outputPath}\"";
+                ? $"\"{sourceCodePath}\" -f {markdownType} -t html {mathjax} --ascii -s -o \"{outputPath}\""
+                : $"\"{sourceCodePath}\" -f {markdownType} -t html {mathjax} --ascii -s -H {tmpFile} -o \"{outputPath}\"";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            process.WaitForExit();
+
+            File.Delete(tmpFile);
+        }
+    }
+
+    public class HTMLWithLocalMathJaxExporter : IDocumentExporter
+    {
+        string mathjaxJsFilePath = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MathJax", "MathJax.js")).AbsoluteUri + "?config=TEX_CHTML";
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
+        {
+            var tmpFile = Path.GetTempFileName();
+            if (cssFile != null)
+            {
+                StreamReader sr = new StreamReader(cssFile);
+                var cssContent = sr.ReadToEnd();
+                sr.Close();
+                StreamWriter sw = new StreamWriter(tmpFile);
+                sw.WriteLine("<style type=\"text/css\">");
+                sw.WriteLine(cssContent);
+                sw.WriteLine("</style>");
+                sw.Close();
+            }
+
+            Process process = new Process();
+            process.StartInfo.FileName = "pandoc";
+            string mathjax = Properties.Settings.Default.ShowMathJax ? $"--mathjax={mathjaxJsFilePath}" : "";
+            process.StartInfo.Arguments =
+                cssFile == null
+                ? $"\"{sourceCodePath}\" -f {markdownType} -t html {mathjax} --ascii -s -o \"{outputPath}\""
+                : $"\"{sourceCodePath}\" -f {markdownType} -t html {mathjax} --ascii -s -H {tmpFile} -o \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
@@ -141,8 +178,12 @@ namespace MarkDownEditor.Model
 
             DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
 
+            if (File.Exists(outputPath))
+                File.Delete(outputPath);
+
+            //File.WriteAllBytes(outputPath, HtmlToXConverter.ConvertToPdf(File.ReadAllText(tmpFilePath)));
             Process process = new Process();
-            process.StartInfo.FileName = "wkhtmltopdf";
+            process.StartInfo.FileName = "WkHtmlToPdfWrapper";
             process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
@@ -153,4 +194,35 @@ namespace MarkDownEditor.Model
             File.Delete(tmpFilePath);
         }
     }
+
+    public class ImageExporter : IDocumentExporter
+    {
+        public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
+        {
+            var tmpFilePath = Path.GetTempFileName() + ".html";
+
+            DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
+
+            if (File.Exists(outputPath))
+                File.Delete(outputPath);
+
+            Process process = new Process();
+            process.StartInfo.FileName = "WkHtmlToImageWrapper";
+            process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltoimage error" + process.ExitCode);
+
+            //var html = File.ReadAllText(tmpFilePath);
+            //var extension = Path.GetExtension(outputPath).Remove(0, 1).ToLower();
+            //var image = HtmlToXConverter.ConvertToImage(html, extension, 600, 0);
+            //File.WriteAllBytes(outputPath, image);
+
+            File.Delete(tmpFilePath);
+        }
+    }
 }
+
+

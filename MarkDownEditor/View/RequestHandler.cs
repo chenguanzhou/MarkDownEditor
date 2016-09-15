@@ -17,6 +17,11 @@ namespace MarkDownEditor
             return false;
         }
 
+        public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
+        {
+            return null;
+        }
+
         public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect)
         {
             if (request.TransitionType == TransitionType.Explicit || request.TransitionType== TransitionType.Reload)

@@ -12,6 +12,8 @@ using MarkDownEditor.Model;
 using MarkDownEditor.View;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
+using Qiniu.IO;
+using Qiniu.RS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,18 +51,12 @@ namespace MarkDownEditor.ViewModel
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
 
-            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(Properties.Settings.Default.DefaultAccent), ThemeManager.DetectAppStyle(Application.Current).Item1);
+            UpdateCSSFiles();
 
-            var css = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css"), "*.css")
-                .Select(s=>Path.GetFileName(s)).ToList();
-            css.Insert(0, Properties.Resources.NoCSS);
-            css.Add(Properties.Resources.AddCustomCSS);
-            CssFiles = css;
-
-            CurrentCssFileIndex = 2;
             CurrentMarkdownTypeText = Properties.Settings.Default.MarkdownProcessor;
 
-
+            Qiniu.Conf.Config.ACCESS_KEY = SecretKey.QiniuConfig.AccessKey;
+            Qiniu.Conf.Config.SECRET_KEY = SecretKey.QiniuConfig.SecretKey;
 
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
@@ -79,7 +75,6 @@ namespace MarkDownEditor.ViewModel
         #region SubViewModels
 
         public SettingsViewModel SettingsViewModel { get; } = new SettingsViewModel();
-        public AboutViewModel AboutViewModel { get; } = new AboutViewModel();
         public FindReplaceViewModel FindReplaceViewModel { get; } = new FindReplaceViewModel();
 
         #endregion //SubViewModels
@@ -88,24 +83,6 @@ namespace MarkDownEditor.ViewModel
         private string previewSourceTempPath = Path.GetTempFileName() + ".html";
 
         public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDownEditor";
-
-        private CultureInfo cultureInfo = new CultureInfo(Properties.Settings.Default.Language);
-        public CultureInfo CultureInfo
-        {
-            get { return cultureInfo; }
-            set
-            {
-                if (cultureInfo == value)
-                    return;
-                cultureInfo = value;
-                Properties.Settings.Default.Language = value?.Name;
-                Properties.Settings.Default.Save();
-                StatusBarText = Properties.Resources.LanguageSwitch;
-                RaisePropertyChanged("CultureInfo");
-            }
-        }
-
-        public List<CultureInfo> AllLanguages => App.AllLanguages;
 
         public string PreviewSource => previewSourceTempPath;
 
@@ -417,9 +394,10 @@ namespace MarkDownEditor.ViewModel
                     {
                         await Task.Run(()=> 
                         {
-                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText],
-                                context.CurrentCssFileIndex == 0 || context.CurrentCssFileIndex == CssFiles.Count-1 ?
-                                null : CssFiles[context.CurrentCssFileIndex], SourceCodePath, dlg.FileName);
+                            bool isNightMode = ViewModelLocator.Main.SettingsViewModel.IsNightMode;
+                            var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode ? "Dark" : "Light", ViewModelLocator.Main.CurrentCssFiles[ViewModelLocator.Main.CurrentCssFileIndex]);
+                            
+                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText], cssFilePath, SourceCodePath, dlg.FileName);
                         });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
@@ -452,7 +430,8 @@ namespace MarkDownEditor.ViewModel
             new ExportFileType(markdownSourceTempPath) {Name="Docx" , ToolTip=Properties.Resources.TypeDocxToolTip, Filter=Properties.Resources.TypeDocxFilter },
             new ExportFileType(markdownSourceTempPath) {Name="Epub" , ToolTip=Properties.Resources.TypeEpubToolTip, Filter=Properties.Resources.TypeEpubFilter },
             new ExportFileType(markdownSourceTempPath) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter }
+            new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter },
+            new ExportFileType(markdownSourceTempPath) {Name="Image", ToolTip=Properties.Resources.TypeImageToolTip, Filter=Properties.Resources.TypeImageFilter }
         };
 
         public static Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
@@ -481,10 +460,12 @@ namespace MarkDownEditor.ViewModel
             }
         }
 
-        public static List<string> CssFiles { get; private set; }
+        public static List<string> LightCssFiles { get; private set; }
+        public static List<string> DarkCssFiles { get; private set; }
+        public List<string> CurrentCssFiles => SettingsViewModel.IsNightMode ? DarkCssFiles : LightCssFiles;
 
         private int currentCssFileIndex;
-        public int CurrentCssFileIndex
+        public int CurrentCssFileIndex      
         {
             get { return currentCssFileIndex; }
             set
@@ -496,25 +477,20 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("CurrentCssFileIndex");
                 UpdatePreview();
 
-                if (value == CssFiles.Count - 1)
+                if (value == (SettingsViewModel.IsNightMode?DarkCssFiles:LightCssFiles).Count - 1)
                 {
                     ShowCustomCSSMessage();
                 }
+                else
+                {
+                    if (SettingsViewModel.IsNightMode)
+                        Properties.Settings.Default.CSSDark = currentCssFileIndex;
+                    else
+                        Properties.Settings.Default.CSSLight = currentCssFileIndex;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
-
-        public class AccentItem
-        {
-            public string Name { get; set; }
-            public Brush ColorBrush { get; set; }
-            public ICommand ChangeAccentCommand => new RelayCommand(()=> 
-            {
-                ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent(this.Name), ThemeManager.DetectAppStyle(Application.Current).Item1);
-                Properties.Settings.Default.DefaultAccent = this.Name;
-                Properties.Settings.Default.Save();
-            });
-        }
-        public List<AccentItem> AccentColors { get; set; } = ThemeManager.Accents.Select(s=>new AccentItem() { Name=s.Name,ColorBrush= s.Resources["AccentColorBrush"] as Brush }).ToList();
 
         #region Document Commands
         public ICommand NewDocumentCommand => new RelayCommand(async () =>
@@ -561,6 +537,33 @@ namespace MarkDownEditor.ViewModel
                 CreateNewDoc();
         });
 
+        private async void OpenDoc(string path = null)
+        {
+            if (path == null)
+            {
+                var dlg = new OpenFileDialog();
+                dlg.Title = Properties.Resources.Open;
+                dlg.Filter = Properties.Resources.MarkDownFileFilter;
+                if (dlg.ShowDialog() != true)
+                    return;
+
+                path = dlg.FileName;
+            }            
+
+            string content = await Open(path);
+            if (content == null)
+                return;
+
+            SourceCode = new TextDocument(content);
+            SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
+            UpdatePreview();
+            SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
+            DocumentPath = path;
+            DocumentTitle = Path.GetFileName(path);
+            IsModified = false;
+            StatusBarText = $"{Properties.Resources.Document} \"{path}\" {Properties.Resources.OpenedSuccessfully}";
+        }
+
         private async Task<string> Open(string path)
         {
             try
@@ -571,45 +574,28 @@ namespace MarkDownEditor.ViewModel
                 sr.Close();
                 return content;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Error, 
-                    $"{Properties.Resources.OpenFileFailed}\n{path}\n{Properties.Resources.Detail}: {ex.Message}", 
+                await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Error,
+                    $"{Properties.Resources.OpenFileFailed}\n{path}\n{Properties.Resources.Detail}: {ex.Message}",
                     MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                 return null;
-            }            
+            }
         }
 
         public ICommand OpenDocumentCommand => new RelayCommand(async () =>
         {
-            Action OpenDoc = async () =>
-            {
-                var dlg = new OpenFileDialog();
-                dlg.Title = Properties.Resources.Open;
-                dlg.Filter = Properties.Resources.MarkDownFileFilter;
-                if (dlg.ShowDialog() == true)
-                {
-                    string content = await Open(dlg.FileName);
-                    if (content == null)
-                        return;
-
-                    SourceCode = new TextDocument(content);
-                    SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
-                    UpdatePreview();
-                    SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
-                    DocumentPath = dlg.FileName;
-                    DocumentTitle = Path.GetFileName(dlg.FileName);
-                    IsModified = false;
-                    StatusBarText = $"{Properties.Resources.Document} \"{dlg.FileName}\" {Properties.Resources.OpenedSuccessfully}";
-                }
-            };
-
             if (IsModified)
             {
                 var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.UnsavedChanges,
                     Properties.Resources.WhetherSaveChanges, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-                    new MetroDialogSettings() { AffirmativeButtonText = Properties.Resources.Save, NegativeButtonText = Properties.Resources.DoNotSave,
-                        FirstAuxiliaryButtonText = Properties.Resources.Cancel, ColorScheme = MetroDialogColorScheme.Accented });
+                    new MetroDialogSettings()
+                    {
+                        AffirmativeButtonText = Properties.Resources.Save,
+                        NegativeButtonText = Properties.Resources.DoNotSave,
+                        FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                        ColorScheme = MetroDialogColorScheme.Accented
+                    });
                 if (ret == MessageDialogResult.Affirmative)
                 {
                     try
@@ -619,7 +605,7 @@ namespace MarkDownEditor.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.SaveFileFailed, ex.Message, 
+                        await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.SaveFileFailed, ex.Message,
                             MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
                         return;
                     }
@@ -632,12 +618,53 @@ namespace MarkDownEditor.ViewModel
                 OpenDoc();
         });
 
+        public ICommand DropCommand => new RelayCommand<DragEventArgs>(async (e) =>
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (IsModified)
+                {
+                    var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.UnsavedChanges,
+                        Properties.Resources.WhetherSaveChanges, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                        new MetroDialogSettings()
+                        {
+                            AffirmativeButtonText = Properties.Resources.Save,
+                            NegativeButtonText = Properties.Resources.DoNotSave,
+                            FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                            ColorScheme = MetroDialogColorScheme.Accented
+                        });
+                    if (ret == MessageDialogResult.Affirmative)
+                    {
+                        try
+                        {
+                            if (Save() == false)
+                                return;
+                        }
+                        catch (Exception ex)
+                        {
+                            await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.SaveFileFailed, ex.Message,
+                                MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
+                            return;
+                        }
+                        OpenDoc(files[0]);
+                    }
+                    else if (ret == MessageDialogResult.Negative)
+                        OpenDoc(files[0]);
+                }
+                else
+                    OpenDoc(files[0]);
+            }
+        });        
+
         public ICommand SaveDocumentCommand => new RelayCommand(async () =>
         {
             try
             {
-                Save();
-                IsModified = false;
+                if (Save())
+                    IsModified = false;
             }
             catch (Exception ex)
             {
@@ -1041,7 +1068,7 @@ namespace MarkDownEditor.ViewModel
                 }
             };
 
-            Func<string, Task<string>> uploadImage = async (string filePath) =>
+            Func<string, Task<string>> uploadImage2Imgur = async (string filePath) =>
             {
                 var client = new ImgurClient(Properties.Settings.Default.ClientID, Properties.Settings.Default.ClientSecret);
                 var endpoint = new ImageEndpoint(client);
@@ -1053,16 +1080,35 @@ namespace MarkDownEditor.ViewModel
                 return image.Link;
             };
 
+            Func<string, Task<string>> uploadImage2Qiniu = async (string filePath) =>
+            {
+                return await Task<string>.Run(()=> 
+                {
+                    var key = Guid.NewGuid().ToString();
+                    var policy = new PutPolicy(SecretKey.QiniuConfig.BucketName, 3600);
+                    string upToken = policy.Token();
+                    PutExtra extra = new PutExtra();
+                    IOClient client = new IOClient();
+                    client.PutFile(upToken, key, filePath, extra);
+
+                    if (SecretKey.QiniuConfig.DomainName.StartsWith("http"))
+                        return SecretKey.QiniuConfig.DomainName + "/" + key;
+                    else
+                        return "http://" + SecretKey.QiniuConfig.DomainName + "/" + key;
+                });
+            };
+
             var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Image, Properties.Resources.SelectImageType,
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new MetroDialogSettings()
+                MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary, new MetroDialogSettings()
                 {
                     AffirmativeButtonText = Properties.Resources.OnlineImage,
-                    NegativeButtonText = Properties.Resources.UploadLocalImage,
-                    FirstAuxiliaryButtonText = Properties.Resources.Cancel,
+                    NegativeButtonText = Properties.Resources.Cancel,
+                    FirstAuxiliaryButtonText = Properties.Resources.UploadLocalImage2IMGUR,
+                    SecondAuxiliaryButtonText = Properties.Resources.UploadLocalImage2Qiniu,
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
-            if (ret == MessageDialogResult.FirstAuxiliary)
+            if (ret == MessageDialogResult.Negative)
                 return;
             else if (ret == MessageDialogResult.Affirmative)
             {
@@ -1084,11 +1130,11 @@ namespace MarkDownEditor.ViewModel
                     try
                     {
                         FileInfo info = new FileInfo(dlg.FileName);
-                        if (info.Length > 10240000)
+                        if (info.Length > 5120000)
                             throw new Exception(Properties.Resources.ImageSizeError);
-
                         progress.SetIndeterminate();
-                        string link = await uploadImage(dlg.FileName);
+
+                        string link = ret == MessageDialogResult.FirstAuxiliary ? await uploadImage2Imgur(dlg.FileName) : await uploadImage2Qiniu(dlg.FileName);
                         await progress.CloseAsync();
                         insertUrl(link);
                     }
@@ -1131,6 +1177,26 @@ namespace MarkDownEditor.ViewModel
             Process.Start(previewSourceTempPath);
         });
         #endregion
+
+        public void UpdateCSSFiles()
+        {
+            var lightCSS = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", "Light"), "*.css")
+                .Select(s => Path.GetFileName(s)).ToList();
+            lightCSS.Insert(0, Properties.Resources.NoCSS);
+            lightCSS.Add(Properties.Resources.AddCustomCSS);
+            LightCssFiles = lightCSS;
+
+            var darkCSS = Directory.GetFiles(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", "Dark"), "*.css")
+                .Select(s => Path.GetFileName(s)).ToList();
+            darkCSS.Insert(0, Properties.Resources.NoCSS);
+            darkCSS.Add(Properties.Resources.AddCustomCSS);
+            DarkCssFiles = darkCSS;
+
+            RaisePropertyChanged("CurrentCssFiles");
+            CurrentCssFileIndex = SettingsViewModel.IsNightMode? 
+                Properties.Settings.Default.CSSDark: Properties.Settings.Default.CSSLight;
+
+        }
 
         private async void LoadDefaultDocument()
         {
@@ -1194,7 +1260,12 @@ namespace MarkDownEditor.ViewModel
                 sw.Write(SourceCode.Text);
                 sw.Close();
 
-                DocumentExporter.Export("Html", MarkDownType[CurrentMarkdownTypeText], CurrentCssFileIndex==0|| CurrentCssFileIndex== CssFiles.Count-1? null:CssFiles[CurrentCssFileIndex], markdownSourceTempPath, previewSourceTempPath);
+                bool isNightMode = SettingsViewModel.IsNightMode;
+                var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode?"Dark":"Light", CurrentCssFiles[CurrentCssFileIndex]);
+                DocumentExporter.Export("Html Local Mathjax", 
+                    MarkDownType[CurrentMarkdownTypeText], 
+                    CurrentCssFileIndex==0|| CurrentCssFileIndex== CurrentCssFiles.Count-1? null: cssFilePath, 
+                    markdownSourceTempPath, previewSourceTempPath);
 
                 ShouldReload = !ShouldReload;
             }            
