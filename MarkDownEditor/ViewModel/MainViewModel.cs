@@ -55,9 +55,6 @@ namespace MarkDownEditor.ViewModel
 
             CurrentMarkdownTypeText = Properties.Settings.Default.MarkdownProcessor;
 
-            Qiniu.Conf.Config.ACCESS_KEY = SecretKey.QiniuConfig.AccessKey;
-            Qiniu.Conf.Config.SECRET_KEY = SecretKey.QiniuConfig.SecretKey;
-
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
             sourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
 
@@ -1084,17 +1081,25 @@ namespace MarkDownEditor.ViewModel
             {
                 return await Task<string>.Run(()=> 
                 {
+                    var settingModel = new SettingsViewModel();
+
+                    Qiniu.Conf.Config.ACCESS_KEY = settingModel.QiniuACCESS_KEY;
+                    Qiniu.Conf.Config.SECRET_KEY = settingModel.QiniuSECRET_KEY;
                     var key = Guid.NewGuid().ToString();
-                    var policy = new PutPolicy(SecretKey.QiniuConfig.BucketName, 3600);
+                    var policy = new PutPolicy(settingModel.QiniuUserScope, 3600);
                     string upToken = policy.Token();
                     PutExtra extra = new PutExtra();
                     IOClient client = new IOClient();
-                    client.PutFile(upToken, key, filePath, extra);
+                    var result=client.PutFile(upToken, key, filePath, extra);
+                    if(!result.OK)
+                    {
+                        return "Upload Fail. Please Check The Qiniu Conf. Error Message:" + result.Exception ?? result.Exception.Message;
+                    }
 
-                    if (SecretKey.QiniuConfig.DomainName.StartsWith("http"))
-                        return SecretKey.QiniuConfig.DomainName + "/" + key;
+                    if (settingModel.QiniuUserDomainName.StartsWith("http"))
+                        return settingModel.QiniuUserDomainName + "/" + key;
                     else
-                        return "http://" + SecretKey.QiniuConfig.DomainName + "/" + key;
+                        return "http://" + settingModel.QiniuUserDomainName + "/" + key;
                 });
             };
 

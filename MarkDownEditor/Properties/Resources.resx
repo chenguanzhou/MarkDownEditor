@@ -573,4 +573,13 @@
   <data name="ShowMathJax" xml:space="preserve">
     <value>Show MathJax</value>
   </data>
+     <data name="QiniuConf" xml:space="preserve">
+    <value>QiniuConf</value>
+  </data>
+   <data name="UserDomainName" xml:space="preserve">
+    <value>QiniuUserDomainName：</value>
+  </data>
+    <data name="UserScope" xml:space="preserve">
+    <value>QiniuUserScope</value>
+  </data>
 </root>
