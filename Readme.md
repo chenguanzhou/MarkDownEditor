@@ -47,6 +47,7 @@ The editor has the following `features`:
 - Editing Mode & Reading Mode
 - Full Screen support
 - MathJax support (Only for markdown processor)
+- Customized Qiniu Key
 - ......
 
 

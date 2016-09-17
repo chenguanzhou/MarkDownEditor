@@ -573,13 +573,13 @@
   <data name="ShowMathJax" xml:space="preserve">
     <value>显示MathJax公式</value>
   </data>
-   <data name="QiniuConf" xml:space="preserve">
+  <data name="QiniuConf" xml:space="preserve">
     <value>七牛云配置</value>
   </data>
-   <data name="UserDomainName" xml:space="preserve">
-    <value>七牛用户外链域名：</value>
+  <data name="QiniuUserDomainName" xml:space="preserve">
+    <value>七牛用户外链域名</value>
   </data>
-    <data name="UserScope" xml:space="preserve">
-    <value>七牛用户存储空间：</value>
+  <data name="QiniuUserScope" xml:space="preserve">
+    <value>七牛用户存储空间</value>
   </data>
 </root>

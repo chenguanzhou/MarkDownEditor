@@ -65,7 +65,7 @@
                             </DockPanel>
                         </StackPanel>
                     </Expander>
-                    <Expander IsExpanded="True" Header="{x:Static p:Resources.QiniuConf}" Height="300">
+                    <Expander Header="{x:Static p:Resources.QiniuConf}" Height="300">
                         <StackPanel>
                             <DockPanel Margin="0,5,0,5">
                                 <TextBlock Text="ACCESS_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
