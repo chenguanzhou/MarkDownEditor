@@ -68,7 +68,42 @@ namespace MarkDownEditor.Properties {
                 return ResourceManager.GetString("About", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///  Looks up a localized string similar to QiniuConf.
+        /// </summary>
+        public static string QiniuConf
+        {
+            get
+            {
+                return ResourceManager.GetString("QiniuConf", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        /// Looks up a localized string similar to QiniuUserDomainName.
+        /// </summary>
+        public static string QiniuUserDomainName
+        {
+            get
+            {
+                return ResourceManager.GetString("UserDomainName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        /// Looks up a localized string similar to QiniuUserScope.
+        /// </summary>
+        public static string QiniuUserScope
+        {
+            get
+            {
+                return ResourceManager.GetString("UserScope", resourceCulture);
+            }
+        }
+
+
+
         /// <summary>
         ///   Looks up a localized string similar to Accent.
         /// </summary>

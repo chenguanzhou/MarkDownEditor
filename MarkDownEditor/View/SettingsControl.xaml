@@ -34,7 +34,7 @@
                                       ItemsSource="{Binding AllLanguages}" SelectedItem="{Binding CultureInfo}" DisplayMemberPath="NativeName">
                                 </Controls:SplitButton>
                             </DockPanel>
-                        </StackPanel>                        
+                        </StackPanel>
                     </Expander>
                     <Expander IsExpanded="True" Header="{x:Static p:Resources.Theme}">
                         <StackPanel>
@@ -65,6 +65,31 @@
                             </DockPanel>
                         </StackPanel>
                     </Expander>
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.QiniuConf}" Height="300">
+                        <StackPanel>
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="ACCESS_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                            </DockPanel>
+                            <TextBox x:Name="txtACCESS_KEY" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuACCESS_KEY}" VerticalAlignment="Top" Width="280"/>
+
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="SECRET_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                            </DockPanel>
+                            <TextBox x:Name="txtSECRET_KEY" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuSECRET_KEY}" VerticalAlignment="Top" Width="280"/>
+
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="{x:Static p:Resources.QiniuUserDomainName}" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                            </DockPanel>
+                            <TextBox x:Name="txtUserDomainName" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuUserDomainName}" VerticalAlignment="Top" Width="280"/>
+
+                            <DockPanel Margin="0,5,0,5">
+                                <TextBlock Text="{x:Static p:Resources.QiniuUserScope}" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                            </DockPanel>
+                            <TextBox x:Name="txtUserScope" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuUserScope}" VerticalAlignment="Top" Width="280"/>
+
+                        </StackPanel>
+                    </Expander>
+
                 </StackPanel>
             </ScrollViewer>
         </Controls:MetroTabItem>
@@ -97,7 +122,7 @@
                                 </Controls:NumericUpDown>
                             </DockPanel>
                         </StackPanel>
-                    </Expander>                    
+                    </Expander>
                     <Expander IsExpanded="True" Header="{x:Static p:Resources.Editing}">
                         <StackPanel>
                             <Controls:ToggleSwitch Header="{x:Static p:Resources.WordWrap}" IsChecked="{Binding WordWrap}"></Controls:ToggleSwitch>
@@ -128,7 +153,7 @@
                                 </Controls:NumericUpDown>
                             </DockPanel>
                         </StackPanel>
-                    </Expander>                    
+                    </Expander>
                 </StackPanel>
             </ScrollViewer>
         </Controls:MetroTabItem>

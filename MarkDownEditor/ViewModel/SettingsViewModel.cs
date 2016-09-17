@@ -286,5 +286,71 @@ namespace MarkDownEditor.ViewModel
                 RaisePropertyChanged("RulerPosition");
             }
         }
+
+
+
+        private string qiniuACCESS_KEY = Properties.Settings.Default.QiniuACCESS_KEY;
+        public string QiniuACCESS_KEY
+        {
+            get { return qiniuACCESS_KEY; }
+            set
+            {
+                if (qiniuACCESS_KEY == value)
+                    return;
+                qiniuACCESS_KEY = value;
+                Properties.Settings.Default.QiniuACCESS_KEY = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged("QiniuACCESS_KEY");
+            }
+        }
+
+
+        private string qiniuSECRET_KEY = Properties.Settings.Default.QiniuSECRET_KEY;
+        public string QiniuSECRET_KEY
+        {
+            get { return qiniuSECRET_KEY; }
+            set
+            {
+                if (qiniuSECRET_KEY == value)
+                    return;
+                qiniuSECRET_KEY = value;
+                Properties.Settings.Default.QiniuSECRET_KEY = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged("QiniuSECRET_KEY");
+            }
+        }
+
+
+        private string qiniuUserDomainName = Properties.Settings.Default.QiniuUserDomainName;
+        public string QiniuUserDomainName
+        {
+            get { return qiniuUserDomainName; }
+            set
+            {
+                if (qiniuUserDomainName == value)
+                    return;
+                qiniuUserDomainName = value;
+                Properties.Settings.Default.QiniuUserDomainName = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged("QiniuUserDomainName");
+            }
+        }
+
+        private string qiniuUserScope = Properties.Settings.Default.QiniuUserScope;
+        public string QiniuUserScope
+        {
+            get { return qiniuUserScope; }
+            set
+            {
+                if (qiniuUserScope == value)
+                    return;
+                qiniuUserScope = value;
+                Properties.Settings.Default.QiniuUserScope = value;
+                Properties.Settings.Default.Save();
+                RaisePropertyChanged("QiniuUserScope");
+            }
+        }
+
+
     }
 }

@@ -26,7 +26,7 @@ namespace MarkDownEditor
             var settings = new CefSettings();
             settings.EnableInternalPdfViewerOffScreen();
             settings.CefCommandLineArgs.Add("disable-gpu", "1");
-            Cef.Initialize(settings, shutdownOnProcessExit: false, performDependencyCheck: true);
+            Cef.Initialize(settings, shutdownOnProcessExit: false, performDependencyCheck: false);
 
         }
 

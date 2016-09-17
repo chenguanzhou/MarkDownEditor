@@ -280,5 +280,73 @@ namespace MarkDownEditor.Properties {
                 this["ShowMathJax"] = value;
             }
         }
+
+
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QiniuACCESS_KEY
+        {
+            get
+            {
+                return ((string)(this["QiniuACCESS_KEY"]));
+            }
+            set
+            {
+                this["QiniuACCESS_KEY"] = value;
+            }
+        }
+
+
+
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QiniuSECRET_KEY
+        {
+            get
+            {
+                return ((string)(this["QiniuSECRET_KEY"]));
+            }
+            set
+            {
+                this["QiniuSECRET_KEY"] = value;
+            }
+        }
+
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QiniuUserDomainName
+        {
+            get
+            {
+                return ((string)(this["QiniuUserDomainName"]));
+            }
+            set
+            {
+                this["QiniuUserDomainName"] = value;
+            }
+        }
+
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QiniuUserScope
+        {
+            get
+            {
+                return ((string)(this["QiniuUserScope"]));
+            }
+            set
+            {
+                this["QiniuUserScope"] = value;
+            }
+        }
+
     }
 }
