@@ -55,7 +55,7 @@ namespace MarkDownEditor.View
                 {
                     target.Reload();
                     string src = $"scrollTo(0, {target.ScrollOffsetRatio} * (document.body.offsetHeight - window.innerHeight))";
-                    target.ExecuteScriptAsync(src);
+                    target.GetMainFrame().ExecuteJavaScriptAsync(src);
                 }                
             }));
 
@@ -79,7 +79,7 @@ namespace MarkDownEditor.View
                 MvvmChromiumWebBrowser target = (MvvmChromiumWebBrowser)obj;
                 target.ScrollOffsetRatio = (double)args.NewValue;
                 string src = $"scrollTo(0, {target.ScrollOffsetRatio} * (document.body.offsetHeight - window.innerHeight))";
-                target.ExecuteScriptAsync(src);
+                target.GetMainFrame().ExecuteJavaScriptAsync(src);
             }));
 
         /// <summary>

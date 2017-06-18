@@ -74,7 +74,7 @@ namespace MarkDownEditor.ViewModel
             get { return cultureInfo; }
             set
             {
-                if (cultureInfo == value)
+                if (cultureInfo?.CompareInfo == value.CompareInfo)
                     return;
                 cultureInfo = value;
                 Properties.Settings.Default.Language = value?.Name;

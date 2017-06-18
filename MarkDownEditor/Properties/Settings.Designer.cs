@@ -280,73 +280,65 @@ namespace MarkDownEditor.Properties {
                 this["ShowMathJax"] = value;
             }
         }
-
-
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string QiniuACCESS_KEY
-        {
-            get
-            {
+        public string QiniuUserDomainNam {
+            get {
+                return ((string)(this["QiniuUserDomainNam"]));
+            }
+            set {
+                this["QiniuUserDomainNam"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("t_2QtVL2VmIUKcA31iQD1yvlSfCKB_ynzwPHcPZJ")]
+        public string QiniuACCESS_KEY {
+            get {
                 return ((string)(this["QiniuACCESS_KEY"]));
             }
-            set
-            {
+            set {
                 this["QiniuACCESS_KEY"] = value;
             }
         }
-
-
-
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string QiniuSECRET_KEY
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("256LcRO_2GBtLzxYzbXi8Ajr-A7KPFrGXtZlcsUt")]
+        public string QiniuSECRET_KEY {
+            get {
                 return ((string)(this["QiniuSECRET_KEY"]));
             }
-            set
-            {
+            set {
                 this["QiniuSECRET_KEY"] = value;
             }
         }
-
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string QiniuUserDomainName
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://7xread.com1.z0.glb.clouddn.com")]
+        public string QiniuUserDomainName {
+            get {
                 return ((string)(this["QiniuUserDomainName"]));
             }
-            set
-            {
+            set {
                 this["QiniuUserDomainName"] = value;
             }
         }
-
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string QiniuUserScope
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("markdowneditor")]
+        public string QiniuUserScope {
+            get {
                 return ((string)(this["QiniuUserScope"]));
             }
-            set
-            {
+            set {
                 this["QiniuUserScope"] = value;
             }
         }
-
     }
 }
