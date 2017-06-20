@@ -192,9 +192,9 @@ namespace MarkDownEditor.ViewModel
                     markdownSourceTempPath = Path.GetDirectoryName(documentPath) + "\\~" + Path.GetRandomFileName() + ".md";
                     previewSourceTempPath = Path.GetDirectoryName(documentPath) + "\\~" + Path.GetRandomFileName() + ".html";
                 }
-                
 
-                //RaisePropertyChanged("DocumentSource");
+
+                RaisePropertyChanged("DocumentSource");
                 RaisePropertyChanged("PreviewSource");
                 RaisePropertyChanged("DocumentPath");
             }
