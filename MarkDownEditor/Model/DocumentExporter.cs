@@ -184,9 +184,10 @@ namespace MarkDownEditor.Model
     {
         public void Export(string markdownType, string sourceCodePath, string cssFile, string outputPath)
         {
-            var tmpFilePath = Path.GetTempFileName()+".html";
+            
+            var tmpHtmlPath = Path.GetDirectoryName(sourceCodePath) + "\\~" + Path.GetRandomFileName() + ".html"; ;
 
-            DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpFilePath);
+            DocumentExporter.Export("Html", markdownType, cssFile, sourceCodePath, tmpHtmlPath);
 
             if (File.Exists(outputPath))
                 File.Delete(outputPath);
@@ -194,14 +195,14 @@ namespace MarkDownEditor.Model
             //File.WriteAllBytes(outputPath, HtmlToXConverter.ConvertToPdf(File.ReadAllText(tmpFilePath)));
             Process process = new Process();
             process.StartInfo.FileName = "WkHtmlToPdfWrapper";
-            process.StartInfo.Arguments = $"\"{tmpFilePath}\" \"{outputPath}\"";
+            process.StartInfo.Arguments = $"\"{tmpHtmlPath}\" \"{outputPath}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
             process.WaitForExit();
             if (process.ExitCode != 0)
                 throw new Exception(Properties.Resources.FailedToExport + "\n" + "wkhtmltopdf error" + process.ExitCode);
 
-            File.Delete(tmpFilePath);
+            File.Delete(tmpHtmlPath);
         }
     }
 

@@ -81,6 +81,7 @@ namespace MarkDownEditor.ViewModel
 
         public string Title => DocumentTitle + (IsModified ? "(*)" : "") + " ---- MarkDownEditor";
 
+        public string DocumentSource => markdownSourceTempPath;
         public string PreviewSource => previewSourceTempPath;
 
         public bool showPreview = true;
@@ -177,6 +178,24 @@ namespace MarkDownEditor.ViewModel
                 if (documentPath == value)
                     return;
                 documentPath = value;
+
+                File.Delete(markdownSourceTempPath);
+                File.Delete(previewSourceTempPath);
+
+                if (string.IsNullOrEmpty(documentPath))
+                {
+                    markdownSourceTempPath = Path.GetTempFileName();
+                    previewSourceTempPath = Path.GetTempFileName() + ".html";
+                }
+                else
+                {
+                    markdownSourceTempPath = Path.GetDirectoryName(documentPath) + "\\~" + Path.GetRandomFileName() + ".md";
+                    previewSourceTempPath = Path.GetDirectoryName(documentPath) + "\\~" + Path.GetRandomFileName() + ".html";
+                }
+                
+
+                //RaisePropertyChanged("DocumentSource");
+                RaisePropertyChanged("PreviewSource");
                 RaisePropertyChanged("DocumentPath");
             }
         }
@@ -357,14 +376,14 @@ namespace MarkDownEditor.ViewModel
 
         public class ExportFileType
         {
-            public ExportFileType(string sourceCodePath)
+            public ExportFileType(MainViewModel model)
             {
-                SourceCodePath = sourceCodePath;
+                Model = model;
             }
             public string Name { get; set; }            
             public string Filter { get; set; }
             public string ToolTip { get; set; }
-            public string SourceCodePath { get; set; }
+            public MainViewModel Model { get; set; }
 
             public ICommand ExportCommand => new RelayCommand(async () =>
             {
@@ -394,7 +413,7 @@ namespace MarkDownEditor.ViewModel
                             bool isNightMode = ViewModelLocator.Main.SettingsViewModel.IsNightMode;
                             var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode ? "Dark" : "Light", ViewModelLocator.Main.CurrentCssFiles[ViewModelLocator.Main.CurrentCssFileIndex]);
                             
-                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText], cssFilePath, SourceCodePath, dlg.FileName);
+                            DocumentExporter.Export(Name, MarkDownType[context.CurrentMarkdownTypeText], cssFilePath, Model.DocumentSource, dlg.FileName);
                         });
                         await progress.CloseAsync();
                         var ret = await DialogCoordinator.Instance.ShowMessageAsync(context,
@@ -421,14 +440,14 @@ namespace MarkDownEditor.ViewModel
 
         public List<ExportFileType> ExportFileTypes => new List<ExportFileType>()
         {
-            new ExportFileType(markdownSourceTempPath) {Name="Plain Html", ToolTip=Properties.Resources.TypePlainHtmlToolTip, Filter=Properties.Resources.TypePlainHtmlFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="Html" , ToolTip=Properties.Resources.TypeHtmlToolTip, Filter=Properties.Resources.TypeHtmlFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="RTF" , ToolTip=Properties.Resources.TypeRTFFilter, Filter=Properties.Resources.TypeRTFFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="Docx" , ToolTip=Properties.Resources.TypeDocxToolTip, Filter=Properties.Resources.TypeDocxFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="Epub" , ToolTip=Properties.Resources.TypeEpubToolTip, Filter=Properties.Resources.TypeEpubFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter },
-            new ExportFileType(markdownSourceTempPath) {Name="Image", ToolTip=Properties.Resources.TypeImageToolTip, Filter=Properties.Resources.TypeImageFilter }
+            new ExportFileType(this) {Name="Plain Html", ToolTip=Properties.Resources.TypePlainHtmlToolTip, Filter=Properties.Resources.TypePlainHtmlFilter },
+            new ExportFileType(this) {Name="Html" , ToolTip=Properties.Resources.TypeHtmlToolTip, Filter=Properties.Resources.TypeHtmlFilter },
+            new ExportFileType(this) {Name="RTF" , ToolTip=Properties.Resources.TypeRTFFilter, Filter=Properties.Resources.TypeRTFFilter },
+            new ExportFileType(this) {Name="Docx" , ToolTip=Properties.Resources.TypeDocxToolTip, Filter=Properties.Resources.TypeDocxFilter },
+            new ExportFileType(this) {Name="Epub" , ToolTip=Properties.Resources.TypeEpubToolTip, Filter=Properties.Resources.TypeEpubFilter },
+            new ExportFileType(this) {Name="Latex", ToolTip=Properties.Resources.TypeLatexToolTip, Filter=Properties.Resources.TypeLatexFilter },
+            new ExportFileType(this) {Name="PDF", ToolTip=Properties.Resources.TypePdfToolTip, Filter=Properties.Resources.TypePdfFilter },
+            new ExportFileType(this) {Name="Image", ToolTip=Properties.Resources.TypeImageToolTip, Filter=Properties.Resources.TypeImageFilter }
         };
 
         public static Dictionary<string, string> MarkDownType => new Dictionary<string, string>()
@@ -551,12 +570,13 @@ namespace MarkDownEditor.ViewModel
             if (content == null)
                 return;
 
+            DocumentPath = path;
+            DocumentTitle = Path.GetFileName(path);
             SourceCode = new TextDocument(content);
             SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
             UpdatePreview();
             SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
-            DocumentPath = path;
-            DocumentTitle = Path.GetFileName(path);
+            
             IsModified = false;
             StatusBarText = $"{Properties.Resources.Document} \"{path}\" {Properties.Resources.OpenedSuccessfully}";
         }
