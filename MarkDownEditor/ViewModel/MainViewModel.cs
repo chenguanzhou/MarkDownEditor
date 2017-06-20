@@ -1077,11 +1077,19 @@ namespace MarkDownEditor.ViewModel
                 return image.Link;
             };
 
+            Func<string, Task<string>> uploadImage2SMMS = async (string filePath) =>
+            {
+                return await Task<string>.Run(() =>
+                {
+                    return SMMSClient.UploadImageToSMMS(filePath);
+                });
+            };
+
             Func<string, Task<string>> uploadImage2Qiniu = async (string filePath) =>
             {
                 return await Task<string>.Run(()=> 
                 {
-                    var settingModel = new SettingsViewModel();
+                    var settingModel = SettingsViewModel;
 
                     Qiniu.Conf.Config.ACCESS_KEY = settingModel.QiniuACCESS_KEY;
                     Qiniu.Conf.Config.SECRET_KEY = settingModel.QiniuSECRET_KEY;
@@ -1103,13 +1111,14 @@ namespace MarkDownEditor.ViewModel
                 });
             };
 
+            string currentImageStorageService = SettingsViewModel.CurrentImageStrorageService;
             var ret = await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Image, Properties.Resources.SelectImageType,
                 MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary, new MetroDialogSettings()
                 {
                     AffirmativeButtonText = Properties.Resources.OnlineImage,
                     NegativeButtonText = Properties.Resources.Cancel,
-                    FirstAuxiliaryButtonText = Properties.Resources.UploadLocalImage2IMGUR,
-                    SecondAuxiliaryButtonText = Properties.Resources.UploadLocalImage2Qiniu,
+                    FirstAuxiliaryButtonText = "Upload Image To " + currentImageStorageService,
+                    SecondAuxiliaryButtonText = "Insert local image (maybe not avalible when exporting)",
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
@@ -1122,9 +1131,9 @@ namespace MarkDownEditor.ViewModel
 
                 insertUrl(link);
             }
-            else
+            else if (ret == MessageDialogResult.FirstAuxiliary)
             //upload
-            {
+            {                
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.Title = Properties.Resources.UploadImagesTitle;
                 dlg.Filter = Properties.Resources.ImageFilter;
@@ -1138,8 +1147,13 @@ namespace MarkDownEditor.ViewModel
                         if (info.Length > 5120000)
                             throw new Exception(Properties.Resources.ImageSizeError);
                         progress.SetIndeterminate();
-
-                        string link = ret == MessageDialogResult.FirstAuxiliary ? await uploadImage2Imgur(dlg.FileName) : await uploadImage2Qiniu(dlg.FileName);
+                        string link;
+                        if (currentImageStorageService == "SM.MS")
+                            link = await uploadImage2SMMS(dlg.FileName);
+                        else if (currentImageStorageService == "IMGUR")
+                            link = await uploadImage2Imgur(dlg.FileName);
+                        else
+                            link = await uploadImage2Qiniu(dlg.FileName);
                         await progress.CloseAsync();
                         insertUrl(link);
                     }

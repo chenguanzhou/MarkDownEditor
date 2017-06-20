@@ -17,6 +17,7 @@ namespace MarkDownEditor.View
         {
             this.RequestHandler = new RequestHandler();
             this.IsBrowserInitializedChanged += MvvmChromiumWebBrowser_IsBrowserInitializedChanged;
+                  
         }
 
         #region IsBrowserInitialized

@@ -121,6 +121,32 @@ namespace MarkDownEditor.ViewModel
         }
         public List<AccentItem> AccentColors { get; set; } = ThemeManager.Accents.Select(s => new AccentItem() { Name = s.Name, ColorBrush = s.Resources["AccentColorBrush"] as Brush }).ToList();
 
+        public List<string> AllImageStrorageServices => new List<string>
+        {
+            "SM.MS",
+            "IMGUR",
+            "Qiniu"
+        };
+
+        private int currentImageStrorageServiceIndex = Properties.Settings.Default.CurrentImageStrorageServiceIndex;
+        public int CurrentImageStrorageServiceIndex
+        {
+            get { return currentImageStrorageServiceIndex; }
+            set
+            {
+                if (currentImageStrorageServiceIndex == value)
+                    return;
+
+                currentImageStrorageServiceIndex = value;
+                Properties.Settings.Default.CurrentImageStrorageServiceIndex = value;
+                Properties.Settings.Default.Save();
+                
+                RaisePropertyChanged("CurrentImageStrorageServiceIndex");
+            }
+        }
+
+        public string CurrentImageStrorageService => AllImageStrorageServices[CurrentImageStrorageServiceIndex];
+
         #endregion
 
         private FontFamily editorFont = new FontFamily(Properties.Settings.Default.EditorFont);

@@ -89,7 +89,7 @@ namespace MarkDownEditor
 
         public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, ref string newUrl)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool OnResourceResponse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)

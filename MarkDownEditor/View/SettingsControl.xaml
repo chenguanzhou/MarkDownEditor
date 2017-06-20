@@ -65,29 +65,38 @@
                             </DockPanel>
                         </StackPanel>
                     </Expander>
-                    <Expander Header="{x:Static p:Resources.QiniuConf}" Height="300">
-                        <StackPanel>
-                            <DockPanel Margin="0,5,0,5">
-                                <TextBlock Text="ACCESS_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
-                            </DockPanel>
-                            <TextBox x:Name="txtACCESS_KEY" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuACCESS_KEY}" VerticalAlignment="Top" Width="280"/>
 
-                            <DockPanel Margin="0,5,0,5">
-                                <TextBlock Text="SECRET_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
-                            </DockPanel>
-                            <TextBox x:Name="txtSECRET_KEY" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuSECRET_KEY}" VerticalAlignment="Top" Width="280"/>
+                    <Expander IsExpanded="True" Header="Image Storage Service">
+                        <Controls:MetroAnimatedSingleRowTabControl SelectedIndex="{Binding CurrentImageStrorageServiceIndex}">
+                            <Controls:MetroTabItem Header="SM.MS"/>
+                            <Controls:MetroTabItem Header="IMGUR"/>
+                            <Controls:MetroTabItem Header="Qiniu">
+                                <StackPanel>
+                                    <DockPanel Margin="0,5,0,5">
+                                        <TextBlock Text="ACCESS_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                    <TextBox x:Name="txtACCESS_KEY" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuACCESS_KEY}" VerticalAlignment="Top" Width="280"/>
 
-                            <DockPanel Margin="0,5,0,5">
-                                <TextBlock Text="{x:Static p:Resources.QiniuUserDomainName}" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
-                            </DockPanel>
-                            <TextBox x:Name="txtUserDomainName" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuUserDomainName}" VerticalAlignment="Top" Width="280"/>
+                                    <DockPanel Margin="0,5,0,5">
+                                        <TextBlock Text="SECRET_KEY：" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                    <TextBox x:Name="txtSECRET_KEY" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuSECRET_KEY}" VerticalAlignment="Top" Width="280"/>
 
-                            <DockPanel Margin="0,5,0,5">
-                                <TextBlock Text="{x:Static p:Resources.QiniuUserScope}" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
-                            </DockPanel>
-                            <TextBox x:Name="txtUserScope" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuUserScope}" VerticalAlignment="Top" Width="280"/>
+                                    <DockPanel Margin="0,5,0,5">
+                                        <TextBlock Text="{x:Static p:Resources.QiniuUserDomainName}" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                    <TextBox x:Name="txtUserDomainName" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuUserDomainName}" VerticalAlignment="Top" Width="280"/>
 
-                        </StackPanel>
+                                    <DockPanel Margin="0,5,0,5">
+                                        <TextBlock Text="{x:Static p:Resources.QiniuUserScope}" Style="{StaticResource SettingKeyStyle}" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                    <TextBox x:Name="txtUserScope" HorizontalAlignment="Left" Height="23" Margin="5,0,0,0" TextWrapping="Wrap" Text="{Binding QiniuUserScope}" VerticalAlignment="Top" Width="280"/>
+
+                                </StackPanel>
+                            </Controls:MetroTabItem>
+
+
+                        </Controls:MetroAnimatedSingleRowTabControl>
                     </Expander>
 
                 </StackPanel>

@@ -68,17 +68,23 @@
     <Setting Name="ShowMathJax" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-	<Setting Name="QiniuACCESS_KEY" Type="System.String" Scope="User">
+    <Setting Name="QiniuUserDomainNam" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-		<Setting Name="QiniuSECRET_KEY" Type="System.String" Scope="User">
+    <Setting Name="QiniuACCESS_KEY" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-		<Setting Name="QiniuUserDomainNam" Type="System.String" Scope="User">
+    <Setting Name="QiniuSECRET_KEY" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-		<Setting Name="QiniuUserScope" Type="System.String" Scope="User">
+    <Setting Name="QiniuUserDomainName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="QiniuUserScope" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CurrentImageStrorageServiceIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>
