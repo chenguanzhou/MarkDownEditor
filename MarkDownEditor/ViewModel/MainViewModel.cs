@@ -1271,22 +1271,16 @@ namespace MarkDownEditor.ViewModel
                 Process.Start(path);
         }
 
+        private PreviewUpdator updator = new PreviewUpdator();
         private void UpdatePreview()
         {
             if (IsShowPreview)
             {
-                StreamWriter sw = new StreamWriter(markdownSourceTempPath);
-                sw.Write(SourceCode.Text);
-                sw.Close();
-
                 bool isNightMode = SettingsViewModel.IsNightMode;
-                var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode?"Dark":"Light", CurrentCssFiles[CurrentCssFileIndex]);
-                DocumentExporter.Export("Html Local Mathjax", 
-                    MarkDownType[CurrentMarkdownTypeText], 
-                    CurrentCssFileIndex==0|| CurrentCssFileIndex== CurrentCssFiles.Count-1? null: cssFilePath, 
-                    markdownSourceTempPath, previewSourceTempPath);
+                var cssFilePath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "css", isNightMode ? "Dark" : "Light", CurrentCssFiles[CurrentCssFileIndex]);
+                string cssFile = CurrentCssFileIndex == 0 || CurrentCssFileIndex == CurrentCssFiles.Count - 1 ? null : cssFilePath;
 
-                ShouldReload = !ShouldReload;
+                updator.Update(this, SourceCode.Text, markdownSourceTempPath, previewSourceTempPath, MarkDownType[CurrentMarkdownTypeText], cssFile);
             }            
 
             DocumrntStatisticsInfo = $"{Properties.Resources.Words}: {Regex.Matches(SourceCode.Text, @"[\S]+").Count}       {Properties.Resources.Characters}: {SourceCode.TextLength}       {Properties.Resources.Lines}: {SourceCode.LineCount}";

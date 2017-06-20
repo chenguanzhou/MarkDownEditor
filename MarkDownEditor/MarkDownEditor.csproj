@@ -168,6 +168,7 @@
     <Compile Include="Converters\OppositeConverter.cs" />
     <Compile Include="InvokeDelegateCommandAction.cs" />
     <Compile Include="Model\DocumentExporter.cs" />
+    <Compile Include="Model\PreviewUpdator.cs" />
     <Compile Include="Properties\Resources.zh-CN.Designer.cs">
       <DependentUpon>Resources.zh-CN.resx</DependentUpon>
       <AutoGen>True</AutoGen>
