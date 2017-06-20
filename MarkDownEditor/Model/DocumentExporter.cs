@@ -60,12 +60,17 @@ namespace MarkDownEditor.Model
             var tmpFile = Path.GetTempFileName();
             if (cssFile!=null)
             {
-                StreamReader sr = new StreamReader(cssFile);
-                var cssContent = sr.ReadToEnd();
-                sr.Close();
                 StreamWriter sw = new StreamWriter(tmpFile);
                 sw.WriteLine("<style type=\"text/css\">");
-                sw.WriteLine(cssContent);
+
+                if (File.Exists(cssFile))
+                {
+                    StreamReader sr = new StreamReader(cssFile);
+                    var cssContent = sr.ReadToEnd();
+                    sr.Close();
+                    sw.WriteLine(cssContent);
+                }
+                
                 sw.WriteLine("</style>");
                 sw.Close();
             }
@@ -93,12 +98,17 @@ namespace MarkDownEditor.Model
             var tmpFile = Path.GetTempFileName();
             if (cssFile != null)
             {
-                StreamReader sr = new StreamReader(cssFile);
-                var cssContent = sr.ReadToEnd();
-                sr.Close();
                 StreamWriter sw = new StreamWriter(tmpFile);
                 sw.WriteLine("<style type=\"text/css\">");
-                sw.WriteLine(cssContent);
+
+                if (File.Exists(cssFile))
+                {
+                    StreamReader sr = new StreamReader(cssFile);
+                    var cssContent = sr.ReadToEnd();
+                    sr.Close();
+                    sw.WriteLine(cssContent);
+                }
+
                 sw.WriteLine("</style>");
                 sw.Close();
             }
