@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="license.rtf" />
     <Content Include="Microsoft_VC120_CRT_x86.msm" />
+    <Content Include="Microsoft_VC140_CRT_x86.msm" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

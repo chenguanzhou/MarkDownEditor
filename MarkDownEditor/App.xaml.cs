@@ -23,26 +23,17 @@ namespace MarkDownEditor
         };
 
         public App()
-        {
+        {            
+            Environment.CurrentDirectory = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+
             var settings = new CefSettings()
-
             {
-
-                //By default CefSharp will use an in-memory cache, you need to specify a Cache Folder to persist data
-
-                CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CefSharp\\Cache")
-
+               CachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CefSharp\\Cache")
             };
 
             settings.DisableGpuAcceleration();
-            //settings.CefCommandLineArgs.Add("disable-gpu", "1");
-            //settings.CefCommandLineArgs.Add("disable-gpu-compositing", "1");
-
-
-            //Perform dependency check to make sure all relevant resources are in our output directory.
-            
-            Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
             Cef.EnableHighDPISupport();
+            Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
 
         }
 

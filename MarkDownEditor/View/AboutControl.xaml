@@ -24,6 +24,7 @@
                 </StackPanel.Resources>
                 <TextBlock Text="{Binding ApplicationName}" FontSize="25"></TextBlock>
                 <TextBlock Text="{Binding VersionNumber}" FontSize="16"></TextBlock>
+                <TextBlock Text="By Chen Guanzhou" FontSize="16"></TextBlock>
                 <TextBlock FontSize="16">
                 <Hyperlink Command="{Binding ClickSourceCodeWebCommand}">
                     <TextBlock Text="{x:Static p:Resources.SourceCode}">
@@ -36,15 +37,12 @@
                 <TextBlock FontSize="16">
                     <Hyperlink Command="{Binding CheckForUpdateCommand}">
                         <TextBlock Text="{x:Static p:Resources.CheckForUpdate}">
-                                <TextBlock.Style>
-                                    <Style></Style>
-                                </TextBlock.Style>
+                            <TextBlock.Style>
+                                <Style></Style>
+                            </TextBlock.Style>
                         </TextBlock>
                     </Hyperlink>
                 </TextBlock>
-                <Expander Margin="0,20,0,0" IsExpanded="True" Header="{x:Static p:Resources.Donate}" FontSize="16">
-                    <Image Source="/MarkDownEditor;component/alipay.jpg"></Image>
-                </Expander>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

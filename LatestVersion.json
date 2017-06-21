@@ -1,8 +1,8 @@
 {
   "AppName": "MarkDownEditor",
   "LatestVersion": {
-    "Version": "0.3.9.0",
-    "UpdateTime": "2016/9/17",
-    "Description": "1. Customized Qiniu Key;  2. Fix win7 crash bug"
+    "Version": "0.4.0.0",
+    "UpdateTime": "2017/6/21",
+    "Description": "1. Async preview;  2. Insert local image in absolute url or relative path; 3. Make SM.MS as the default image storage service; 4. Fix crash bug in no css condition; 5. Fix crash bug when open document by double clicking"
   }
 }

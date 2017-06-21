@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?define MarkDownEditor_TargetDir=$(var.MarkDownEditor.TargetDir)?>
-  <Product Id="{325B5305-18DC-4086-B39E-3B07BEBA76EB}" Name="MarkDownEditor" Language="1033" Version="0.3.8" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
-    <Package Id="{835D85DC-1CC7-473A-BDD9-9C1F044763E7}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
+  <Product Id="{7AECC89E-7BB9-4C9C-A813-FBD02FC0C9F8}" Name="MarkDownEditor" Language="1033" Version="0.4.0" Manufacturer="Chen Guanzhou" UpgradeCode="5d30c639-0761-41c7-b4ef-e0c1b75eeb3f">
+    <Package Id="{36DA66A4-4374-4381-9729-1E00D913455B}" InstallerVersion="405" Compressed="yes" InstallScope="perMachine"/>
 
     <MajorUpgrade Schedule="afterInstallInitialize"
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
@@ -36,8 +36,12 @@
     <Icon Id="icon.ico" SourceFile="..\MarkDOwnEditor\MarkdownEditorLogo.ico"/>
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
-    <Feature Id="VCRedist" Title="Visual C++ 2013 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
-      <MergeRef Id="VCRedist"/>
+    <Feature Id="VCRedist12" Title="Visual C++ 2013 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <MergeRef Id="VCRedist12"/>
+    </Feature>
+    
+    <Feature Id="VCRedist14" Title="Visual C++ 2015 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+      <MergeRef Id="VCRedist14"/>
     </Feature>
 
     <PropertyRef Id="NETFRAMEWORK45"/>
@@ -143,7 +147,8 @@
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="INSTALLFOLDER">
-      <Merge Id="VCRedist" SourceFile="Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0"/>
+      <Merge Id="VCRedist12" SourceFile="Microsoft_VC120_CRT_x86.msm" DiskId="1" Language="0"/>
+      <Merge Id="VCRedist14" SourceFile="Microsoft_VC140_CRT_x86.msm" DiskId="1" Language="0"/>
     </DirectoryRef>
   </Fragment>
 
@@ -155,7 +160,6 @@
         <File Id="CefSharp.Core.dll" Name="CefSharp.Core.dll" Source="$(var.MarkDownEditor_TargetDir)CefSharp.Core.dll" />
         <File Id="CefSharp.dll" Name="CefSharp.dll" Source="$(var.MarkDownEditor_TargetDir)CefSharp.dll" />
         <File Id="CefSharp.Wpf.dll" Name="CefSharp.Wpf.dll" Source="$(var.MarkDownEditor_TargetDir)CefSharp.Wpf.dll" />
-        <File Id="d3dcompiler_43.dll" Name="d3dcompiler_43.dll" Source="$(var.MarkDownEditor_TargetDir)d3dcompiler_43.dll" />
         <File Id="d3dcompiler_47.dll" Name="d3dcompiler_47.dll" Source="$(var.MarkDownEditor_TargetDir)d3dcompiler_47.dll" />
         <File Id="MahApps.Metro.dll" Name="MahApps.Metro.dll" Source="$(var.MarkDownEditor_TargetDir)MahApps.Metro.dll" />
         <File Id="GalaSoft.MvvmLight.dll" Name="GalaSoft.MvvmLight.dll" Source="$(var.MarkDownEditor_TargetDir)GalaSoft.MvvmLight.dll" />
@@ -172,6 +176,7 @@
 
         <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.MarkDownEditor_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
         <File Id="libcef.dll" Name="libcef.dll" Source="$(var.MarkDownEditor_TargetDir)libcef.dll" />
+        <File Id="chrome_elf.dll" Name="chrome_elf.dll" Source="$(var.MarkDownEditor_TargetDir)chrome_elf.dll" />
         <File Id="libEGL.dll" Name="libEGL.dll" Source="$(var.MarkDownEditor_TargetDir)libEGL.dll" />
         <File Id="libGLESv2.dll" Name="libGLESv2.dll" Source="$(var.MarkDownEditor_TargetDir)libGLESv2.dll" />
         <File Id="widevinecdmadapter.dll" Name="widevinecdmadapter.dll" Source="$(var.MarkDownEditor_TargetDir)widevinecdmadapter.dll" />

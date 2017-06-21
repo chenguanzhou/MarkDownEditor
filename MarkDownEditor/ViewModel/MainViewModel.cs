@@ -1249,12 +1249,12 @@ namespace MarkDownEditor.ViewModel
             {
                 var content = await Open(args[1]);
 
+                DocumentPath = args[1];
+                DocumentTitle = Path.GetFileName(args[1]);
                 SourceCode = new TextDocument(content);
                 SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => UpdatePreview());
                 UpdatePreview();
                 SourceCode.TextChanged += new EventHandler((object obj, EventArgs e) => IsModified = CanUndo);
-                DocumentPath = args[1];
-                DocumentTitle = Path.GetFileName(args[1]);
                 IsModified = false;
                 StatusBarText = $"{Properties.Resources.Document} \"{args[1]}\" {Properties.Resources.OpenedSuccessfully}";
             }

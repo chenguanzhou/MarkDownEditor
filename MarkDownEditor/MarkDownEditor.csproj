@@ -404,7 +404,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="WkHtmlToXDotNet.dll" />
-    <Resource Include="alipay.jpg" />
     <Content Include="css\Light\Modest.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
