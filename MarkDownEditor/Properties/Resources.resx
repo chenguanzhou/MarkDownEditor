@@ -582,4 +582,13 @@
   <data name="QiniuUserScope" xml:space="preserve">
     <value>QiniuUserScope</value>
   </data>
+  <data name="InsertLocalImage" xml:space="preserve">
+    <value>Insert local image URL</value>
+  </data>
+  <data name="OISS" xml:space="preserve">
+    <value>Online Image Storage Service</value>
+  </data>
+  <data name="UploadToImageStorageService" xml:space="preserve">
+    <value>Upload Image To </value>
+  </data>
 </root>

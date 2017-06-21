@@ -583,6 +583,15 @@ namespace MarkDownEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert local image URL.
+        /// </summary>
+        public static string InsertLocalImage {
+            get {
+                return ResourceManager.GetString("InsertLocalImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to International Settings.
         /// </summary>
         public static string InternationalSettings {
@@ -732,6 +741,15 @@ namespace MarkDownEditor.Properties {
         public static string NoCSS {
             get {
                 return ResourceManager.GetString("NoCSS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online Image Storage Service.
+        /// </summary>
+        public static string OISS {
+            get {
+                return ResourceManager.GetString("OISS", resourceCulture);
             }
         }
         
@@ -1407,6 +1425,15 @@ namespace MarkDownEditor.Properties {
         public static string UploadLocalImage2Qiniu {
             get {
                 return ResourceManager.GetString("UploadLocalImage2Qiniu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Image To .
+        /// </summary>
+        public static string UploadToImageStorageService {
+            get {
+                return ResourceManager.GetString("UploadToImageStorageService", resourceCulture);
             }
         }
         

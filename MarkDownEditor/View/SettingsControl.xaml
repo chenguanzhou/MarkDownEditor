@@ -66,7 +66,7 @@
                         </StackPanel>
                     </Expander>
 
-                    <Expander IsExpanded="True" Header="Image Storage Service">
+                    <Expander IsExpanded="True" Header="{x:Static p:Resources.OISS}">
                         <Controls:MetroAnimatedSingleRowTabControl SelectedIndex="{Binding CurrentImageStrorageServiceIndex}">
                             <Controls:MetroTabItem Header="SM.MS"/>
                             <Controls:MetroTabItem Header="IMGUR"/>

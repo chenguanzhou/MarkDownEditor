@@ -582,4 +582,13 @@
   <data name="QiniuUserScope" xml:space="preserve">
     <value>七牛用户存储空间</value>
   </data>
+  <data name="InsertLocalImage" xml:space="preserve">
+    <value>插入本地图片URL</value>
+  </data>
+  <data name="OISS" xml:space="preserve">
+    <value>在线图片存储服务</value>
+  </data>
+  <data name="UploadToImageStorageService" xml:space="preserve">
+    <value>上传至</value>
+  </data>
 </root>

@@ -1,15 +1,11 @@
-using CefSharp;
-using CefSharp.Wpf;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using ICSharpCode.AvalonEdit.Document;
 using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
 using Imgur.API.Models;
-using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using MarkDownEditor.Model;
-using MarkDownEditor.View;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using Qiniu.IO;
@@ -17,7 +13,6 @@ using Qiniu.RS;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -25,8 +20,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
 
 namespace MarkDownEditor.ViewModel
 {
@@ -1137,8 +1130,8 @@ namespace MarkDownEditor.ViewModel
                 {
                     AffirmativeButtonText = Properties.Resources.OnlineImage,
                     NegativeButtonText = Properties.Resources.Cancel,
-                    FirstAuxiliaryButtonText = "Upload Image To " + currentImageStorageService,
-                    SecondAuxiliaryButtonText = "Insert local image (maybe not avalible when exporting)",
+                    FirstAuxiliaryButtonText = Properties.Resources.UploadToImageStorageService + currentImageStorageService,
+                    SecondAuxiliaryButtonText = Properties.Resources.InsertLocalImage,
                     ColorScheme = MetroDialogColorScheme.Accented
                 });
 
@@ -1153,7 +1146,7 @@ namespace MarkDownEditor.ViewModel
             }
             else if (ret == MessageDialogResult.FirstAuxiliary)
             //upload
-            {                
+            {
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.Title = Properties.Resources.UploadImagesTitle;
                 dlg.Filter = Properties.Resources.ImageFilter;
@@ -1183,10 +1176,22 @@ namespace MarkDownEditor.ViewModel
                             await progress.CloseAsync();
 
                         await DialogCoordinator.Instance.ShowMessageAsync(this, Properties.Resources.Error, ex.Message,
-                            MessageDialogStyle.Affirmative, new MetroDialogSettings(){ ColorScheme = MetroDialogColorScheme.Accented });
-                    }                    
+                            MessageDialogStyle.Affirmative, new MetroDialogSettings() { ColorScheme = MetroDialogColorScheme.Accented });
+                    }
                 }
-            }            
+            }
+            else if (ret == MessageDialogResult.SecondAuxiliary)
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.Title = Properties.Resources.UploadImagesTitle;
+                dlg.Filter = Properties.Resources.ImageFilter;
+                if (dlg.ShowDialog() == true)
+                {
+                    var uri = new Uri(dlg.FileName);
+
+                    insertUrl(uri.AbsoluteUri);
+                }
+            }      
         });
 
         public ICommand SeparateLineCommand => new RelayCommand(() =>
