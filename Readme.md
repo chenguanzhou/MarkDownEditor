@@ -2,7 +2,7 @@
 [![Join the chat at https://gitter.im/chenguanzhou/MarkDownEditor](https://badges.gitter.im/chenguanzhou/MarkDownEditor.svg)](https://gitter.im/chenguanzhou/MarkDownEditor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![](https://img.shields.io/badge/license-GPL%20License-blue.svg)
 [![Github All Releases Downloads](https://img.shields.io/github/downloads/chenguanzhou/MarkDownEditor/total.svg)](https://github.com/chenguanzhou/MarkDownEditor/releases)
-[![Github Latest Releases Downloads](https://img.shields.io/github/downloads/chenguanzhou/markdowneditor/latest/total.svg)](https://github.com/chenguanzhou/MarkDownEditor/releases)
+[![Github Latest Releases Downloads](https://img.shields.io/github/downloads/chenguanzhou/markdowneditor/latest/total.svg)](https://github.com/chenguanzhou/MarkDownEditor/releases/latest)
 
 
 # MarkDown Editor
