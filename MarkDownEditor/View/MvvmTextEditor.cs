@@ -345,5 +345,12 @@ namespace MarkDownEditor.View
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
+        
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            string src = $"onmousedown=new Function(\"return true\")";
+            this.GetMainFrame().ExecuteJavaScriptAsync(src);
+        }
     }
 }
