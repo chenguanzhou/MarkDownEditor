@@ -79,7 +79,39 @@ namespace MarkDownEditor.View
             ToggleFullScreen = false;
         }
         #endregion
+        
+        
+        private Point touchStartPoint;
+        private Point touchEndPoint;
+        //Touch support for Browser
+        private void MvvmCWBrowser_PreviewTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            string src = $"onmousedown=new Function(\"return false\")";
+            mvvmCWBrowser.GetMainFrame().ExecuteJavaScriptAsync(src);
+            touchStartPoint = e.GetTouchPoint(mvvmCWBrowser).Position;
+        }
 
+        private void MvvmCWBrowser_PreviewTouchMove(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            touchEndPoint = e.GetTouchPoint(mvvmCWBrowser).Position;
+            string src = $"scrollBy({-touchEndPoint.X+touchStartPoint.X}, {-touchEndPoint.Y + touchStartPoint.Y})";
+            mvvmCWBrowser.GetMainFrame().ExecuteJavaScriptAsync(src);
+            touchStartPoint = touchEndPoint;
+        }
+
+        //Touch support of TextEditor
+        private void MvvmTextEditor_PreviewTouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            touchStartPoint = e.GetTouchPoint(mvvmTextEditor).Position;
+            mvvmTextEditor.IsTouched = true;
+        }
+
+        private void MvvmTextEditor_PreviewTouchMove(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            touchEndPoint = e.GetTouchPoint(mvvmTextEditor).Position;
+            mvvmTextEditor.ScrollToVerticalOffset(mvvmTextEditor.VerticalOffset + (touchStartPoint.Y - touchEndPoint.Y));
+            touchStartPoint = touchEndPoint;
+        }
 
     }
 }
