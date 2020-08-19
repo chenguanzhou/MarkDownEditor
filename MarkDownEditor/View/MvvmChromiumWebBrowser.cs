@@ -103,5 +103,31 @@ namespace MarkDownEditor.View
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
+        
+        //support touch
+        public bool IsTouched = false;
+        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
+        {
+            if (!IsTouched)
+            {
+                base.OnPreviewMouseDown(e);
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+            if (!IsTouched)
+            {
+                base.OnPreviewMouseUp(e);
+            }
+            else
+            {
+                e.Handled = true;
+            }
+            IsTouched = false;
+        }
     }
 }
