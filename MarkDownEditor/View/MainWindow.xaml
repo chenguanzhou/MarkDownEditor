@@ -95,6 +95,9 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <view:MvvmTextEditor
+                                x:Name="mvvmTextEditor"
+                                PreviewTouchDown="MvvmTextEditor_PreviewTouchDown"
+                                PreviewTouchMove="MvvmTextEditor_PreviewTouchMove"
                                 SyntaxHighlighting="MarkDown"           
                                 Background="{DynamicResource WhiteBrush}"
                                 Foreground="{DynamicResource BlackBrush}"
@@ -154,6 +157,9 @@
                         <view:PreviewToolBarControl>
                         </view:PreviewToolBarControl>
                         <view:MvvmChromiumWebBrowser
+                            x:Name="mvvmCWBrowser"
+                            PreviewTouchDown="MvvmCWBrowser_PreviewTouchDown"
+                            PreviewTouchMove="MvvmCWBrowser_PreviewTouchMove"
                             Grid.Row="1" Margin="10"
                             ShouldReload="{Binding ShouldReload,Mode=TwoWay}"
                             ScrollOffsetRatio="{Binding ScrollOffsetRatio,Mode=TwoWay}"
